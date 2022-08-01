@@ -14,6 +14,7 @@ double divide(double a, double b){return a / b;}
 double mod(double a, double b){return ((int64_t)a) % ((int64_t)b);}
 double pow(double a, double b){double result = a; if(b == 0) return 1;else if(a == 0) return 0; else for(int i = 0; i < (b - 1); i++) result *= a; return result;}
 
+#pragma pack(push, 1)
 typedef struct _Calculator{
     struct _IN{
         void (*inPut)(double*, double*, char*);
@@ -30,6 +31,7 @@ typedef struct _Calculator{
     double (*mod)(double, double);
     double (*pow)(double, double);
 }Calculator;
+#pragma pack(pop)
 
 void setUpPublic(Calculator *calculator){
     calculator->in.inPut = inPut;
