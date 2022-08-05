@@ -1,5 +1,7 @@
 #include <stdarg.h>
 
+#ifdef __MAIN_H__
+
 #define null NULL
 typedef enum{false, true} boolean;
 typedef char *String;
