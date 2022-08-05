@@ -1,6 +1,7 @@
 #include <stdarg.h>
 
-#ifdef __MAIN_H__
+#ifndef _MAIN_H
+#define _MAIN_H
 
 #define null NULL
 typedef enum{false, true} boolean;
@@ -32,3 +33,5 @@ void systemSetUp(){
     System.out.print = print;
     System.out.println = println;
 }
+
+#endif
