@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 #include <time.h>
 #include "main.h"
 
-void println(const char *format, ...) {va_list ap;char buf[4096];va_start(ap, format);vsprintf(buf, format, ap);va_end(ap);fprintf(stdout, "%s\n", buf);}
-void requestReply(boolean *reply){printf("Do you want to play again? (y/n): ");char answer;scanf(" %c", &answer);if(answer == 'y'){*reply = true;}else{*reply = false;}}
+void requestReply(boolean *reply){System.out.print("Do you want to play again? (y/n): ");char answer;scanf(" %c", &answer);if(answer == 'y'){*reply = true;}else{*reply = false;}}
 void inPut(double *a, double *b, char *op);
 void outPut(double a, double b, char op, double result, FILE *fp);
 double calculate(double a, double b, char op);  
@@ -15,14 +13,6 @@ double multiply(double a, double b){return a * b;}
 double divide(double a, double b){return a / b;}
 double mod(double a, double b){return ((int64_t)a) % ((int64_t)b);}
 double pow(double a, double b){double result = a; if(b == 0) return 1;else if(a == 0) return 0; else for(int i = 0; i < (b - 1); i++) result *= a; return result;}
-
-#pragma pack(push, 1)
-typedef struct _System{
-    struct _OUT_{
-        void (*println)(const char *, ...);
-    }out;
-}Sys;
-#pragma pack(pop)
 
 #pragma pack(push, 1)
 typedef struct _Calculator{
@@ -43,10 +33,8 @@ typedef struct _Calculator{
 }Calculator;
 #pragma pack(pop)
 
-Sys System;
-
 void setUpPublic(Calculator *calculator){
-    System.out.println = println;
+    systemSetUp();
     calculator->in.inPut = inPut;
     calculator->out.outPut = outPut;
     calculator->requestReply = requestReply;
