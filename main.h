@@ -27,11 +27,6 @@ typedef struct _System{
 }Sys;
 #pragma pack(pop)
 
-Sys System;
-
-void systemSetUp(){
-    System.out.print = print;
-    System.out.println = println;
-}
+Sys System = {print, println};
 
 #endif

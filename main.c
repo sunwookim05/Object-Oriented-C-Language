@@ -34,7 +34,6 @@ typedef struct _Calculator{
 #pragma pack(pop)
 
 void setUpPublic(Calculator *calculator){
-    systemSetUp();
     calculator->in.inPut = inPut;
     calculator->out.outPut = outPut;
     calculator->requestReply = requestReply;
