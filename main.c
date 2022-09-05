@@ -1,7 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include "main.h"
+#include <time.h>
 
 void requestReply(boolean *reply){System.out.print("Do you want to play again? (y/n): ");char answer;scanf(" %c", &answer);if(answer == 'y'){*reply = true;}else{*reply = false;}}
 void inPut(double *a, double *b, char *op);
