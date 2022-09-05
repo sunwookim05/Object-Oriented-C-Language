@@ -3,6 +3,7 @@
     "files.associations": {
         "time.h": "c",
         "stdarg.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "main.h": "c"
     }
 }
