@@ -68,8 +68,7 @@ int main(void){
 
     return 0;
 }
-
-double calculate(double a, double b, char op);  
+  
 double plus(double a, double b){return a + b;}
 double minus(double a, double b){return a - b;}
 double multiply(double a, double b){return a * b;}
@@ -88,6 +87,7 @@ void outPut(double a, double b, char op, double result, FILE *fp){
     fprintf(fp, "%g %c %g = %g\n", a, op, b, result);
     System.out.println("%g %c %g = %g", a, op, b, result);
 }
+
 void requestReply(boolean *reply){
     System.out.print("Do you want to play again? (y/n): ");
     char answer;

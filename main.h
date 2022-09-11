@@ -7,6 +7,8 @@
 
 #define import extern
 #define null NULL
+#define false 0
+#define true 1
 typedef char *String;
 typedef char int8_t;
 typedef short int16_t;
@@ -17,7 +19,6 @@ typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
 typedef unsigned long long uint64_t;
 typedef uint8_t boolean;
-typedef enum __BOOL__{false, true} __BOOL__;
 
 void print(const String format, ...) {va_list ap;char buf[4096];va_start(ap, format);vsprintf(buf, format, ap);va_end(ap);fprintf(stdout, "%s", buf);}
 void println(const String format, ...) {va_list ap;char buf[4096];va_start(ap, format);vsprintf(buf, format, ap);va_end(ap);fprintf(stdout, "%s\n", buf);}
