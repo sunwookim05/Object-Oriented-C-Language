@@ -1,6 +1,8 @@
 #include "main.h"
 #include <time.h>
 
+import Sys System;
+
 #pragma pack(push, 1)
 typedef struct _Calculator{
     struct _IN{
@@ -69,12 +71,37 @@ int main(void){
     return 0;
 }
   
-double plus(double a, double b){return a + b;}
-double minus(double a, double b){return a - b;}
-double multiply(double a, double b){return a * b;}
-double divide(double a, double b){return a / b;}
-double mod(double a, double b){return ((int64_t)a) % ((int64_t)b);}
-double pow(double a, double b){double result = a; if(b == 0) return 1;else if(a == 0) return 0; else for(int i = 0; i < (b - 1); i++) result *= a; return result;}
+double plus(double a, double b){
+    return a + b;
+}
+
+double minus(double a, double b){
+    return a - b;
+}
+
+double multiply(double a, double b){
+    return a * b;
+}
+
+double divide(double a, double b){
+    return a / b;
+}
+
+double mod(double a, double b){
+    return ((int64_t)a) % ((int64_t)b);
+}
+
+double pow(double a, double b){
+    double result = a; 
+    if(b == 0) 
+        return 1;
+    else if(a == 0) 
+        return 0; 
+    else 
+        for(int i = 0; i < (b - 1); i++) 
+            result *= a; 
+    return result;
+}
 
 void inPut(double *a, double *b, char *op){
     scanf("%lf %c %lf", a, op, b);
