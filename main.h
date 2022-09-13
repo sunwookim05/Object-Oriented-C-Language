@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <time.h>
 
 #ifndef _MAIN_H
 #define _MAIN_H
@@ -27,6 +28,25 @@ typedef struct _System{
         void (*println)(const String, ...);
     }out;
 }Sys;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct _Calculator{
+    struct _IN{
+        void (*inPut)(double*, double*, char*);
+    }in;
+    struct _OUT{
+        void (*outPut)(double, double, char, double, FILE*);
+    }out;
+    void (*requestReply)(boolean*);
+    double (*calculate)(double, double, char);
+    double (*plus)(double, double);
+    double (*minus)(double, double);
+    double (*multiply)(double, double);
+    double (*divide)(double, double);
+    double (*mod)(double, double);
+    double (*pow)(double, double);
+}Calculator;
 #pragma pack(pop)
 
 #endif
