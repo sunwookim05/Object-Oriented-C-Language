@@ -1,3 +1,13 @@
+/* 
+    Compile Commands
+        gcc -c Calculator.c
+        gcc -c Systemout.c
+        gcc -c main.c
+        gcc -o main Calculator.o Systemout.o main.c
+
+    Run main.exe
+*/
+
 #include "main.h"
 
 import void setUpPublic(Calculator*);
