@@ -31,7 +31,6 @@ void setUpPrivate(Calculator *calculator){
     calculator->pow = pow;
 }
 
-
 double plus(double a, double b){
     return a + b;
 }
