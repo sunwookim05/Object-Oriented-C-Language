@@ -39,6 +39,7 @@ typedef struct _IOBase{
 
 #pragma pack(push, 1)
 typedef struct _Calculator{
+    struct _Calculator *this;
     struct _IN{
         void (*inPut)(double*, double*, char*);
     }in;
