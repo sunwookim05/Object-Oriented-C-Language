@@ -10,6 +10,7 @@
 
 #include "main.h"
 
+import void setUpPublic(Calculator*);
 import void setUpProtected(Calculator*);
 
 int main(void){
