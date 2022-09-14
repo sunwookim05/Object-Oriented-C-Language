@@ -11,6 +11,7 @@
 #define null NULL
 #define false 0
 #define true 1
+
 typedef char *String;
 typedef char int8_t;
 typedef short int16_t;
