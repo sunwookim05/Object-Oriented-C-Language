@@ -7,6 +7,7 @@
 #define _MAIN_H
 
 #define import extern
+#define final const
 #define null NULL
 #define false 0
 #define true 1
