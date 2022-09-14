@@ -21,6 +21,7 @@ int main(void){
     char op;
 
     fp = fopen("log.txt", "w");
+    setUpPublic(&calculator);
     setUpProtected(&calculator);
 
     while(reply){
