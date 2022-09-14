@@ -2,7 +2,6 @@
 
 gcc -c Calculator.c
 
-
 gcc -c Systemout.c
 
 gcc -c main.c
