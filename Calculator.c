@@ -100,15 +100,15 @@ void requestReply(boolean *reply){
 }
 
 double calculate(double a, double b, char op){
-    Calculator calculator;
-    setUpPrivate(&calculator);
+    Calculator this;
+    setUpPrivate(&this);
     switch(op){
-        case '+': return calculator.plus(a, b);
-        case '-': return calculator.minus(a, b);
-        case '*': return calculator.multiply(a, b);
-        case '/': return calculator.divide(a, b);
-        case '%': return calculator.mod(a, b);
-        case '^': return calculator.pow(a, b);
+        case '+': return this.plus(a, b);
+        case '-': return this.minus(a, b);
+        case '*': return this.multiply(a, b);
+        case '/': return this.divide(a, b);
+        case '%': return this.mod(a, b);
+        case '^': return this.pow(a, b);
         default: return 0;
     }
 }
