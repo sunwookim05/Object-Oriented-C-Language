@@ -2,24 +2,24 @@
 
 import Sys System;
 
-void setUpIoBase(IOBase *ioBase){
+void setUpIoBase(IOBase *this){
     import void inPut(double*, double*, char*);
     import void outPut(double, double, char, double, FILE*);
 
-    ioBase->inPut = inPut;
-    ioBase->outPut = outPut;
+    this->inPut = inPut;
+    this->outPut = outPut;
 }
 
-void setUpPublic(Calculator *calculator){
+void setUpPublic(Calculator *this){
     import void requestReply(boolean*);
     import double calculate(double, double, char);
 
-    calculator->requestReply = requestReply;
-    calculator->calculate = calculate;
+    this->requestReply = requestReply;
+    this->calculate = calculate;
 }
 
-void setUpPrivate(Calculator *calculator){
-    setUpPublic(calculator);
+void setUpPrivate(Calculator *this){
+    setUpPublic(this);
     import double plus(double, double);
     import double minus(double, double);
     import double multiply(double, double);
@@ -27,21 +27,21 @@ void setUpPrivate(Calculator *calculator){
     import double mod(double, double);
     import double pow(double, double);
     
-    calculator->plus = plus;
-    calculator->minus = minus;
-    calculator->multiply = multiply;
-    calculator->divide = divide;
-    calculator->mod = mod;
-    calculator->pow = pow;
+    this->plus = plus;
+    this->minus = minus;
+    this->multiply = multiply;
+    this->divide = divide;
+    this->mod = mod;
+    this->pow = pow;
 }
 
-void setUpProtected(Calculator *calculator){
+void setUpProtected(Calculator *this){
     IOBase ioBase;
     
     setUpIoBase(&ioBase);
 
-    calculator->in.inPut = ioBase.inPut;
-    calculator->out.outPut = ioBase.outPut;
+    this->in.inPut = ioBase.inPut;
+    this->out.outPut = ioBase.outPut;
 }
 
 double plus(double a, double b){
