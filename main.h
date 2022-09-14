@@ -40,7 +40,6 @@ typedef struct _IOBase{
 
 #pragma pack(push, 1)
 typedef struct _Calculator{
-    struct _Calculator *this;
     struct _IN{
         void (*inPut)(double*, double*, char*);
     }in;
@@ -55,6 +54,7 @@ typedef struct _Calculator{
     double (*divide)(double, double);
     double (*mod)(double, double);
     double (*pow)(double, double);
+    struct _Calculator *this;
 }Calculator;
 #pragma pack(pop)
 
