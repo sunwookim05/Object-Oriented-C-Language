@@ -10,7 +10,7 @@
 
 #include "main.h"
 
-import void setUpPublic(Calculator*);
+import void setUpProtected(Calculator*);
 
 int main(void){
     FILE *fp;
@@ -20,7 +20,8 @@ int main(void){
     char op;
 
     fp = fopen("log.txt", "w");
-    setUpPublic(&calculator);
+    setUpProtected(&calculator);
+
     while(reply){
         calculator.in.inPut(&a, &b, &op);
         result = calculator.calculate(a, b, op);

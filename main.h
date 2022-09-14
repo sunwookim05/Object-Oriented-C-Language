@@ -31,6 +31,13 @@ typedef struct _System{
 #pragma pack(pop)
 
 #pragma pack(push, 1)
+typedef struct _IOBase{
+    void (*inPut)(double*, double*, char*);
+    void (*outPut)(double, double, char, double, FILE*);
+}IOBase;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
 typedef struct _Calculator{
     struct _IN{
         void (*inPut)(double*, double*, char*);

@@ -2,14 +2,18 @@
 
 import Sys System;
 
-void setUpPublic(Calculator *calculator){
+void setUpIoBase(IOBase *ioBase){
     import void inPut(double*, double*, char*);
     import void outPut(double, double, char, double, FILE*);
+
+    ioBase->inPut = inPut;
+    ioBase->outPut = outPut;
+}
+
+void setUpPublic(Calculator *calculator){
     import void requestReply(boolean*);
     import double calculate(double, double, char);
 
-    calculator->in.inPut = inPut;
-    calculator->out.outPut = outPut;
     calculator->requestReply = requestReply;
     calculator->calculate = calculate;
 }
@@ -29,6 +33,16 @@ void setUpPrivate(Calculator *calculator){
     calculator->divide = divide;
     calculator->mod = mod;
     calculator->pow = pow;
+}
+
+void setUpProtected(Calculator *calculator){
+    IOBase ioBase;
+    
+    setUpPublic(calculator);
+    setUpIoBase(&ioBase);
+
+    calculator->in.inPut = ioBase.inPut;
+    calculator->out.outPut = ioBase.outPut;
 }
 
 double plus(double a, double b){
