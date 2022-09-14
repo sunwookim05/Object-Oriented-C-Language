@@ -38,7 +38,6 @@ void setUpPrivate(Calculator *calculator){
 void setUpProtected(Calculator *calculator){
     IOBase ioBase;
     
-    setUpPublic(calculator);
     setUpIoBase(&ioBase);
 
     calculator->in.inPut = ioBase.inPut;
