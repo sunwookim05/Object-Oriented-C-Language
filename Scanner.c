@@ -90,19 +90,18 @@ double nextDouble(void){
 }
 
 String next(void){
-    String s = (String)malloc(sizeof(char) * 1000);
+    String s = (String)calloc(0, sizeof(char) * 1000);
     scanf("%s", s);
     getchar();
     String str = s;
-    free(s);
     return str;
 }
 
 String nextLine(void){
-    String s = (String)malloc(sizeof(char) * 1000);
+    String s = (String)calloc(0, sizeof(char) * 1000);
     scanf("%[^\n]", s);
+    getchar();
     String str = s;
-    free(s);
     return str;
 }
 
