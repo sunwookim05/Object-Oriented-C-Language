@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
 #include <time.h>
 
 #ifndef _MAIN_H
@@ -43,6 +44,7 @@ typedef struct _Scanner{
     uint16_t (*nextUShort)(void);
     uint32_t (*nextUInt)(void);
     uint64_t (*nextULong)(void);
+    boolean (*nextBoolean)(void);
     float (*nextFloat)(void);
     double (*nextDouble)(void);
     String (*next)(void);
