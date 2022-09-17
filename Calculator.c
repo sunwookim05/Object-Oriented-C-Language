@@ -93,10 +93,14 @@ void requestReply(boolean *reply){
     char answer;
 
     scanf(" %c", &answer);
-    if(answer == 'y')
+    if(answer == 'y' || answer == 'Y')
         *reply = true;
-    else
+    else if(answer == 'n' || answer == 'N')
         *reply = false;
+    else{
+        System.out.println("Invalid input!");
+        requestReply(reply);
+    }
 }
 
 double calculate(double a, double b, char op){
