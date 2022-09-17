@@ -35,6 +35,34 @@ int64_t nextLong(void){
     return l;
 }
 
+uint8_t nextUByte(void){
+    uint8_t b;
+    scanf("%hhu", &b);
+    getchar();
+    return b;
+}
+
+uint16_t nextUShort(void){
+    uint16_t s;
+    scanf("%hu", &s);
+    getchar();
+    return s;
+}
+
+uint32_t nextUInt(void){
+    uint32_t i;
+    scanf("%u", &i);
+    getchar();
+    return i;
+}
+
+uint64_t nextULong(void){
+    uint64_t l;
+    scanf("%llu", &l);
+    getchar();
+    return l;
+}
+
 float nextFloat(void){
     float f;
     scanf("%f", &f);
@@ -66,14 +94,4 @@ String nextLine(void){
     return str;
 }
 
-Scanner sc = {
-    nextChar,
-    nextByte,
-    nextShort,
-    nextInt,
-    nextLong,
-    nextFloat,
-    nextDouble,
-    next,
-    nextLine
-};
+Scanner sc = {nextChar, nextByte, nextShort, nextInt, nextLong, nextUByte, nextUShort, nextUInt, nextULong, nextFloat, nextDouble, next, nextLine};
