@@ -33,6 +33,19 @@ typedef struct _System{
 #pragma pack(pop)
 
 #pragma pack(push, 1)
+typedef struct _Scanner{
+    char (*nextChar)(void);
+    int8_t (*nextByte)(void);
+    int16_t (*nextShort)(void);
+    int32_t (*nextInt)(void);
+    int64_t (*nextLong)(void);
+    float (*nextFloat)(void);
+    double (*nextDouble)(void);
+    String (*next)(void);
+    String (*nextLine)(void);
+}Scanner;
+
+#pragma pack(push, 1)
 typedef struct _IOBase{
     void (*inPut)(double*, double*, char*);
     void (*outPut)(double, double, char, double, FILE*);

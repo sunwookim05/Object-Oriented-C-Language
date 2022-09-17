@@ -1,6 +1,7 @@
 #include "main.h"
 
 import Sys System;
+import Scanner sc;
 
 void setUpIoBase(IOBase *this){
     import void inPut(double*, double*, char*);
@@ -77,7 +78,9 @@ double pow(double a, double b){
 }
 
 void inPut(double *a, double *b, char *op){
-    scanf("%lf %c %lf", a, op, b);
+    *a = sc.nextDouble();
+    *op = sc.nextChar();
+    *b = sc.nextDouble();
 }
 
 void outPut(double a, double b, char op, double result, FILE *fp){
@@ -90,9 +93,8 @@ void outPut(double a, double b, char op, double result, FILE *fp){
 
 void requestReply(boolean *reply){
     System.out.print("Do you want to play again? (y/n): ");
-    char answer;
+    char answer = sc.nextChar();
 
-    scanf(" %c", &answer);
     if(answer == 'y' || answer == 'Y')
         *reply = true;
     else if(answer == 'n' || answer == 'N')
