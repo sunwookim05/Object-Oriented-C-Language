@@ -1,14 +1,14 @@
 #include "main.h"
 
-import void setUpPublic(Calculator*);
-import void setUpProtected(Calculator*);
-
 int main(void){
     FILE *fp;
     Calculator calculator;
     boolean reply = true;
     double a, b, result;
     char op;
+
+    import void setUpPublic(Calculator*);
+    import void setUpProtected(Calculator*);
 
     fp = fopen("log.txt", "w");
     setUpPublic(&calculator);
