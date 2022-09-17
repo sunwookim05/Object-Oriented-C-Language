@@ -39,6 +39,10 @@ typedef struct _Scanner{
     int16_t (*nextShort)(void);
     int32_t (*nextInt)(void);
     int64_t (*nextLong)(void);
+    uint8_t (*nextUByte)(void);
+    uint16_t (*nextUShort)(void);
+    uint32_t (*nextUInt)(void);
+    uint64_t (*nextULong)(void);
     float (*nextFloat)(void);
     double (*nextDouble)(void);
     String (*next)(void);
