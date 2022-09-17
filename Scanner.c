@@ -63,6 +63,18 @@ uint64_t nextULong(void){
     return l;
 }
 
+boolean nextBoolean(void){
+    String s = (String)malloc(sizeof(char) * 5);
+    scanf("%s", s);
+    if(atoi(s) >= 1 || strcmp(s, "true") == 0){
+        free(s);
+        return true;
+    }else{
+        free(s);
+        return false;
+    }
+}
+
 float nextFloat(void){
     float f;
     scanf("%f", &f);
@@ -94,4 +106,19 @@ String nextLine(void){
     return str;
 }
 
-Scanner sc = {nextChar, nextByte, nextShort, nextInt, nextLong, nextUByte, nextUShort, nextUInt, nextULong, nextFloat, nextDouble, next, nextLine};
+Scanner sc = {
+    nextChar,
+    nextByte,
+    nextShort,
+    nextInt,
+    nextLong,
+    nextUByte,
+    nextUShort,
+    nextUInt,
+    nextULong,
+    nextBoolean,
+    nextFloat,
+    nextDouble,
+    next,
+    nextLine
+};
