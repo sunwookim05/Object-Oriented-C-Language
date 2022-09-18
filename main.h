@@ -50,6 +50,7 @@ typedef struct _Scanner{
     String (*next)(void);
     String (*nextLine)(void);
 }Scanner;
+#pragma pack(pop)
 
 #pragma pack(push, 1)
 typedef struct _IOBase{
