@@ -52,7 +52,5 @@ int main(void){
     free(m);
     free(n);
 
-    while(1);
-
     return 0;
 }
