@@ -12,6 +12,8 @@ gcc -c main.c
 
 gcc -o main Calculator.o Systemout.o Scanner.o main.o
 
+.\main
+
 Run main.exe
 
 --------Scanner--------
@@ -23,5 +25,7 @@ gcc -c Scanner.c
 gcc -c ScannerTest.c
 
 gcc -o Scanner Systemout.o Scanner.o ScannerTest.o
+
+.\Scanner
 
 Run Scanner.exe
