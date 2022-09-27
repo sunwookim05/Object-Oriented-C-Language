@@ -11,7 +11,7 @@ int main(void){
     int a;
     double r;
 
-    // import int plus(int, int);
+    // extern int plus(int, int);
     int plus(int a, int b);
 
     for(int i = 0; i < 1000; i++){
