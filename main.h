@@ -38,75 +38,20 @@ typedef struct _System{
 
 #pragma pack(push, 1)
 typedef struct _Scanner{
-    /**
-     * @brief Get a char from the user.
-     * @return char
-     */
     char (*nextChar)(void);
-    /**
-     * @brief Get a int8_t from the user.
-     * @return int8_t
-     */
     int8_t (*nextByte)(void);
-    /**
-     * @brief Get a int16_t from the user.
-     * @return int16_t
-     */
     int16_t (*nextShort)(void);
-    /**
-     * @brief Get a int32_t from the user.
-     * @return int32_t
-     */
     int32_t (*nextInt)(void);
-    /**
-     * @brief Get a int64_t from the user.
-     * @return int64_t
-     */
     int64_t (*nextLong)(void);
-    /**
-     * @brief Get a uint8_t from the user.
-     * @return uint8_t
-     */
     uint8_t (*nextUByte)(void);
-    /**
-     * @brief Get a uint16_t from the user.
-     * @return uint16_t
-     */
     uint16_t (*nextUShort)(void);
-    /**
-     * @brief Get a uint32_t from the user.
-     * @return uint32_t
-     */
     uint32_t (*nextUInt)(void);
-    /**
-     * @brief Get a uint64_t from the user.
-     * @return uint64_t
-     */
     uint64_t (*nextULong)(void);
-    /**
-     * @brief Get a float32_t from the user.
-     * @return float32_t
-     */
     boolean (*nextBoolean)(void);
-    /**
-     * @brief Get a float32_t from the user.
-     * @return float32_t
-     */
     float (*nextFloat)(void);
-    /**
-     * @brief Get a float64_t from the user.
-     * @return float64_t
-     */
     double (*nextDouble)(void);
-    /**
-     * @brief Get the next String object
-     * @return String
-     */
+    long double (*nextLongDouble)(void);
     String (*next)(void);
-    /**
-     * @brief Get the next Line object
-     * @return String
-     */
     String (*nextLine)(void);
 }Scanner;
 #pragma pack(pop)
