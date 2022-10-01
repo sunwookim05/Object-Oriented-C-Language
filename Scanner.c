@@ -132,22 +132,3 @@ struct Scanner new_Scanner(struct __stdin_t in){
     };
     return ret;
 }
-
-
-// Scanner sc = {
-//     nextChar,
-//     nextByte,
-//     nextShort,
-//     nextInt,
-//     nextLong,
-//     nextUByte,
-//     nextUShort,
-//     nextUInt,
-//     nextULong,
-//     nextBoolean,
-//     nextFloat,
-//     nextDouble,
-//     nextLDouble,
-//     next,
-//     nextLine
-// };

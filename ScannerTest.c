@@ -4,6 +4,7 @@ import Sys System;
 
 int main(void){
     Scanner sc = new_Scanner(System.in);
+
     System.out.print("int8_t: ");
     int8_t a = sc.nextByte();
     System.out.print("int16_t: ");
@@ -28,10 +29,12 @@ int main(void){
     float k = sc.nextFloat();
     System.out.print("double: ");
     double l = sc.nextDouble();
+    System.out.print("long double: ");
+    long double m = sc.nextLDouble();
     System.out.print("String: ");
-    String m = sc.next();
+    String n = sc.next();
     System.out.print("String with space: ");
-    String n = sc.nextLine();
+    String o = sc.nextLine();
 
     System.out.println(" ");
     System.out.println("int8_t: %d", a);
@@ -46,11 +49,12 @@ int main(void){
     System.out.println("char: %c", j);
     System.out.println("float: %f", k);
     System.out.println("double: %f", l);
-    System.out.println("String: %s", m);
-    System.out.println("String with space: %s", n);
+    System.out.println("long double: %Lf", m);
+    System.out.println("String: %s", n);
+    System.out.println("String with space: %s", o);
 
-    free(m);
     free(n);
+    free(o);
 
     return 0;
 }
