@@ -112,20 +112,42 @@ String nextLine(void){
     return str;
 }
 
-Scanner sc = {
-    nextChar,
-    nextByte,
-    nextShort,
-    nextInt,
-    nextLong,
-    nextUByte,
-    nextUShort,
-    nextUInt,
-    nextULong,
-    nextBoolean,
-    nextFloat,
-    nextDouble,
-    nextLDouble,
-    next,
-    nextLine
-};
+struct Scanner new_Scanner(struct __stdin_t in){
+    Scanner ret = {
+        .nextChar = nextChar,
+        .nextByte = nextByte,
+        .nextShort = nextShort,
+        .nextInt = nextInt,
+        .nextLong = nextLong,
+        .nextUByte = nextUByte,
+        .nextUShort = nextUShort,
+        .nextUInt = nextUInt,
+        .nextULong = nextULong,
+        .nextBoolean = nextBoolean,
+        .nextFloat = nextFloat,
+        .nextDouble = nextDouble,
+        .nextLDouble = nextLDouble,
+        .next = next,
+        .nextLine = nextLine
+    };
+    return ret;
+}
+
+
+// Scanner sc = {
+//     nextChar,
+//     nextByte,
+//     nextShort,
+//     nextInt,
+//     nextLong,
+//     nextUByte,
+//     nextUShort,
+//     nextUInt,
+//     nextULong,
+//     nextBoolean,
+//     nextFloat,
+//     nextDouble,
+//     nextLDouble,
+//     next,
+//     nextLine
+// };
