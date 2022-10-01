@@ -1,9 +1,9 @@
 #include "main.h"
 
 import Sys System;
-import Scanner sc;
 
 int main(void){
+    Scanner sc = new_Scanner(System.in);
     System.out.print("int8_t: ");
     int8_t a = sc.nextByte();
     System.out.print("int16_t: ");

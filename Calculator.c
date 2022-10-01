@@ -1,7 +1,6 @@
 #include "main.h"
 
 import Sys System;
-import Scanner sc;
 
 void setUpIoBase(IOBase *this){
     import void inPut(double*, double*, char*);
@@ -78,6 +77,7 @@ double pow(double a, double b){
 }
 
 void inPut(double *a, double *b, char *op){
+    Scanner sc = new_Scanner(System.in);
     *a = sc.nextDouble();
     *op = sc.nextChar();
     *b = sc.nextDouble();
@@ -92,6 +92,7 @@ void outPut(double a, double b, char op, double result, FILE *fp){
 }
 
 void requestReply(boolean *reply){
+    Scanner sc = new_Scanner(System.in);
     System.out.print("Do you want to play again? (y/n): ");
     char answer = sc.nextChar();
 
