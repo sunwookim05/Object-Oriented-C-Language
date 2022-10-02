@@ -27,9 +27,6 @@ typedef double float64_t;
 typedef long double float128_t;
 typedef uint8_t boolean;
 
-// struct Scanner;
-// typedef struct Scanner Scanner;
-
 #pragma pack(push, 1)
 typedef struct _System{
     struct _OUT_{
@@ -37,7 +34,7 @@ typedef struct _System{
         void (*println)(const String, ...);
     }out;
     struct __stdin_t{
-        int(*read)();
+        int (*read)();
     } in;
 }Sys;
 #pragma pack(pop)
@@ -54,15 +51,15 @@ typedef struct Scanner{
     uint32_t (*nextUInt)(void);
     uint64_t (*nextULong)(void);
     boolean (*nextBoolean)(void);
-    float (*nextFloat)(void);
-    double (*nextDouble)(void);
-    long double (*nextLDouble)(void);
+    float32_t (*nextFloat)(void);
+    float64_t (*nextDouble)(void);
+    float128_t (*nextLDouble)(void);
     String (*next)(void);
     String (*nextLine)(void);
 }Scanner;
 #pragma pack(pop)
 
-struct Scanner new_Scanner(struct __stdin_t);
+Scanner new_Scanner(struct __stdin_t);
 
 #pragma pack(push, 1)
 typedef struct _IOBase{

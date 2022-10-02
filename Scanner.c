@@ -112,7 +112,7 @@ String nextLine(void){
     return str;
 }
 
-struct Scanner new_Scanner(struct __stdin_t in){
+Scanner new_Scanner(struct __stdin_t in){
     Scanner ret = {
         .nextChar = nextChar,
         .nextByte = nextByte,
