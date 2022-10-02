@@ -26,11 +26,11 @@ int main(void){
     System.out.print("char: ");
     char j = sc.nextChar();
     System.out.print("float: ");
-    float k = sc.nextFloat();
+    float32_t k = sc.nextFloat();
     System.out.print("double: ");
-    double l = sc.nextDouble();
+    float64_t l = sc.nextDouble();
     System.out.print("long double: ");
-    long double m = sc.nextLDouble();
+    float128_t m = sc.nextLDouble();
     System.out.print("String: ");
     String n = sc.next();
     System.out.print("String with space: ");

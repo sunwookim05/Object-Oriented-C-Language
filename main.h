@@ -51,15 +51,15 @@ typedef struct Scanner{
     uint32_t (*nextUInt)(void);
     uint64_t (*nextULong)(void);
     boolean (*nextBoolean)(void);
-    float (*nextFloat)(void);
-    double (*nextDouble)(void);
-    long double (*nextLDouble)(void);
+    float32_t (*nextFloat)(void);
+    float64_t (*nextDouble)(void);
+    float128_t (*nextLDouble)(void);
     String (*next)(void);
     String (*nextLine)(void);
 }Scanner;
 #pragma pack(pop)
 
-struct Scanner new_Scanner(struct __stdin_t);
+Scanner new_Scanner(struct __stdin_t);
 
 #pragma pack(push, 1)
 typedef struct _IOBase{
