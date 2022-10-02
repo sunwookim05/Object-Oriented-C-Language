@@ -27,9 +27,6 @@ typedef double float64_t;
 typedef long double float128_t;
 typedef uint8_t boolean;
 
-// struct Scanner;
-// typedef struct Scanner Scanner;
-
 #pragma pack(push, 1)
 typedef struct _System{
     struct _OUT_{
@@ -37,7 +34,7 @@ typedef struct _System{
         void (*println)(const String, ...);
     }out;
     struct __stdin_t{
-        int(*read)();
+        int (*read)();
     } in;
 }Sys;
 #pragma pack(pop)
