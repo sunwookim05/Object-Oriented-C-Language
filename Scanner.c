@@ -75,41 +75,39 @@ boolean nextBoolean(void){
     }
 }
 
-float nextFloat(void){
-    float f;
+float32_t nextFloat(void){
+    float32_t f;
     scanf("%f", &f);
     getchar();
     return f;
 }
 
-double nextDouble(void){
-    double d;
+float64_t nextDouble(void){
+    float64_t d;
     scanf("%lf", &d);
     getchar();
     return d;
 }
 
-long double nextLDouble(void){
-    long double ld;
+float128_t nextLDouble(void){
+    float128_t ld;
     scanf("%Lf", &ld);
     getchar();
     return ld;
 }
 
 String next(void){
-    String s = (String)calloc(0, sizeof(char) * 1000);
+    String s = (String)calloc(0, sizeof(char) * 4096);
     scanf("%s", s);
     getchar();
-    String str = s;
-    return str;
+    return s;
 }
 
 String nextLine(void){
-    String s = (String)calloc(0, sizeof(char) * 1000);
+    String s = (String)zcalloc(0, sizeof(char) * 4096);
     scanf("%[^\n]", s);
     getchar();
-    String str = s;
-    return str;
+    return s;
 }
 
 Scanner new_Scanner(struct __stdin_t in){
