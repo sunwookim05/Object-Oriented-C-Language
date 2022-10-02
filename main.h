@@ -65,91 +65,91 @@ typedef struct _System{
 typedef struct Scanner{
     /**
     * @brief User input char
-    * @param in 
+    * @param void
     * @return char
     */    
     char (*nextChar)(void);
     /**
      * @brief User input Byte
-     * @param in
+     * @param void
      * @return int8_t
      */
     int8_t (*nextByte)(void);
     /**
      * @brief User input Short
-     * @param in
+     * @param void
      * @return int16_t
      */
     int16_t (*nextShort)(void);
     /**
      * @brief User input Int
-     * @param in
+     * @param void
      * @return int32_t
      */
     int32_t (*nextInt)(void);
     /**
      * @brief User input Long
-     * @param in
+     * @param void
      * @return int64_t
      */
     int64_t (*nextLong)(void);
     /**
      * @brief User input Unsigned Byte
-     * @param in
+     * @param void
      * @return uint8_t
      */
     uint8_t (*nextUByte)(void);
     /**
      * @brief User input Unsigned Short
-     * @param in
+     * @param void
      * @return uint16_t
      */
     uint16_t (*nextUShort)(void);
     /**
      * @brief User input Unsigned Int
-     * @param in
+     * @param void
      * @return uint32_t
      */
     uint32_t (*nextUInt)(void);
     /**
      * @brief User input Unsigned Long
-     * @param in
+     * @param void
      * @return uint64_t
      */
     uint64_t (*nextULong)(void);
     /**
      * @brief User input boolean
-     * @param in
+     * @param void
      * @return boolean
      */
     boolean (*nextBoolean)(void);
     /**
      * @brief User input Float
-     * @param in
+     * @param void
      * @return float
      */
     float (*nextFloat)(void);
     /**
      * @brief User input Double
-     * @param in
+     * @param void
      * @return double
      */
     double (*nextDouble)(void);
     /**
      * @brief User input Long Double
-     * @param in
+     * @param void
      * @return long double
      */
     long double (*nextLDouble)(void);
     /**
      * @brief User input String no Spaces
-     * @param in
+     * @param void
      * @return String
      */
     String (*next)(void);
     /**
      * @brief User input String with Spaces
-     * @param in
+     * @param void
      * @return String
      */
     String (*nextLine)(void);
@@ -165,13 +165,19 @@ Scanner new_Scanner(struct __stdin_t);
 typedef struct _IOBase{
     /**
     * @brief User input
-    * @param in 
+    * @param double*
+    * @param double*
+    * #param char*
     * @return void
     */
     void (*inPut)(double*, double*, char*);
     /**
     * @brief User output
-    * @param out
+    * @param double
+    * @param double
+    * @param char
+    * @param double
+    * @param FILE*
     * @return void
     */
     void (*outPut)(double, double, char, double, FILE*);
@@ -186,7 +192,9 @@ typedef struct _Calculator{
     struct _IN{
         /** 
         * @brief User input
-        * @param in 
+        * @param double*
+        * @param double*
+        * @param char*
         * @return void
         */
         void (*inPut)(double*, double*, char*);
@@ -194,56 +202,68 @@ typedef struct _Calculator{
     struct _OUT{
         /** 
          * @brief User output
-         * @param out
+         * @param double
+         * @param double
+         * @param char
+         * @param double
+         * @param FILE*
          * @return void
          */
         void (*outPut)(double, double, char, double, FILE*);
     }out;
     /**
      * @brief Request user reply
-     * @param Calculator
-     * @return boolean
+     * @param boolean*
+     * @return void
      */
     void (*requestReply)(boolean*);
     /**
      * @brief Calculate
-     * @param Calculator
+     * @param double
+     * @param double
+     * @param char
      * @return double
      */
     double (*calculate)(double, double, char);
     /**
      * @brief Add
-     * @param Calculator
+     * @param double
+     * @param double
      * @return double
      */
     double (*plus)(double, double);
     /**
      * @brief Subtract
-     * @param Calculator
+     * @param double
+     * @param double
      * @return double
      */
     double (*minus)(double, double);
     /**
      * @brief Multiply
-     * @param Calculator
+     * @param double
+     * @param double
      * @return double
      */
     double (*multiply)(double, double);
     /**
      * @brief Divide
-     * @param Calculator
+     * @param double
+     * @param double
      * @return double
      */
     double (*divide)(double, double);
     /**
      * @brief Modulus
-     * @param Calculator
+     * @param double
+     * @param double
      * @return double
      */
     double (*mod)(double, double);
     /**
      * @brief Power
-     * @param Calculator
+     * @param double
+     * @param double
      * @return double
      */
     double (*pow)(double, double);
