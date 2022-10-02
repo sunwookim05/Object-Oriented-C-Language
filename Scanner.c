@@ -114,7 +114,6 @@ String nextLine(void){
 * Constructs a new {@code Scanner} that produces values scanned
 * from the specified input stream. Bytes from the stream are converted
 * into characters using the underlying platform's
-* {@linkplain java.nio.charset.Charset#defaultCharset() default charset}.
 *
 * @param  source An input stream to be scanned
 */
