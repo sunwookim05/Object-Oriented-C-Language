@@ -111,10 +111,14 @@ String nextLine(void){
 }
 
 /**
- * @brief Creates a new Scanner object
- * @return Scanner 
- */
-Scanner new_Scanner(struct __stdin_t in){
+* Constructs a new {@code Scanner} that produces values scanned
+* from the specified input stream. Bytes from the stream are converted
+* into characters using the underlying platform's
+* {@linkplain java.nio.charset.Charset#defaultCharset() default charset}.
+*
+* @param  source An input stream to be scanned
+*/
+Scanner new_Scanner(struct __stdin_t source){
     Scanner ret = {
         .nextChar = nextChar,
         .nextByte = nextByte,
