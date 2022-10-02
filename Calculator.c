@@ -107,7 +107,7 @@ void requestReply(boolean *reply){
 }
 
 double calculate(double a, double b, char op){
-    Calculator this;
+    Calculator this = new_Calculator();
     setUpPrivate(&this);
     switch(op){
         case '+': return this.plus(a, b);
@@ -118,4 +118,15 @@ double calculate(double a, double b, char op){
         case '^': return this.pow(a, b);
         default: return 0;
     }
+}
+
+/**
+ * @brief Create a new Calculator object
+ * @return Calculator 
+ */
+Calculator new_Calculator(){
+    Calculator this;
+    setUpPublic(&this);
+    setUpProtected(&this);
+    return this;
 }
