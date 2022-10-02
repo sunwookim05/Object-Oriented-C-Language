@@ -75,22 +75,22 @@ boolean nextBoolean(void){
     }
 }
 
-float32_t nextFloat(void){
+float nextFloat(void){
     float32_t f;
     scanf("%f", &f);
     getchar();
     return f;
 }
 
-float64_t nextDouble(void){
-    float64_t d;
+double nextDouble(void){
+    double d;
     scanf("%lf", &d);
     getchar();
     return d;
 }
 
-float128_t nextLDouble(void){
-    float128_t ld;
+long double nextLDouble(void){
+    long double ld;
     scanf("%Lf", &ld);
     getchar();
     return ld;
@@ -110,6 +110,11 @@ String nextLine(void){
     return s;
 }
 
+/**
+ * @brief Creates a new Scanner object
+ * @param in 
+ * @return Scanner 
+ */
 Scanner new_Scanner(struct __stdin_t in){
     Scanner ret = {
         .nextChar = nextChar,
