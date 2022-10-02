@@ -66,7 +66,7 @@ uint64_t nextULong(void){
 boolean nextBoolean(void){
     String s = (String)malloc(sizeof(char) * 5);
     scanf("%s", s);
-    if(atoi(s) >= 1 || strcmp(s, "true") == 0){
+    if(atoi(s) >= 1 || strncmp(s, "true", 4) == 0){
         free(s);
         return true;
     }else{
