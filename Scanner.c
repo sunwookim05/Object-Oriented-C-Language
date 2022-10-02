@@ -104,7 +104,7 @@ String next(void){
 }
 
 String nextLine(void){
-    String s = (String)zcalloc(0, sizeof(char) * 4096);
+    String s = (String)calloc(0, sizeof(char) * 4096);
     scanf("%[^\n]", s);
     getchar();
     return s;
