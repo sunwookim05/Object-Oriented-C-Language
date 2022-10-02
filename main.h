@@ -242,4 +242,6 @@ typedef struct _Calculator{
 }Calculator;
 #pragma pack(pop)
 
+Calculator new_Calculator();
+
 #endif
