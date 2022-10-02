@@ -76,7 +76,7 @@ boolean nextBoolean(void){
 }
 
 float nextFloat(void){
-    float32_t f;
+    float f;
     scanf("%f", &f);
     getchar();
     return f;

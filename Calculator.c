@@ -127,6 +127,5 @@ double calculate(double a, double b, char op){
 Calculator new_Calculator(){
     Calculator this;
     setUpPublic(&this);
-    setUpProtected(&this);
     return this;
 }

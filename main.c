@@ -1,5 +1,7 @@
 #include "main.h"
 
+import void setUpProtected(Calculator*);
+
 int main(void){
     FILE *fp;
     Calculator calculator = new_Calculator();
@@ -7,6 +9,7 @@ int main(void){
     double a, b, result;
     char op;
 
+    setUpProtected(&calculator);
     fp = fopen("log.txt", "w");
     
     while(reply){
