@@ -112,7 +112,6 @@ String nextLine(void){
 
 /**
  * @brief Creates a new Scanner object
- * @param in 
  * @return Scanner 
  */
 Scanner new_Scanner(struct __stdin_t in){
