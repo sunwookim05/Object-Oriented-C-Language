@@ -60,7 +60,7 @@ typedef struct _System{
 
 #pragma pack(push, 1)
 /** 
- * @brief Calculator class
+ * @brief Scanner class
  */
 typedef struct Scanner{
     /**
