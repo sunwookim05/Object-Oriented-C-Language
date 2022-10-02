@@ -25,9 +25,18 @@ typedef unsigned long long uint64_t;
 typedef uint8_t boolean;
 
 #pragma pack(push, 1)
-/** 
- * @brief System class
- */ 
+/**
+ * The {@code System} class contains several useful class fields
+ * and methods. It cannot be instantiated.
+ *
+ * Among the facilities provided by the {@code System} class
+ * are standard input, standard output, and error output streams;
+ * access to externally defined properties and environment
+ * variables; a means of loading files and libraries; and a utility
+ * method for quickly copying a portion of an array.
+ *
+ * @since   1.0
+ */
 typedef struct _System{
     struct _OUT_{
         /**
