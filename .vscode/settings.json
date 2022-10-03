@@ -5,6 +5,8 @@
         "stdarg.h": "c",
         "stdio.h": "c",
         "main.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "scanner.h": "c",
+        "calculator.h": "c"
     }
 }

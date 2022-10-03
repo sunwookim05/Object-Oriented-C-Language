@@ -4,8 +4,8 @@
 #include <string.h>
 #include <time.h>
 
-#ifndef _MAIN_H
-#define _MAIN_H
+#ifndef __MAIN_H
+#define __MAIN_H
 
 #define import extern
 #define final const
