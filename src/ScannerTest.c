@@ -7,6 +7,8 @@ import Sys System;
 int main(void){
     Scanner sc = new_Scanner(System.in);
 
+    System.out.print("char: ");
+    char j = sc.nextChar();
     System.out.print("int8_t: ");
     int8_t a = sc.nextByte();
     System.out.print("int16_t: ");
@@ -25,8 +27,6 @@ int main(void){
     uint64_t h = sc.nextULong();
     System.out.print("boolean: ");
     boolean i = sc.nextBoolean();
-    System.out.print("char: ");
-    char j = sc.nextChar();
     System.out.print("float: ");
     float k = sc.nextFloat();
     System.out.print("double: ");
@@ -39,6 +39,7 @@ int main(void){
     String o = sc.nextLine();
 
     System.out.println(" ");
+    System.out.println("char: %c", j);
     System.out.println("int8_t: %d", a);
     System.out.println("int16_t: %d", b);
     System.out.println("int32_t: %d", c);
@@ -48,7 +49,6 @@ int main(void){
     System.out.println("uint32_t: %u", g);
     System.out.println("uint64_t: %llu", h);
     System.out.println("boolean: %s", i ? "true" : "false");
-    System.out.println("char: %c", j);
     System.out.println("float: %f", k);
     System.out.println("double: %f", l);
     System.out.println("long double: %Lf", m);
