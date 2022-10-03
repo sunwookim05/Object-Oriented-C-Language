@@ -1,7 +1,10 @@
 #include "main.h"
+#include "System.h"
+#include "Scanner.h"
 
 char nextChar(void){
     char c;
+    getchar();
     scanf("%c", &c);
     getchar();
     return c;

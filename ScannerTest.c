@@ -1,4 +1,6 @@
 #include "main.h"
+#include "System.h"
+#include "Scanner.h"
 
 import Sys System;
 

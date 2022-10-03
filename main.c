@@ -1,4 +1,5 @@
 #include "main.h"
+#include "Calculator.h"
 
 import void setUpProtected(Calculator*);
 
