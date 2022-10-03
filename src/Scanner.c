@@ -4,7 +4,6 @@
 
 char nextChar(void){
     char c;
-    getchar();
     scanf("%c", &c);
     getchar();
     return c;
