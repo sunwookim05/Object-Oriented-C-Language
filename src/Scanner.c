@@ -120,7 +120,7 @@ String nextLine(void){
 * @param  source An input stream to be scanned
 */
 Scanner new_Scanner(struct __stdin_t source){
-    Scanner ret = {
+    Scanner scanner = {
         .nextChar = nextChar,
         .nextByte = nextByte,
         .nextShort = nextShort,
@@ -137,5 +137,5 @@ Scanner new_Scanner(struct __stdin_t source){
         .next = next,
         .nextLine = nextLine
     };
-    return ret;
+    return scanner;
 }
