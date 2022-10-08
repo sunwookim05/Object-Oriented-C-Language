@@ -6,8 +6,8 @@
 import Sys System;
 
 void setUpIoBase(IOBase *this){
-    import void inPut(double*, double*, char*);
-    import void outPut(double, double, char, double, FILE*);
+    import void inPut(long double*, long double*, char*);
+    import void outPut(long double, long double, char, long double, FILE*);
 
     this->inPut = inPut;
     this->outPut = outPut;
@@ -15,7 +15,7 @@ void setUpIoBase(IOBase *this){
 
 void setUpPublic(Calculator *this){
     import void requestReply(boolean*);
-    import double calculate(double, double, char);
+    import long double calculate(long double, long double, char);
 
     this->requestReply = requestReply;
     this->calculate = calculate;
@@ -23,19 +23,19 @@ void setUpPublic(Calculator *this){
 
 void setUpPrivate(Calculator *this){
     setUpPublic(this);
-    import double plus(double, double);
-    import double minus(double, double);
-    import double multiply(double, double);
-    import double divide(double, double);
-    import double mod(double, double);
-    import double pow(double, double);
+    import long double plus(long double, long double);
+    import long double minus(long double, long double);
+    import long double multiply(long double, long double);
+    import long double divide(long double, long double);
+    import long double mod(long double, long double);
+    import long double power(long double, long double);
     
     this->plus = plus;
     this->minus = minus;
     this->multiply = multiply;
     this->divide = divide;
     this->mod = mod;
-    this->pow = pow;
+    this->power = power;
 }
 
 void setUpProtected(Calculator *this){
@@ -47,46 +47,46 @@ void setUpProtected(Calculator *this){
     this->out.outPut = ioBase.outPut;
 }
 
-double plus(double a, double b){
+long double plus(long double a, long double b){
     return a + b;
 }
 
-double minus(double a, double b){
+long double minus(long double a, long double b){
     return a - b;
 }
 
-double multiply(double a, double b){
+long double multiply(long double a, long double b){
     return a * b;
 }
 
-double divide(double a, double b){
+long double divide(long double a, long double b){
     return a / b;
 }
 
-double mod(double a, double b){
+long double mod(long double a, long double b){
     return ((int64_t)a) % ((int64_t)b);
 }
 
-double pow(double a, double b){
-    double result = a; 
-    if(b == 0) 
+long double power(long double a, long double b){
+    long double result = a; 
+    if(!b) 
         return 1;
-    else if(a == 0) 
+    else if(!a) 
         return 0; 
     else 
-        for(int i = 0; i < (b - 1); i++) 
+        for(long double i = 0; i < (b - 1); i++) 
             result *= a; 
     return result;
 }
 
-void inPut(double *a, double *b, char *op){
+void inPut(long double *a, long double *b, char *op){
     Scanner sc = new_Scanner(System.in);
-    *a = sc.nextDouble();
+    *a = sc.nextLDouble();
     *op = sc.nextChar();
-    *b = sc.nextDouble();
+    *b = sc.nextLDouble();
 }
 
-void outPut(double a, double b, char op, double result, FILE *fp){
+void outPut(long double a, long double b, char op, long double result, FILE *fp){
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
     fprintf(fp, "%04d-%02d-%02d %02d:%02d:%02d : ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
@@ -109,7 +109,7 @@ void requestReply(boolean *reply){
     }
 }
 
-double calculate(double a, double b, char op){
+long double calculate(long double a, long double b, char op){
     Calculator this = new_Calculator();
     setUpPrivate(&this);
     switch(op){
@@ -118,7 +118,7 @@ double calculate(double a, double b, char op){
         case '*': return this.multiply(a, b);
         case '/': return this.divide(a, b);
         case '%': return this.mod(a, b);
-        case '^': return this.pow(a, b);
+        case '^': return this.power(a, b);
         default: return 0;
     }
 }
