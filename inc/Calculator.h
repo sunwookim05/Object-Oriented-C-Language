@@ -10,22 +10,22 @@
 typedef struct _IOBase{
     /**
     * @brief User input
-    * @param double*
-    * @param double*
+    * @param a
+    * @param b
     * #param char*
     * @return void
     */
-    void (*inPut)(double*, double*, char*);
+    void (*inPut)(long double*, long double*, char*);
     /**
     * @brief User output
-    * @param double
-    * @param double
-    * @param char
-    * @param double
-    * @param FILE*
+    * @param a
+    * @param b
+    * @param op
+    * @param result
+    * @param fp
     * @return void
     */
-    void (*outPut)(double, double, char, double, FILE*);
+    void (*outPut)(long double, long double, char, long double, FILE*);
 }IOBase;
 #pragma pack(pop)
 
@@ -37,24 +37,24 @@ typedef struct _Calculator{
     struct _IN{
         /** 
         * @brief User input
-        * @param double*
-        * @param double*
-        * @param char*
+        * @param a
+        * @param b
+        * @param op
         * @return void
         */
-        void (*inPut)(double*, double*, char*);
+        void (*inPut)(long double*, long double*, char*);
     }in;
     struct _OUT{
         /** 
          * @brief User output
-         * @param double
-         * @param double
-         * @param char
-         * @param double
-         * @param FILE*
+         * @param a
+         * @param b
+         * @param op
+         * @param result
+         * @param fp
          * @return void
          */
-        void (*outPut)(double, double, char, double, FILE*);
+        void (*outPut)(long double, long double, char, long double, FILE*);
     }out;
     /**
      * @brief Request user reply
@@ -64,54 +64,54 @@ typedef struct _Calculator{
     void (*requestReply)(boolean*);
     /**
      * @brief Calculate
-     * @param double
-     * @param double
+     * @param a
+     * @param b
      * @param char
      * @return double
      */
-    double (*calculate)(double, double, char);
+    long double (*calculate)(long double, long double, char);
     /**
      * @brief Add
-     * @param double
-     * @param double
-     * @return double
+     * @param a
+     * @param b
+     * @return resault
      */
-    double (*plus)(double, double);
+    long double (*plus)(long double, long double);
     /**
      * @brief Subtract
-     * @param double
-     * @param double
-     * @return double
+     * @param a
+     * @param b
+     * @return resault
      */
-    double (*minus)(double, double);
+    long double (*minus)(long double, long double);
     /**
      * @brief Multiply
-     * @param double
-     * @param double
-     * @return double
+     * @param a
+     * @param b
+     * @return resault
      */
-    double (*multiply)(double, double);
+    long double (*multiply)(long double, long double);
     /**
      * @brief Divide
-     * @param double
-     * @param double
-     * @return double
+     * @param a
+     * @param b
+     * @return resault
      */
-    double (*divide)(double, double);
+    long double (*divide)(long double, long double);
     /**
      * @brief Modulus
-     * @param double
-     * @param double
-     * @return double
+     * @param a
+     * @param b
+     * @return resault
      */
-    double (*mod)(double, double);
+    long double (*mod)(long double, long double);
     /**
      * @brief Power
-     * @param double
-     * @param double
-     * @return double
+     * @param a
+     * @param b
+     * @return resault
      */
-    double (*pow)(double, double);
+    long double (*power)(long double, long double);
     struct _Calculator *this;
 }Calculator;
 #pragma pack(pop)
