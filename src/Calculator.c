@@ -99,11 +99,11 @@ void requestReply(boolean *reply){
     System.out.print("Do you want to play again? (y/n): ");
     char answer = sc.nextChar();
 
-    if(answer == 'y' || answer == 'Y')
+    if(answer == 'y' || answer == 'Y'){
         *reply = true;
-    else if(answer == 'n' || answer == 'N')
+    }else if(answer == 'n' || answer == 'N'){
         *reply = false;
-    else{
+    }else{
         System.out.println("Invalid input!");
         requestReply(reply);
     }
