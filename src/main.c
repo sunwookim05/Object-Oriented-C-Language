@@ -7,7 +7,7 @@ int main(void){
     FILE *fp;
     Calculator calculator = new_Calculator();
     boolean reply = true;
-    long double a, b, result;
+    double a, b, result;
     char op;
 
     setUpProtected(&calculator);
