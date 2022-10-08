@@ -22,7 +22,6 @@ void setUpPublic(Calculator *this){
 }
 
 void setUpPrivate(Calculator *this){
-    setUpPublic(this);
     import double plus(double, double);
     import double minus(double, double);
     import double multiply(double, double);
