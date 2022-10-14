@@ -1,5 +1,6 @@
 #include "main.h"
 
+#pragma once
 #ifndef __Scanner_H
 #define __Scanner_H
 
