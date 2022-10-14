@@ -1,5 +1,6 @@
 #include "main.h"
 
+#pragma once
 #ifndef __SYSTEM_H
 #define __SYSTEM_H
 
