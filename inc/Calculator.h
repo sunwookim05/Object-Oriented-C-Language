@@ -119,4 +119,5 @@ typedef struct _Calculator{
 
 Calculator new_Calculator();
 
+#pragma warning(pop)
 #endif
