@@ -106,4 +106,5 @@ typedef struct Scanner{
 
 Scanner new_Scanner(struct __stdin_t);
 
+#pragma warning(pop)
 #endif

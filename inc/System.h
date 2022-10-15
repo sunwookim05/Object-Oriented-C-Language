@@ -40,4 +40,5 @@ typedef struct _System{
 }Sys;
 #pragma pack(pop)
 
+#pragma warning(pop)
 #endif

@@ -25,4 +25,5 @@ typedef unsigned int uint32_t;
 typedef unsigned long long uint64_t;
 typedef uint8_t boolean;
 
+#pragma warning(pop)
 #endif
