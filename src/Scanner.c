@@ -66,9 +66,9 @@ uint64_t nextULong(void){
 }
 
 boolean nextBoolean(void){
-    String s = (String)malloc(sizeof(char) * 5);
+    String s = (String)calloc(0, sizeof(char) * 5);
     scanf("%s", s);
-    if(atoi(s) >= 1 || !strncmp(s, "true", 4) || !strncmp(s, "True", 4) || !strncmp(s, "TRUE", 4)){
+    if(atoi(s)|| !strncmp(s, "true", 4) || !strncmp(s, "True", 4) || !strncmp(s, "TRUE", 4)){
         free(s);
         return true;
     }else{
