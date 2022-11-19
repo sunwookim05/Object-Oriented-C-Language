@@ -37,7 +37,7 @@ typedef struct _System{
     struct __stdin_t{
         int (*read)();
     } in;
-}Sys;
+}SYSTEM;
 #pragma pack(pop)
 
 #pragma warning(pop)

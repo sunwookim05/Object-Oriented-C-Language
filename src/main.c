@@ -9,7 +9,7 @@ int main(void){
     boolean retry = true;
     double a, b, result;
     char op;
-
+    
     setUpProtected(&calculator);
     fp = fopen("log.txt", "w");
     
