@@ -89,8 +89,8 @@ void outPut(double a, double b, char op, double result, FILE *fp){
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
     fprintf(fp, "%04d-%02d-%02d %02d:%02d:%02d : ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
-    fprintf(fp, "%g %c %g = %g\n", a, op, b, result);
-    System.out.println("%g %c %g = %g", a, op, b, result);
+    fprintf(fp, "%.10000g %c %.10000g = %.10000g\n", a, op, b, result);
+    System.out.println("%.10000g %c %.10000g = %.10000g", a, op, b, result);
 }
 
 void requestReply(boolean *reply){
