@@ -20,7 +20,7 @@ struct __stdin_t;
  * @since   1.0
  */
 typedef struct _System{
-    struct _OUT_{
+    struct __stdout_t{
         /**
         * @brief System out print function
         * @param format
