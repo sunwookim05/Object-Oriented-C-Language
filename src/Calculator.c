@@ -14,7 +14,7 @@ void setUpIoBase(IOBase *this){
 }
 
 void setUpPublic(Calculator *this){
-    import void requestReply(boolean*);
+    import boolean requestReply();
     import double calculate(double, double, char);
 
     this->requestReply = requestReply;
@@ -93,18 +93,18 @@ void outPut(double a, double b, char op, double result, FILE *fp){
     System.out.println("%.10000g %c %.10000g = %.10000g", a, op, b, result);
 }
 
-void requestReply(boolean *reply){
+boolean requestReply(){
     Scanner sc = new_Scanner(System.in);
     System.out.print("Do you want to play again? (y/n): ");
     char answer = sc.nextChar();
 
     if(answer == 'y' || answer == 'Y'){
-        *reply = true;
+        return true;
     }else if(answer == 'n' || answer == 'N'){
-        *reply = false;
+        return false;
     }else{
         System.out.println("Invalid input!");
-        requestReply(reply);
+        return requestReply();
     }
 }
 

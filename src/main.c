@@ -6,18 +6,18 @@ import void setUpProtected(Calculator*);
 int main(void){
     FILE *fp;
     Calculator calculator = new_Calculator();
-    boolean reply = true;
+    boolean retry = true;
     double a, b, result;
     char op;
 
     setUpProtected(&calculator);
     fp = fopen("log.txt", "w");
     
-    while(reply){
+    while(retry){
         calculator.in.inPut(&a, &b, &op);
         result = calculator.calculate(a, b, op);
         calculator.out.outPut(a, b, op, result, fp);
-        calculator.requestReply(&reply);
+        retry = calculator.requestReply();
     }
     fclose(fp);
 
