@@ -3,7 +3,7 @@
 #include "System.h"
 #include "Scanner.h"
 
-import Sys System;
+import SYSTEM System;
 
 void setUpIoBase(IOBase *this){
     import void inPut(double*, double*, char*);
