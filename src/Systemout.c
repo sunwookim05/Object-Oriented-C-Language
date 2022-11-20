@@ -18,4 +18,4 @@ void println(const String format, ...) {
     va_end(ap);fprintf(stdout, "%s\n", buf);
 }
 
-Sys System = {print, println};
+SYSTEM System = {print, println};
