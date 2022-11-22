@@ -15,6 +15,7 @@
 #define true 1
 
 typedef char *String;
+typedef char byte;
 typedef char int8_t;
 typedef short int16_t;
 typedef int int32_t;
