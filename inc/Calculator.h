@@ -62,7 +62,7 @@ typedef struct _Calculator{
      * @param reply
      * @return void
      */
-    boolean (*requestReply)(void);
+    boolean (*requestRetry)(void);
     /**
      * @brief Calculate
      * @param a
