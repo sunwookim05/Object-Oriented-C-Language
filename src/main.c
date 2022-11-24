@@ -17,7 +17,7 @@ int main(void){
         calculator.in.inPut(&a, &b, &op);
         result = calculator.calculate(a, b, op);
         calculator.out.outPut(a, b, op, result, fp);
-        retry = calculator.requestReply();
+        retry = calculator.requestRetry();
     }
     fclose(fp);
 

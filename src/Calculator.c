@@ -14,10 +14,10 @@ void setUpIoBase(IOBase *this){
 }
 
 void setUpPublic(Calculator *this){
-    import boolean requestReply();
+    import boolean requestRetry();
     import double calculate(double, double, char);
 
-    this->requestReply = requestReply;
+    this->requestReply = requestRetry;
     this->calculate = calculate;
 }
 
@@ -93,7 +93,7 @@ void outPut(double a, double b, char op, double result, FILE *fp){
     System.out.println("%.10000g %c %.10000g = %.10000g", a, op, b, result);
 }
 
-boolean requestReply(){
+boolean requestRetry(){
     Scanner sc = new_Scanner(System.in);
     System.out.print("Do you want to play again? (y/n): ");
     char answer = sc.nextChar();
