@@ -17,7 +17,7 @@ void setUpPublic(Calculator *this){
     import boolean requestRetry();
     import double calculate(double, double, char);
 
-    this->requestReply = requestRetry;
+    this->requestRetry = requestRetry;
     this->calculate = calculate;
 }
 
@@ -104,7 +104,7 @@ boolean requestRetry(){
         return false;
     }else{
         System.out.println("Invalid input!");
-        return requestReply();
+        return requestRetry();
     }
 }
 
