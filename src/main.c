@@ -9,10 +9,10 @@ int main(void){
     boolean retry = true;
     double a, b, result;
     char op;
-    
+
     setUpProtected(&calculator);
     fp = fopen("log.txt", "w");
-    
+
     while(retry){
         calculator.in.inPut(&a, &b, &op);
         result = calculator.calculate(a, b, op);
