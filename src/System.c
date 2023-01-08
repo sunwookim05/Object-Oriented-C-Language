@@ -15,7 +15,8 @@ void println(const String format, ...) {
     char buf[4096];
     va_start(ap, format);
     vsprintf(buf, format, ap);
-    va_end(ap);fprintf(stdout, "%s\n", buf);
+    va_end(ap);
+    fprintf(stdout, "%s\n", buf);
 }
 
 SYSTEM System = {print, println};
