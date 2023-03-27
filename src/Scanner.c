@@ -67,14 +67,13 @@ uint64_t nextULong(void){
 
 boolean nextBoolean(void){
     String s = (String)calloc(0, sizeof(char) * 5);
-    scanf("%s", s);
-    if(atoi(s)|| !strncmp(s, "true", 4) || !strncmp(s, "True", 4) || !strncmp(s, "TRUE", 4)){
+    scanf("%5s", s);
+    if(atoi(s)| !(((s[0]|0x20)^'t') ^ ((s[1]|0x20)^'r') ^ ((s[2]|0x20)^'u') ^ ((s[3]|0x20)^'e'))){
         free(s);
         return true;
-    }else{
-        free(s);
-        return false;
     }
+    free(s);
+    return false;
 }
 
 float nextFloat(void){
@@ -100,16 +99,21 @@ long double nextLDouble(void){
 
 String next(void){
     String s = (String)calloc(0, sizeof(char) * 4096);
-    scanf("%s", s);
+    scanf("%4095s", s);
     s = (String)realloc(s, sizeof(char) * (strlen(s) + 1));
     getchar();
     return s;
 }
 
 String nextLine(void){
-    String s = (String)calloc(0, sizeof(char) * 4096);
-    scanf("%[^\n]", s);
-    getchar();
+    char c;
+    uint16_t i = 0;
+    String s = (String)calloc(0, sizeof(char) * 1);
+    while (i < 4096 - 1 & (c = fgetc(stdin)) != EOF & c != '\n') {
+        s[i++] = c;
+        s = (String)realloc(s, sizeof(char) * (i + 1));
+    }
+    s[i] = '\0';
     return s;
 }
 
