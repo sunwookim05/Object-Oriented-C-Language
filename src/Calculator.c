@@ -98,12 +98,9 @@ boolean requestRetry(){
     System.out.print("Do you want to play again? (y/n): ");
     char answer = sc.nextChar();
 
-    if(answer == 'y' || answer == 'Y')
-        return true;
-    else if(answer == 'n' || answer == 'N')
-        return false;
-    else
-        System.out.println("Invalid input!");
+    if(!((answer|0x20)^'y')) return true;
+    else if(!((answer|0x20)^'n')) return false;
+    else System.out.println("Invalid input!");
     return requestRetry();
 }
 
