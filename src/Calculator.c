@@ -118,10 +118,6 @@ double calculate(double a, double b, char op){
     }
 }
 
-/**
- * @brief Create a new Calculator object
- * @return Calculator 
- */
 Calculator new_Calculator(){
     Calculator this;
     setUpPublic(&this);
