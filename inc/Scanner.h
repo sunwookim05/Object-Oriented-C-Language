@@ -118,6 +118,13 @@ typedef struct Scanner{
 }Scanner;
 #pragma pack(pop)
 
+/**
+* Constructs a new {@code Scanner} that produces values scanned
+* from the specified input stream. Bytes from the stream are converted
+* into characters using the underlying platform's
+*
+* @param  source An input stream to be scanned
+*/
 Scanner new_Scanner(struct __stdin_t);
 
 #pragma warning(pop)

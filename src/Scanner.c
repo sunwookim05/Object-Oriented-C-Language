@@ -117,13 +117,6 @@ String nextLine(void){
     return s;
 }
 
-/**
-* Constructs a new {@code Scanner} that produces values scanned
-* from the specified input stream. Bytes from the stream are converted
-* into characters using the underlying platform's
-*
-* @param  source An input stream to be scanned
-*/
 Scanner new_Scanner(struct __stdin_t source){
     Scanner scanner = {
         .nextChar = nextChar,
