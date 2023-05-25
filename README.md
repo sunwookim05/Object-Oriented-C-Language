@@ -1,6 +1,6 @@
 # Object-Oriented-C-Language
 
---------Calculator--------
+---------Calculator---------
 
 gcc -c src\Calculator.c -I inc\
 
