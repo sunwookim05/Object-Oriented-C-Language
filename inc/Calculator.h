@@ -117,6 +117,10 @@ typedef struct _Calculator{
 }Calculator;
 #pragma pack(pop)
 
+/**
+ * @brief Create a new Calculator object
+ * @return Calculator 
+ */
 Calculator new_Calculator();
 
 #pragma warning(pop)
