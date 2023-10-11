@@ -54,7 +54,13 @@ typedef struct STRING{
 #pragma pack(push, 1)
 typedef  struct INTEGER{
     void (*sort)(int*, SortMode);
+    int (*max)(int, int);
+    int (*min)(int, int);
+    int (*parseInt)(string, ...);
     string (*toString)(int);
+    string (*toBinaryString)(int);
+    string (*toOctalString)(int);
+    string (*toHexString)(int);
 }INTEGER;
 #pragma warning(push)
 

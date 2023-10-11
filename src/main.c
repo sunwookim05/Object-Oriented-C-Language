@@ -32,36 +32,40 @@ int main(void){
     int* value = (int*)malloc(sizeof(int) * 5);
     srand(time(null));
     for(int i = 0; i < 5; i++){
-        value[i] = rand() % 100;
+        *(value + i) = rand() % 100;
     }
     System.out.println("Before sort");
     for(int i = 0; i < 5; i++){
-        System.out.printf("%d ", value[i]);
+        System.out.printf("%d ", *(value + i));
     }
     System.out.println("");
     Integer.sort(value, ASC);
     System.out.println("After sort");
     for(int i = 0; i < 5; i++){
-        System.out.printf("%d ", value[i]);
+        System.out.printf("%d ", *(value + i));
     }
     System.out.println("");
+    free(value);
+    value = (int*)malloc(sizeof(int) * 5);
     for(int i = 0; i < 5; i++){
-        value[i] = rand() % 100;
+        *(value + i) = rand() % 100;
     }
     System.out.println("Before sort");
     for(int i = 0; i < 5; i++){
-        System.out.printf("%d ", value[i]);
+        System.out.printf("%d ", *(value + i));
     }
     System.out.println("");
     Integer.sort(value, DES);
     System.out.println("After sort");
     for(int i = 0; i < 5; i++){
-        System.out.printf("%d ", value[i]);
+        System.out.printf("%d ", *(value + i));
     }
     System.out.println("");
-    free(value);
+    string s = Integer.toString(12345);
+    System.out.println(s);
 
-    System.out.println(Integer.toString(12345));
+    free(s);
+    free(value);
 
 
     return 0;
