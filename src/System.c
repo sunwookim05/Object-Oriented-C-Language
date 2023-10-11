@@ -1,7 +1,7 @@
 #include "main.h"
 #include "System.h"
 
-void print(const String format, ...) {
+void print(const string format, ...) {
     va_list ap;
     char buf[4096];
     va_start(ap, format);
@@ -10,7 +10,7 @@ void print(const String format, ...) {
     fprintf(stdout, "%s", buf);
 }
 
-void println(const String format, ...) {
+void println(const string format, ...) {
     va_list ap;
     char buf[4096];
     va_start(ap, format);
@@ -20,3 +20,28 @@ void println(const String format, ...) {
 }
 
 SYSTEM System = {print, println};
+
+void sort(int* value, SortMode mode){
+    size_t size = 0;
+    while (value[size] != '\0') {
+        size++;
+    }
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size - 1; j++) {
+            if(!mode ? value[j] > value[j + 1] : value[j] < value[j + 1]){
+                int temp = value[j];
+                value[j] = value[j + 1];
+                value[j + 1] = temp;
+            }
+        }
+    }
+}
+
+string toString(int value){
+    char *result = (char*)calloc(0, sizeof(char) * 4096);
+    sprintf(result, "%d", value);
+    result = (char*)realloc(result, sizeof(char) * (strlen(result) + 1));
+    return result;
+}
+
+INTEGER Integer = {sort, toString};

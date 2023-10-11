@@ -6,6 +6,11 @@
 
 struct __stdin_t;
 
+typedef enum SORTMODE{
+    ASC,
+    DES
+}SortMode;
+
 #pragma pack(push, 1)
 /**
  * The {@code System} class contains several useful class fields
@@ -19,26 +24,39 @@ struct __stdin_t;
  *
  * @since   1.0
  */
-typedef struct _System{
-    struct __stdout_t{
+typedef struct Sys{
+    struct stdout_t{
         /**
         * @brief System out print function
         * @param format
         * @return void
         */
-        void (*print)(const String, ...);
+        void (*printf)(const string, ...);
         /** 
         * @brief System out println function
         * @param format
         * @return void
         */
-        void (*println)(const String, ...);
+        void (*println)(const string, ...);
     }out;
     struct __stdin_t{
         int (*read)();
     } in;
 }SYSTEM;
 #pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct STRING{
+    string value;
+}String;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef  struct INTEGER{
+    void (*sort)(int*, SortMode);
+    string (*toString)(int);
+}INTEGER;
+#pragma warning(push)
 
 #pragma warning(pop)
 #endif

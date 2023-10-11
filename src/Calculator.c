@@ -95,7 +95,7 @@ void outPut(double a, double b, char op, double result, FILE *fp){
 
 boolean requestRetry(){
     Scanner sc = new_Scanner(System.in);
-    System.out.print("Do you want to play again? (y/n): ");
+    System.out.printf("Do you want to play again? (y/n): ");
     char answer = sc.nextChar();
 
     if(!((answer|0x20)^'y')) return true;
