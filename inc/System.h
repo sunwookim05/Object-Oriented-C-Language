@@ -31,13 +31,13 @@ typedef struct Sys{
         * @param format
         * @return void
         */
-        void (*printf)(const string, ...);
+        void (*printf)(const String, ...);
         /** 
         * @brief System out println function
         * @param format
         * @return void
         */
-        void (*println)(const string, ...);
+        void (*println)(const String, ...);
     }out;
     struct __stdin_t{
         int (*read)();
@@ -46,9 +46,28 @@ typedef struct Sys{
 #pragma pack(pop)
 
 #pragma pack(push, 1)
-typedef struct STRING{
-    string value;
-}String;
+typedef struct BOOLEAN{
+    int (*compareTo)(boolean, boolean);
+    String (*toString)(boolean);
+}BOOLEAN;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct BYTE{
+    void (*sort)(byte*, SortMode);
+    int (*compareTo)(byte, byte);
+    byte (*decode)(String);
+    String (*toString)(byte);
+}BYTE;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct SHORT{
+    void (*sort)(short*, SortMode);
+    int (*compareTo)(short, short);
+    short (*decode)(String);
+    String (*toString)(short);
+}SHORT;
 #pragma pack(pop)
 
 #pragma pack(push, 1)
@@ -56,13 +75,20 @@ typedef  struct INTEGER{
     void (*sort)(int*, SortMode);
     int (*max)(int, int);
     int (*min)(int, int);
-    int (*parseInt)(string, ...);
-    string (*toString)(int);
-    string (*toBinaryString)(int);
-    string (*toOctalString)(int);
-    string (*toHexString)(int);
+    int (*bitCount)(int);
+    int (*parseInt)(const String, ...);
+    String (*toString)(int);
+    String (*toBinaryString)(int);
+    String (*toOctalString)(int);
+    String (*toHexString)(int);
 }INTEGER;
-#pragma warning(push)
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct LONG{
+    String (*toString)(long long);
+}LONG;
+#pragma pack(pop)
 
 #pragma warning(pop)
 #endif

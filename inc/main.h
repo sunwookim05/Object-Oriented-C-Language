@@ -14,7 +14,7 @@
 #define false 0
 #define true 1
 
-typedef char *string;
+typedef char* String;
 typedef char byte;
 typedef char int8_t;
 typedef short int16_t;

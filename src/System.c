@@ -1,7 +1,7 @@
 #include "main.h"
 #include "System.h"
 
-void print(const string format, ...) {
+void print(const String format, ...) {
     va_list ap;
     char buf[4096];
     va_start(ap, format);
@@ -10,7 +10,7 @@ void print(const string format, ...) {
     fprintf(stdout, "%s", buf);
 }
 
-void println(const string format, ...) {
+void println(const String format, ...) {
     va_list ap;
     char buf[4096];
     va_start(ap, format);
@@ -18,8 +18,6 @@ void println(const string format, ...) {
     va_end(ap);
     fprintf(stdout, "%s\n", buf);
 }
-
-SYSTEM System = {print, println};
 
 void swap(int* a, int* b) {
     int temp = *a;
@@ -61,47 +59,96 @@ int min(int a, int b){
     return a < b ? a : b;
 }
 
-int parseInt(string value, ...){
-    va_list args;
-    va_start(args, value);
-    int numBase = 10;
-
-    int secondArg = va_arg(args, int);
-    if (secondArg >= 2 && secondArg <= 36) {
-        numBase = secondArg;
+void* parse(char* value, int base, int type) {
+    long long int parsedValue = strtoll(value, NULL, base);
+    void* result = NULL;
+    switch (type) {
+        case 1: // byte
+            result = malloc(sizeof(byte));
+            *(byte*)result = (byte)parsedValue;
+            break;
+        case 2: // short
+            result = malloc(sizeof(short));
+            *(short*)result = (short)parsedValue;
+            break;
+        case 3: // int
+            result = malloc(sizeof(int));
+            *(int*)result = (int)parsedValue;
+            break;
+        case 4: // long long
+            result = malloc(sizeof(long long));
+            *(long long*)result = parsedValue;
+            break;
+        default:
+            break;
     }
-    va_end(args);
+    return result;
+}
 
+int parseInt(const String value, ...){
     int result = 0;
-    int len = strlen(value);
+    va_list ap;
+    va_start(ap, value);
+    int base = va_arg(ap, int);
+    va_end(ap);
+    result = (int)strtol(value, NULL, base);
+    return result;
+}
 
-    for (int i = 0; i < len; i++) {
-        char digit = value[i];
-        int digitValue;
-
-        if (digit >= '0' && digit <= '9') digitValue = digit - '0';
-        else if (digit >= 'a' && digit <= 'z') digitValue = 10 + (digit - 'a');
-        else if (digit >= 'A' && digit <= 'Z') digitValue = 10 + (digit - 'A');
-        else return 0;
-
-        if (digitValue >= numBase) return 0;
-
-        result = result * numBase + digitValue;
+String tostring(void* value, int type) {
+    char* result;
+    int i = 0;
+    switch (type) {
+        case 1: // byte
+            i = snprintf(NULL, 0, "%hhd", *((byte*)value));
+            result = (byte*)calloc(0, sizeof(char) * (i + 1));
+            *result = *((byte*)value);
+            *(result + 1) = '\0';
+            break;
+        case 2: // short
+            i = snprintf(NULL, 0, "%hd", *((short*)value));
+            result = (char*)calloc(0, sizeof(char) * (i + 1));
+            sprintf(result, "%hd", *((short*)value));
+            break;
+        case 3: // int
+            i = snprintf(NULL, 0, "%d", *((int*)value));
+            result = (char*)calloc(0, sizeof(char) * (i + 1));
+            sprintf(result, "%d", *((int*)value));
+            break;
+        case 4: // long long
+            i = snprintf(NULL, 0, "%lld", *((long long*)value));
+            result = (char*)calloc(0, sizeof(char) * (i + 1));
+            sprintf(result, "%lld", *((long long*)value));
+            break;
+        case 5: // float
+            i = snprintf(NULL, 0, "%f", *((float*)value));
+            result = (char*)calloc(0, sizeof(char) * (i + 1));
+            sprintf(result, "%f", *((float*)value));
+            break;
+        case 6: // double
+            i = snprintf(NULL, 0, "%lf", *((double*)value));
+            result = (char*)calloc(0, sizeof(char) * (i + 1));
+            sprintf(result, "%lf", *((double*)value));
+            break;
+        case 7: // long double
+            i = snprintf(NULL, 0, "%Lf", *((long double*)value));
+            result = (char*)calloc(0, sizeof(char) * (i + 1));
+            sprintf(result, "%Lf", *((long double*)value));
+            break;
+        default:
+            result = NULL;
+            break;
     }
-
     return result;
 }
 
-string toString(int value){
-    int i = snprintf(NULL, 0, "%d", value);
-    string result = (char*)calloc(0, sizeof(char) * (i + 1));
-    sprintf(result, "%d", value);
-    return result;
+String intToString(int value){
+    return tostring(&value, 3);
 }
 
-string toBinaryString(int value){
+String toBinaryString(int value){
     int i = sizeof(int) * 8;
-    string str = (char*)malloc(sizeof(char) * (i + 1));
+    String str = (char*)malloc(sizeof(char) * (i + 1));
 
     *(str + i) = '\0';
     for(int j = i - 1; j >= 0; j--){
@@ -109,24 +156,34 @@ string toBinaryString(int value){
         value >>= 1;
     }
 
-    string trim = str + strspn(str, "0");
+    String trim = str + strspn(str, "0");
 
     free(str);
     return !strlen(trim) ? "0" : trim;
 }
 
-string toOctalString(int value){
+String toOctalString(int value){
     int i = snprintf(NULL, 0, "%o", value);
-    string result = (char*)calloc(0, sizeof(char) * (i + 1));
+    String result = (char*)calloc(0, sizeof(char) * (i + 1));
     sprintf(result, "%o", value);
     return result;
 }
 
-string toHexString(int value){
+String toHexString(int value){
     int i = snprintf(NULL, 0, "%X", value);
-    string result = (char*)calloc(0, sizeof(char) * (i + 1));
+    String result = (char*)calloc(0, sizeof(char) * (i + 1));
     sprintf(result, "%X", value);
     return result;
 }
 
-INTEGER Integer = {sort, max, min, parseInt, toString, toBinaryString, toOctalString, toHexString};
+int bitCount(int value){
+    int count = 0;
+    while (value) {
+        count += value & 1;
+        value >>= 1;
+    }
+    return count;
+}
+
+SYSTEM System = {print, println};
+INTEGER Integer = {sort, max, min, bitCount, parseInt, intToString, toBinaryString, toOctalString, toHexString};

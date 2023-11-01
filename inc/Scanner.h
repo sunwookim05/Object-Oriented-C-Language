@@ -107,14 +107,14 @@ typedef struct Scanner{
      * @param void
      * @return String
      */
-    string (*next)(void);
+    String (*next)(void);
 
     /**
      * @brief User input String with Spaces
      * @param void
      * @return String
      */
-    string (*nextLine)(void);
+    String (*nextLine)(void);
 }Scanner;
 #pragma pack(pop)
 

@@ -66,7 +66,7 @@ uint64_t nextULong(void){
 }
 
 boolean nextBoolean(void){
-    string s = (string)calloc(0, sizeof(char) * 5);
+    String s = (String)calloc(0, sizeof(char) * 5);
     scanf("%5s", s);
     if(atoi(s)| !(((s[0]|0x20)^'t') ^ ((s[1]|0x20)^'r') ^ ((s[2]|0x20)^'u') ^ ((s[3]|0x20)^'e'))){
         free(s);
@@ -97,21 +97,21 @@ long double nextLDouble(void){
     return ld;
 }
 
-string next(void){
-    string s = (string)calloc(0, sizeof(char) * 4096);
+String next(void){
+    String s = (String)calloc(0, sizeof(char) * 4096);
     scanf("%4095s", s);
-    s = (string)realloc(s, sizeof(char) * (strlen(s) + 1));
+    s = (String)realloc(s, sizeof(char) * (strlen(s) + 1));
     getchar();
     return s;
 }
 
-string nextLine(void){
+String nextLine(void){
     char c;
     uint16_t i = 0;
-    string s = (string)calloc(0, sizeof(char) * 1);
+    String s = (String)calloc(0, sizeof(char) * 2);
     while (i < 4096 - 1 & (c = fgetc(stdin)) != EOF & c != '\n') {
         s[i++] = c;
-        s = (string)realloc(s, sizeof(char) * (i + 1));
+        s = (String)realloc(s, sizeof(char) * (i + 1));
     }
     s[i] = '\0';
     return s;
