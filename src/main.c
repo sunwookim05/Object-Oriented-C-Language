@@ -40,14 +40,14 @@ int main(void){
 
     System.out.println("Before sort");
     for(int i = 0; i < 10; i++){
-        System.out.println(Integer.toString(arr[i]));
+        System.out.println(Integer.toString(*(arr + i)));
     }
 
     System.out.println("After sort");
     Integer.sort(arr, ASC);
 
     for(int i = 0; i < 10; i++){
-        System.out.println(Integer.toString(arr[i]));
+        System.out.println(Integer.toString(*(arr + i)));
     }
 
     free(arr);   
