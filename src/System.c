@@ -102,8 +102,7 @@ String tostring(void* value, int type) {
         case 1: // byte
             i = snprintf(NULL, 0, "%hhd", *((byte*)value));
             result = (byte*)calloc(0, sizeof(char) * (i + 1));
-            *result = *((byte*)value);
-            *(result + 1) = '\0';
+            sprintf(result, "%hhd", *((byte*)value));
             break;
         case 2: // short
             i = snprintf(NULL, 0, "%hd", *((short*)value));
