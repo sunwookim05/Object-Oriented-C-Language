@@ -30,7 +30,10 @@ import INTEGER Integer;
 
 //TEST PLACE
 int main(void){
-    System.out.println(Integer.toString(Integer.max(10, 20)));
+    String str = Integer.toString(Integer.parseInt("123"));
+    System.out.println(str);
+
+    free(str);
 
     return 0;
 }

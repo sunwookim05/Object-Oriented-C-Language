@@ -51,11 +51,11 @@ void sort(int* value, SortMode mode){
     quickSort(value, 0, size - 1, mode);
 }
 
-int mmax(int a, int b){
+int mMax(int a, int b){
     return a > b ? a : b;
 }
 
-int mmin(int a, int b){
+int mMin(int a, int b){
     return a < b ? a : b;
 }
 
@@ -87,9 +87,10 @@ void* parse(char* value, int base, int type) {
 
 int parseInt(const String value, ...){
     int result = 0;
+    int base = 10;
     va_list ap;
     va_start(ap, value);
-    int base = va_arg(ap, int);
+    if(va_arg(ap, int) <=16 && va_arg(ap, int) >= 2) base = va_arg(ap, int);
     va_end(ap);
     result = (int)strtol(value, NULL, base);
     return result;
@@ -185,4 +186,4 @@ int bitCount(int value){
 }
 
 SYSTEM System = {print, println};
-INTEGER Integer = {sort, mmax, mmin, bitCount, parseInt, intToString, toBinaryString, toOctalString, toHexString};
+INTEGER Integer = {sort, mMax, mMin, bitCount, parseInt, intToString, toBinaryString, toOctalString, toHexString};
