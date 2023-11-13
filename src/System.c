@@ -86,11 +86,13 @@ void* parse(char* value, int base, int type) {
 }
 
 int parseInt(const String value, ...){
+    int arg;
     int result = 0;
     int base = 10;
     va_list ap;
     va_start(ap, value);
-    if(va_arg(ap, int) <=16 && va_arg(ap, int) >= 2) base = va_arg(ap, int);
+    arg = va_arg(ap, int);
+    if (arg < 17 && arg > 1) base = arg;
     va_end(ap);
     result = (int)strtol(value, NULL, base);
     return result;

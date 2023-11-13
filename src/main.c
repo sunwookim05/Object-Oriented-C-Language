@@ -30,7 +30,7 @@ import INTEGER Integer;
 
 //TEST PLACE
 int main(void){
-    String str = Integer.toString(Integer.parseInt("123"));
+    String str = Integer.toString(Integer.parseInt("0xFF", 16));
     System.out.println(str);
 
     free(str);

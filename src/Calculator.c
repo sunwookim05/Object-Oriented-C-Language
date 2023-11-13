@@ -63,7 +63,7 @@ double divide(double a, double b){
 }
 
 double mod(double a, double b){
-    return ((int64_t)a) % ((int64_t)b);
+    return (double )(((int64_t)a) % ((int64_t)b));
 }
 
 double pow(double a, double b){
