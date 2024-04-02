@@ -51,11 +51,11 @@ void sort(int* value, SortMode mode){
     quickSort(value, 0, size - 1, mode);
 }
 
-int mMax(int a, int b){
+int iMax(int a, int b){
     return a > b ? a : b;
 }
 
-int mMin(int a, int b){
+int iMin(int a, int b){
     return a < b ? a : b;
 }
 
@@ -188,4 +188,4 @@ int bitCount(int value){
 }
 
 SYSTEM System = {print, println};
-INTEGER Integer = {sort, mMax, mMin, bitCount, parseInt, intToString, toBinaryString, toOctalString, toHexString};
+INTEGER Integer = {sort, iMax, iMin, bitCount, parseInt, intToString, toBinaryString, toOctalString, toHexString};

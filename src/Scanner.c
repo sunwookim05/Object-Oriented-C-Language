@@ -66,14 +66,12 @@ uint64_t nextULong(void){
 }
 
 boolean nextBoolean(void){
+    boolean b = false;
     String s = (String)calloc(0, sizeof(char) * 5);
     scanf("%5s", s);
-    if(atoi(s)| !(((s[0]|0x20)^'t') ^ ((s[1]|0x20)^'r') ^ ((s[2]|0x20)^'u') ^ ((s[3]|0x20)^'e'))){
-        free(s);
-        return true;
-    }
+    if(atoi(s) | !(((*(s+0)|0x20)^'t') ^ ((*(s+1)|0x20)^'r') ^ ((*(s+2)|0x20)^'u') ^ ((*(s+3)|0x20)^'e'))) b = true;
     free(s);
-    return false;
+    return b;
 }
 
 float nextFloat(void){
@@ -109,11 +107,11 @@ String nextLine(void){
     char c;
     uint16_t i = 0;
     String s = (String)calloc(0, sizeof(char) * 2);
-    while (i < 4096 - 1 & (c = fgetc(stdin)) != EOF & c != '\n') {
-        s[i++] = c;
+    while ((i < 4096 - 1) & ((c = fgetc(stdin)) != EOF) & (c != '\n')) {
+        *(s + i++) = c;
         s = (String)realloc(s, sizeof(char) * (i + 1));
     }
-    s[i] = '\0';
+    *(s + i) = '\0';
     return s;
 }
 

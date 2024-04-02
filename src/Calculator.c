@@ -107,15 +107,22 @@ boolean requestRetry(){
 double calculate(double a, double b, char op){
     Calculator this = new_Calculator();
     setUpPrivate(&this);
-    switch(op){
-        case '+': return this.plus(a, b);
-        case '-': return this.minus(a, b);
-        case '*': return this.multiply(a, b);
-        case '/': return this.divide(a, b);
-        case '%': return this.mod(a, b);
-        case '^': return this.pow(a, b);
-        default: return 0;
-    }
+
+    return op == '+' ? this.plus(a, b) :
+           op == '-' ? this.minus(a, b) :
+           op == '*' ? this.multiply(a, b) :
+           op == '/' ? this.divide(a, b) :
+           op == '%' ? this.mod(a, b) :
+           op == '^' ? this.pow(a, b) : 0;
+//    switch(op){
+//        case '+': return this.plus(a, b);
+//        case '-': return this.minus(a, b);
+//        case '*': return this.multiply(a, b);
+//        case '/': return this.divide(a, b);
+//        case '%': return this.mod(a, b);
+//        case '^': return this.pow(a, b);
+//        default: return 0;
+//    }
 }
 
 Calculator new_Calculator(){
