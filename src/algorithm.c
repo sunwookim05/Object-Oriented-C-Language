@@ -28,7 +28,7 @@ void delete(Stack* stack) {
 
 Stack new_stack(size_t type) {
     Stack stack;
-    stack.data = (void**)malloc(0);
+    stack.data = (void**)malloc(sizeof(void*));
     stack.push = push;
     stack.pop = pop;
     stack.clear = clear;
