@@ -15,25 +15,9 @@ typedef struct  STACK{
     size_t dataSize;
 }Stack;
 
-void push(Stack*, void*);
-void pop(Stack*);
-void clear(Stack*);
-void delete(Stack*);
+Stack new_stack(size_t type);
 
-#define new_Stack(type) \
-({ \
-    Stack stack; \
-    stack.data = (void**)malloc(sizeof(void*)); \
-    stack.push = push; \
-    stack.pop = pop; \
-    stack.clear = clear; \
-    stack.delete = delete; \
-    stack.top = 0; \
-    stack.size = 0; \
-    stack.dataSize = sizeof(type); \
-    stack; \
-})
-
+#define new_Stack(type) new_stack(sizeof(type))
 
 #pragma warning(pop)
 #endif

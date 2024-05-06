@@ -25,3 +25,16 @@ void delete(Stack* stack) {
     stack->top = 0;
     stack->size = 0;
 }
+
+Stack new_stack(size_t type) {
+    Stack stack;
+    stack.data = (void**)malloc(0);
+    stack.push = push;
+    stack.pop = pop;
+    stack.clear = clear;
+    stack.delete = delete;
+    stack.top = 0;
+    stack.size = 0;
+    stack.dataSize = type;
+    return stack;
+}
