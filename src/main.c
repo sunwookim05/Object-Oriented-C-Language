@@ -1,25 +1,43 @@
 #include "main.h"
-#include "Calculator.h"
+#include "System.h"
+#include "algorithm.h"
 
-import void setUpProtected(Calculator*);
+import SYSTEM System;
 
 int main(void){
-    FILE *fp;
-    Calculator calculator = new_Calculator();
-    boolean retry = true;
-    double a, b, result;
-    char op;
+    srand(time(NULL));
+    Stack stack = new_Stack(int);
+    int* a = (int*)malloc(sizeof(int) * 10);
 
-    setUpProtected(&calculator);
-    fp = fopen("log.txt", "w");
-
-    while(retry){
-        calculator.in.inPut(&a, &b, &op);
-        result = calculator.calculate(a, b, op);
-        calculator.out.outPut(a, b, op, result, fp);
-        retry = calculator.requestRetry();
+    for(int i = 0; i < 10; i++){
+        *(a + i) = rand() % 100;
+        stack.push(&stack, (a + i));
+        for(int j = 0; j < stack.top; j++)
+            System.out.printf("%d ", stack.data[j]);
+        System.out.println("");
     }
-    fclose(fp);
 
+    System.out.println("");
+
+    stack.clear(&stack);
+
+    for(int i = 0; i < 10; i++){
+        *(a + i) = rand() % 100;
+        stack.push(&stack, (a + i));
+        for(int j = 0; j < stack.top; j++)
+            System.out.printf("%d ", stack.data[j]);
+        System.out.println("");
+    }
+
+    for(int i = 0; i < 10; i++){
+        stack.pop(&stack);
+        for(int j = 0; j < stack.top; j++)
+            System.out.printf("%d ", stack.data[j]);
+        System.out.println("");
+    }
+
+    stack.delete(&stack);
+
+    free(a);
     return 0;
 }
