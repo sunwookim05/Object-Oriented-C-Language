@@ -1,8 +1,9 @@
-#include "main.h"
 
 #pragma once
 #ifndef __SYSTEM_H
 #define __SYSTEM_H
+
+#include "main.h"
 
 struct __stdin_t;
 
@@ -24,7 +25,7 @@ typedef enum SORTMODE{
  *
  * @since   1.0
  */
-typedef struct Sys{
+typedef struct SYSTEM{
     struct stdout_t{
         /**
         * @brief System out print function

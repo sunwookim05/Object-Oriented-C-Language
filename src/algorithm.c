@@ -1,26 +1,26 @@
 #include "main.h"
 #include "algorithm.h"
 
-void push(Stack* stack, void* data) {
-    stack->data = (void**)realloc(stack->data, (stack->top + 1) * stack->dataSize);
-    memcpy((char*)stack->data + stack->top * stack->dataSize, data, stack->dataSize);
+static void push(Stack* stack, void* data) {
+    stack->data = (void**)realloc(stack->data, (stack->top + 1) * stack->byteSize);
+    memcpy((char*)stack->data + stack->top * stack->byteSize, data, stack->byteSize);
     stack->top++;
-    stack->size = stack->top * stack->dataSize;
+    stack->size = stack->top * stack->byteSize;
 }
 
-void pop(Stack* stack) {
+static void pop(Stack* stack) {
     stack->top--;
-    stack->size = stack->top * stack->dataSize;
+    stack->size = stack->top * stack->byteSize;
     stack->data = (void**)realloc(stack->data, stack->size);
 }
 
-void clear(Stack* stack) {
+static void clear(Stack* stack) {
     stack->top = 0;
     stack->size = 0;
     stack->data = (void**)realloc(stack->data, stack->size);
 }
 
-void delete(Stack* stack) {
+static void delete(Stack* stack) {
     free(stack->data);
     stack->top = 0;
     stack->size = 0;
@@ -35,6 +35,6 @@ Stack new_stack(size_t type) {
     stack.delete = delete;
     stack.top = 0;
     stack.size = 0;
-    stack.dataSize = type;
+    stack.byteSize = type;
     return stack;
 }
