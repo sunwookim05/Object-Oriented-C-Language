@@ -59,43 +59,22 @@ int iMin(int a, int b){
     return a < b ? a : b;
 }
 
-void* parse(char* value, int base, int type) {
-    long long int parsedValue = strtoll(value, NULL, base);
-    void* result = NULL;
-    switch (type) {
-        case 1: // byte
-            result = malloc(sizeof(byte));
-            *(byte*)result = (byte)parsedValue;
-            break;
-        case 2: // short
-            result = malloc(sizeof(short));
-            *(short*)result = (short)parsedValue;
-            break;
-        case 3: // int
-            result = malloc(sizeof(int));
-            *(int*)result = (int)parsedValue;
-            break;
-        case 4: // long long
-            result = malloc(sizeof(long long));
-            *(long long*)result = parsedValue;
-            break;
-        default:
-            break;
-    }
-    return result;
+long long int _parse(char* value, size_t size, uint8_t arg) {
+    uint8_t base = 10;
+    va_list ap;
+    if (arg < 17 && arg > 1) base = arg;
+    return strtoll(value, NULL, base);
 }
 
+#define parse(value, type, arg) _parse(value, sizeof(type), arg)
+
 int parseInt(const String value, ...){
-    int arg;
-    int result = 0;
-    int base = 10;
+    uint8_t arg;
     va_list ap;
     va_start(ap, value);
     arg = va_arg(ap, int);
-    if (arg < 17 && arg > 1) base = arg;
     va_end(ap);
-    result = (int)strtol(value, NULL, base);
-    return result;
+    return (int)parse(value, int, arg);
 }
 
 String tostring(void* value, int type) {
