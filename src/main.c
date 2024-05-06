@@ -5,9 +5,10 @@
 import SYSTEM System;
 
 int main(void){
-    srand(time(NULL));
     Stack stack = new_Stack(int);
     int* a = (int*)malloc(sizeof(int) * 10);
+
+    srand(time(NULL));
 
     for(int i = 0; i < 10; i++){
         *(a + i) = rand() % 100;

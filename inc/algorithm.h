@@ -15,7 +15,7 @@ typedef struct  STACK{
     size_t dataSize;
 }Stack;
 
-Stack new_stack(size_t size);
+Stack new_stack(size_t type);
 
 #define new_Stack(type) new_stack(sizeof(type))
 
