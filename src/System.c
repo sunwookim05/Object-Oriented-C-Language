@@ -47,7 +47,7 @@ void quickSort(int* arr, int low, int high, SortMode mode) {
 }
 
 void sort(int* value, SortMode mode){
-    size_t size = _msize(value) / sizeof(int);
+    size_t size = sizeof(value) / sizeof(int);
     quickSort(value, 0, size - 1, mode);
 }
 

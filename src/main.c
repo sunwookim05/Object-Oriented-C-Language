@@ -1,17 +1,43 @@
 #include "main.h"
 #include "System.h"
-#include "Scanner.h"
+#include "algorithm.h"
 
 import SYSTEM System;
-import INTEGER Integer;
 
 int main(void){
-    Scanner sc = new_Scanner(System.in);
-    System.out.printf("Enter a HEX number:");
-    String str = sc.next();
-    int num = Integer.parseInt(str, 16);
-    System.out.println("Decimal number is: %d", num);
+    srand(time(NULL));
+    Stack stack = new_Stack(int);
+    int* a = (int*)malloc(sizeof(int) * 10);
 
-    free(str);
+    for(int i = 0; i < 10; i++){
+        *(a + i) = rand() % 100;
+        stack.push(&stack, (a + i));
+        for(int j = 0; j < stack.top; j++)
+            System.out.printf("%d ", stack.data[j]);
+        System.out.println("");
+    }
+
+    System.out.println("");
+
+    stack.clear(&stack);
+
+    for(int i = 0; i < 10; i++){
+        *(a + i) = rand() % 100;
+        stack.push(&stack, (a + i));
+        for(int j = 0; j < stack.top; j++)
+            System.out.printf("%d ", stack.data[j]);
+        System.out.println("");
+    }
+
+    for(int i = 0; i < 10; i++){
+        stack.pop(&stack);
+        for(int j = 0; j < stack.top; j++)
+            System.out.printf("%d ", stack.data[j]);
+        System.out.println("");
+    }
+
+    stack.delete(&stack);
+
+    free(a);
     return 0;
 }
