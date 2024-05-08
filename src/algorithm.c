@@ -1,15 +1,15 @@
 #include "algorithm.h"
 
 static void push(Stack* stack, void* data) {
-    stack->data = (void**)realloc(stack->data, (stack->top + 1) * stack->byteSize);
-    memcpy((char*)stack->data + stack->top * stack->byteSize, data, stack->byteSize);
+    stack->data = (void**)realloc(stack->data, (stack->top + 1) * sizeof(void*));
+    memcpy((char*)stack->data + stack->top * sizeof(void*), data, stack->byteSize);
     stack->top++;
-    stack->size = stack->top * stack->byteSize;
+    stack->size = (stack->top) * sizeof(void*);
 }
 
 static void pop(Stack* stack) {
     stack->top--;
-    stack->size = stack->top * stack->byteSize;
+    stack->size = (stack->top) * sizeof(void*);
     stack->data = (void**)realloc(stack->data, stack->size);
 }
 
