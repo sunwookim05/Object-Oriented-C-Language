@@ -96,7 +96,7 @@ long double nextLDouble(void){
 }
 
 String next(void){
-    String s = (String)calloc(0, sizeof(char) * 4096);
+    String s = (String)calloc(4096, sizeof(char));
     scanf("%4095s", s);
     s = (String)realloc(s, sizeof(char) * (strlen(s) + 1));
     getchar();
