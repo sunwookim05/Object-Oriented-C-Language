@@ -1,4 +1,3 @@
-#include "main.h"
 #include "algorithm.h"
 
 static void push(Stack* stack, void* data) {
