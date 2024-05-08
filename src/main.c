@@ -5,16 +5,14 @@
 import SYSTEM System;
 
 int main(void){
-    Stack stack = new_Stack(int);
-    int* a = (int*)malloc(sizeof(int) * 10);
-
-    srand(time(NULL));
+    Stack stack = new_Stack(double);
+    double* a = (double*)malloc(sizeof(double) * 10);
 
     for(int i = 0; i < 10; i++){
-        *(a + i) = rand() % 100;
+        *(a + i) = i + 0.5;
         stack.push(&stack, (a + i));
         for(int j = 0; j < stack.top; j++)
-            System.out.printf("%d ", stack.data[j]);
+            System.out.printf("%.2f ", stack.data[j]);
         System.out.println("");
     }
 
@@ -23,17 +21,17 @@ int main(void){
     stack.clear(&stack);
 
     for(int i = 0; i < 10; i++){
-        *(a + i) = rand() % 100;
+        *(a + i) = i + 0.5;
         stack.push(&stack, (a + i));
         for(int j = 0; j < stack.top; j++)
-            System.out.printf("%d ", stack.data[j]);
+            System.out.printf("%.2f ", stack.data[j]);
         System.out.println("");
     }
 
     for(int i = 0; i < 10; i++){
         stack.pop(&stack);
         for(int j = 0; j < stack.top; j++)
-            System.out.printf("%d ", stack.data[j]);
+            System.out.printf("%.2f ", stack.data[j]);
         System.out.println("");
     }
 
