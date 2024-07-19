@@ -4,41 +4,51 @@
 
 import SYSTEM System;
 
-int main(void){
+int main(void){ 
     Stack stack = new_Stack(int);
-    int* a = (int*)malloc(sizeof(int) * 10);
+    Queue queue = new_Queue(int);
+    int* value = (int*)malloc(sizeof(int) * 10);
 
-    srand(time(NULL));
+    for (int i = 0; i < 10; i++) {
+        *(value + i) = i;
+        stack.push(&stack, value + i);
+        for (int j = 0; j < stack.top; j++) System.out.printf("%d ", *(int*)*(stack.data + j));
+        System.out.println("");
+    }
 
-    for(int i = 0; i < 10; i++){
-        *(a + i) = rand() % 100;
-        stack.push(&stack, (a + i));
-        for(int j = 0; j < stack.top; j++)
-            System.out.printf("%d ", stack.data[j]);
+    for (int i = 0; i < 10; i++) {
+        int* poppedValue = (int*)stack.pop(&stack);
+        if (poppedValue) {
+            System.out.println("Popped: %d", *poppedValue);
+            free(poppedValue);
+        }
+        for (int j = 0; j < stack.top; j++) System.out.printf("%d ", *(int*)*(stack.data + j));
         System.out.println("");
     }
 
     System.out.println("");
 
+    for (int i = 0; i < 10; i++) {
+        *(value + i) = i;
+        queue.push(&queue, value + i);
+        for (int j = 0; j < queue.size; j++) System.out.printf("%d ", *(int*)*(queue.data + j));
+        System.out.println("");
+    }
+
+    for (int i = 0; i < 10; i++) {
+        int* poppedValue = (int*)queue.pop(&queue);
+        if (poppedValue) {
+            System.out.println("Popped: %d", *poppedValue);
+            free(poppedValue);
+        }
+        for (int j = 0; j < queue.size; j++) System.out.printf("%d ", *(int*)*(queue.data + j));
+        System.out.println("");
+    }
+
     stack.clear(&stack);
-
-    for(int i = 0; i < 10; i++){
-        *(a + i) = rand() % 100;
-        stack.push(&stack, (a + i));
-        for(int j = 0; j < stack.top; j++)
-            System.out.printf("%d ", stack.data[j]);
-        System.out.println("");
-    }
-
-    for(int i = 0; i < 10; i++){
-        stack.pop(&stack);
-        for(int j = 0; j < stack.top; j++)
-            System.out.printf("%d ", stack.data[j]);
-        System.out.println("");
-    }
-
     stack.delete(&stack);
-
-    free(a);
+    queue.clear(&queue);
+    queue.delete(&queue);
+    free(value);
     return 0;
 }
