@@ -2,7 +2,7 @@
 
 ---------Object-Oriented-C-Language---------
 
-gcc -o main src\algorithm.c src\System.c src\Scanner.c src\main.c -I inc\
+gcc -o main src\*.c -I inc\
 
 .\main
 

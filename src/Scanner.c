@@ -69,7 +69,7 @@ boolean nextBoolean(void){
     boolean b = false;
     String s = (String)calloc(0, sizeof(char) * 5);
     scanf("%5s", s);
-    if(atoi(s)|!(((*(s+0)|0x20)^'t') ^ ((*(s+1)|0x20)^'r') ^ ((*(s+2)|0x20)^'u') ^ ((*(s+3)|0x20)^'e'))) b = true;
+    if(atoi(s) | !(((*(s+0)|0x20)^'t') ^ ((*(s+1)|0x20)^'r') ^ ((*(s+2)|0x20)^'u') ^ ((*(s+3)|0x20)^'e'))) b = true;
     free(s);
     return b;
 }

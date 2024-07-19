@@ -16,8 +16,8 @@
 #define true 1
 
 typedef char* String;
-typedef char byte;
-typedef unsigned char ubyte;
+typedef int8_t byte;
+typedef uint8_t ubyte;
 typedef uint8_t boolean;
 
 #pragma warning(pop)
