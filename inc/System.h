@@ -1,5 +1,3 @@
-
-#pragma once
 #ifndef __SYSTEM_H
 #define __SYSTEM_H
 
@@ -91,5 +89,4 @@ typedef struct LONG{
 }LONG;
 #pragma pack(pop)
 
-#pragma warning(pop)
 #endif

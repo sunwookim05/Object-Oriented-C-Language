@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __MAIN_H
 #define __MAIN_H
 
@@ -20,5 +19,4 @@ typedef int8_t byte;
 typedef uint8_t ubyte;
 typedef uint8_t boolean;
 
-#pragma warning(pop)
 #endif

@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __ALGORITHM_H
 #define __ALGORITHM_H
 
@@ -37,5 +36,4 @@ Queue new_queue(size_t type);
 
 #define new_Queue(type) new_queue(sizeof(type))
 
-#pragma warning(pop)
 #endif
