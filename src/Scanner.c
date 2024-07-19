@@ -107,7 +107,7 @@ String nextLine(void){
     char c;
     uint16_t i = 0;
     String s = (String)calloc(0, sizeof(char) * 2);
-    while ((i < 4096 - 1) & ((c = fgetc(stdin)) != EOF) & (c != '\n')) {
+    while ((i < 4096 - 1) && ((c = fgetc(stdin)) != EOF) && (c != '\n')) {
         *(s + i++) = c;
         s = (String)realloc(s, sizeof(char) * (i + 1));
     }
