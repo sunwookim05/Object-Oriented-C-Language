@@ -14,7 +14,7 @@
 #define false 0
 #define true 1
 
-typedef char* String;
+typedef char* string;
 typedef int8_t byte;
 typedef uint8_t ubyte;
 typedef uint8_t boolean;

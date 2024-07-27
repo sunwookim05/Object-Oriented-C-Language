@@ -26,6 +26,8 @@ static void stackClear(Stack* stack) {
 
 static void stackDelete(Stack* stack) {
     stackClear(stack);
+    stack->byteSize = 0;
+    stack->data = null;
 }
 
 Stack new_stack(size_t type) {
@@ -68,6 +70,8 @@ static void queueClear(Queue* queue) {
 
 static void queueDelete(Queue* queue) {
     queueClear(queue);
+    queue->byteSize = 0;
+    queue->data = null;
 }
 
 Queue new_queue(size_t type) {
