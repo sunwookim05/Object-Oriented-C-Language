@@ -102,18 +102,18 @@ typedef struct Scanner{
     long double (*nextLDouble)(void);
 
     /**
-     * @brief User input String no Spaces
+     * @brief User input string no Spaces
      * @param void
-     * @return String
+     * @return string
      */
-    String (*next)(void);
+    string (*next)(void);
 
     /**
-     * @brief User input String with Spaces
+     * @brief User input string with Spaces
      * @param void
-     * @return String
+     * @return string
      */
-    String (*nextLine)(void);
+    string (*nextLine)(void);
 }Scanner;
 #pragma pack(pop)
 
