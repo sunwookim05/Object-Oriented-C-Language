@@ -85,3 +85,64 @@ Queue new_queue(size_t type) {
     queue.size = 0;
     return queue;
 }
+
+static void dequePushFront(Deque* deque, void* data) {
+    deque->data = (void**)realloc(deque->data, (deque->size + 1) * sizeof(void*));
+    memmove(deque->data + 1, deque->data, deque->size * sizeof(void*));
+    *(deque->data) = malloc(deque->byteSize);
+    memcpy(*(deque->data), data, deque->byteSize);
+    deque->size++;
+}
+
+static void dequePushBack(Deque* deque, void* data) {
+    deque->data = (void**)realloc(deque->data, (deque->size + 1) * sizeof(void*));
+    *(deque->data + deque->size) = malloc(deque->byteSize);
+    memcpy(*(deque->data + deque->size), data, deque->byteSize);
+    deque->size++;
+}
+
+static void* dequePopFront(Deque* deque) {
+    void* removedData = *(deque->data);
+    memmove(deque->data, deque->data + 1, (deque->size - 1) * sizeof(void*));
+    deque->data = (void**)realloc(deque->data, (deque->size - 1) * sizeof(void*));
+    deque->size--;
+
+    return removedData;
+}
+
+static void* dequePopBack(Deque* deque) {
+    void* removedData = *(deque->data + deque->size - 1);
+    deque->data = (void**)realloc(deque->data, (deque->size - 1) * sizeof(void*));
+    deque->size--;
+
+    return removedData;
+}
+
+static void dequeClear(Deque* deque) {
+    for (size_t i = 0; i < deque->size; i++) {
+        free(*(deque->data + i));
+    }
+    free(deque->data);
+    deque->data = null;
+    deque->size = 0;
+}
+
+static void dequeDelete(Deque* deque) {
+    dequeClear(deque);
+    deque->byteSize = 0;
+    deque->data = null;
+}
+
+Deque new_deque(size_t type) {
+    Deque deque;
+    deque.data = null;
+    deque.byteSize = type;
+    deque.pushFront = dequePushFront;
+    deque.pushBack = dequePushBack;
+    deque.popFront = dequePopFront;
+    deque.popBack = dequePopBack;
+    deque.clear = dequeClear;
+    deque.delete = dequeDelete;
+    deque.size = 0;
+    return deque;
+}
