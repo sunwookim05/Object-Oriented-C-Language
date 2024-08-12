@@ -36,4 +36,22 @@ Queue new_queue(size_t type);
 
 #define new_Queue(type) new_queue(sizeof(type))
 
+#pragma pack(push, 1)
+typedef struct DEQUE {
+    void** data;
+    size_t size;
+    size_t byteSize;
+    void (*pushFront)(struct DEQUE*, void*);
+    void (*pushBack)(struct DEQUE*, void*);
+    void* (*popFront)(struct DEQUE*);
+    void* (*popBack)(struct DEQUE*);
+    void (*clear)(struct DEQUE*);
+    void (*delete)(struct DEQUE*);
+} Deque;
+#pragma pack(pop)
+
+Deque new_deque(size_t type);
+
+#define new_Deque(type) new_deque(sizeof(type))
+
 #endif
