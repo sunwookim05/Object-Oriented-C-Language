@@ -146,3 +146,46 @@ Deque new_deque(size_t type) {
     deque.size = 0;
     return deque;
 }
+
+static void listAdd(List* list, void* data) {
+    list->data = (void**)realloc(list->data, (list->size + 1) * sizeof(void*));
+    *(list->data + list->size) = malloc(list->byteSize);
+    memcpy(*(list->data + list->size), data, list->byteSize);
+    list->size++;
+}
+
+static void* listRemove(List* list, size_t index) {
+    void* removedData = *(list->data + index);
+    memmove(list->data + index, list->data + index + 1, (list->size - index - 1) * sizeof(void*));
+    list->data = (void**)realloc(list->data, (list->size - 1) * sizeof(void*));
+    list->size--;
+
+    return removedData;
+}
+
+static void listClear(List* list) {
+    for (size_t i = 0; i < list->size; i++) {
+        free(*(list->data + i));
+    }
+    free(list->data);
+    list->data = null;
+    list->size = 0;
+}
+
+static void listDelete(List* list) {
+    listClear(list);
+    list->byteSize = 0;
+    list->data = null;
+}
+
+List new_list(size_t type) {
+    List list;
+    list.data = null;
+    list.byteSize = type;
+    list.add = listAdd;
+    list.remove = listRemove;
+    list.clear = listClear;
+    list.delete = listDelete;
+    list.size = 0;
+    return list;
+}
