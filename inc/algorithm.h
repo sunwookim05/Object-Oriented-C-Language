@@ -1,7 +1,7 @@
+#include "main.h"
+
 #ifndef __ALGORITHM_H
 #define __ALGORITHM_H
-
-#include "main.h"
 
 #pragma pack(push, 1)
 typedef struct STACK {

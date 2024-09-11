@@ -44,7 +44,7 @@ TYPE parse##NAME(const string str) { \
 PARSE_INT(byte, strtol, Byte)
 PARSE_INT(short, strtol, Short)
 PARSE_INT(int, strtol, Integer)
-PARSE_INT(long long int, strtoll, Long)
+PARSE_INT(int64_t, strtoll, Long)
 PARSE_FLOAT(float, strtof, Float)
 PARSE_FLOAT(double, strtod, Double)
 
@@ -58,10 +58,10 @@ string toString##NAME(TYPE value) { \
     return str; \
 }
 
-TOSTRING(byte, "%hhd", Byte)
-TOSTRING(short, "%hd", Short)
-TOSTRING(int, "%d", Integer)
-TOSTRING(long long int, "%lld", Long)
+TOSTRING(byte, "%" SCNd8, Byte)
+TOSTRING(int16_t, "%" SCNd16, Short)
+TOSTRING(int32_t, "%" SCNd32, Integer)
+TOSTRING(int64_t, "%" SCNd64, Long)
 TOSTRING(float, "%g", Float)
 TOSTRING(double, "%g", Double)
 
@@ -89,9 +89,9 @@ string toBinaryString##NAME(TYPE value) { \
 }
 
 TOBINARAYSTRING(byte, 8, Byte)
-TOBINARAYSTRING(short, 16, Short)
-TOBINARAYSTRING(int, 32, Integer)
-TOBINARAYSTRING(long long int, 64, Long)
+TOBINARAYSTRING(int16_t, 16, Short)
+TOBINARAYSTRING(int32_t, 32, Integer)
+TOBINARAYSTRING(int64_t, 64, Long)
 
 #define TOOCTALSTRING(TYPE, FORMAT, NAME) \
 string toOctalString##NAME(TYPE value) { \
@@ -102,10 +102,10 @@ string toOctalString##NAME(TYPE value) { \
     return str; \
 }
 
-TOOCTALSTRING(byte, "%hho", Byte)
-TOOCTALSTRING(short, "%ho", Short)
-TOOCTALSTRING(int, "%o", Integer)
-TOOCTALSTRING(long long int, "%llo", Long)
+TOOCTALSTRING(byte, "%" SCNo8, Byte)
+TOOCTALSTRING(int16_t, "%" SCNo16, Short)
+TOOCTALSTRING(int32_t, "%" SCNo32, Integer)
+TOOCTALSTRING(int64_t, "%" SCNo64, Long)
 
 #define TOHEXSTRING(TYPE, FORMAT, NAME) \
 string toHexString##NAME(TYPE value) { \
@@ -116,10 +116,10 @@ string toHexString##NAME(TYPE value) { \
     return str; \
 }
 
-TOHEXSTRING(byte, "%hhX", Byte)
-TOHEXSTRING(short, "%hX", Short)
-TOHEXSTRING(int, "%X", Integer)
-TOHEXSTRING(long long int, "%llX", Long)
+TOHEXSTRING(byte, "%" SCNx8, Byte)
+TOHEXSTRING(int16_t, "%" SCNx16, Short)
+TOHEXSTRING(int32_t, "%" SCNx32, Integer)
+TOHEXSTRING(int64_t, "%" SCNx64, Long)
 
 #define BITCOUNT(TYPE, NAME) \
 size_t bitCount##NAME(TYPE value) { \
@@ -132,9 +132,9 @@ size_t bitCount##NAME(TYPE value) { \
 }
 
 BITCOUNT(byte, Byte)
-BITCOUNT(short, Short)
-BITCOUNT(int, Integer)
-BITCOUNT(long long int, Long)
+BITCOUNT(int16_t, Short)
+BITCOUNT(int32_t, Integer)
+BITCOUNT(int64_t, Long)
 
 #define BYTEVALUE(TYPE, NAME) \
 byte byteValue##NAME(TYPE value) { \
@@ -142,48 +142,48 @@ byte byteValue##NAME(TYPE value) { \
 }
 
 BYTEVALUE(byte, Byte)
-BYTEVALUE(short, Short)
-BYTEVALUE(int, Integer)
-BYTEVALUE(long long int, Long)
+BYTEVALUE(int16_t, Short)
+BYTEVALUE(int32_t, Integer)
+BYTEVALUE(int64_t, Long)
 BYTEVALUE(float, Float)
 BYTEVALUE(double, Double)
 BYTEVALUE(boolean, Boolean)
 
 #define SHORTVALUE(TYPE, NAME) \
-short shortValue##NAME(TYPE value) { \
+int16_t shortValue##NAME(TYPE value) { \
     return (short)value; \
 }
 
 SHORTVALUE(byte, Byte)
-SHORTVALUE(short, Short)
-SHORTVALUE(int, Integer)
-SHORTVALUE(long long int, Long)
+SHORTVALUE(int16_t, Short)
+SHORTVALUE(int32_t, Integer)
+SHORTVALUE(int64_t, Long)
 SHORTVALUE(float, Float)
 SHORTVALUE(double, Double)
 SHORTVALUE(boolean, Boolean)
 
 #define INTVALUE(TYPE, NAME) \
-int intValue##NAME(TYPE value) { \
+int32_t intValue##NAME(TYPE value) { \
     return (int)value; \
 }
 
 INTVALUE(byte, Byte)
-INTVALUE(short, Short)
-INTVALUE(int, Integer)
-INTVALUE(long long int, Long)
+INTVALUE(int16_t, Short)
+INTVALUE(int32_t, Integer)
+INTVALUE(int64_t, Long)
 INTVALUE(float, Float)
 INTVALUE(double, Double)
 INTVALUE(boolean, Boolean)
 
 #define LONGVALUE(TYPE, NAME) \
-long long int longValue##NAME(TYPE value) { \
-    return (long long int)value; \
+int64_t longValue##NAME(TYPE value) { \
+    return (int64_t)value; \
 }
 
 LONGVALUE(byte, Byte)
-LONGVALUE(short, Short)
-LONGVALUE(int, Integer)
-LONGVALUE(long long int, Long)
+LONGVALUE(int16_t, Short)
+LONGVALUE(int32_t, Integer)
+LONGVALUE(int64_t, Long)
 LONGVALUE(float, Float)
 LONGVALUE(double, Double)
 LONGVALUE(boolean, Boolean)
@@ -194,9 +194,9 @@ float floatValue##NAME(TYPE value) { \
 }
 
 FLOATVALUE(byte, Byte)
-FLOATVALUE(short, Short)
-FLOATVALUE(int, Integer)
-FLOATVALUE(long long int, Long)
+FLOATVALUE(int16_t, Short)
+FLOATVALUE(int32_t, Integer)
+FLOATVALUE(int64_t, Long)
 FLOATVALUE(float, Float)
 FLOATVALUE(double, Double)
 FLOATVALUE(boolean, Boolean)
@@ -207,9 +207,9 @@ double doubleValue##NAME(TYPE value) { \
 }
 
 DOUBLEVALUE(byte, Byte)
-DOUBLEVALUE(short, Short)
-DOUBLEVALUE(int, Integer)
-DOUBLEVALUE(long long int, Long)
+DOUBLEVALUE(int16_t, Short)
+DOUBLEVALUE(int32_t, Integer)
+DOUBLEVALUE(int64_t, Long)
 DOUBLEVALUE(float, Float)
 DOUBLEVALUE(double, Double)
 DOUBLEVALUE(boolean, Boolean)
@@ -220,9 +220,9 @@ boolean booleanValue##NAME(TYPE value) { \
 }
 
 BOOLEANVALUE(byte, Byte)
-BOOLEANVALUE(short, Short)
-BOOLEANVALUE(int, Integer)
-BOOLEANVALUE(long long int, Long)
+BOOLEANVALUE(int16_t, Short)
+BOOLEANVALUE(int32_t, Integer)
+BOOLEANVALUE(int64_t, Long)
 BOOLEANVALUE(float, Float)
 BOOLEANVALUE(double, Double)
 BOOLEANVALUE(boolean, Boolean)
@@ -233,9 +233,9 @@ TYPE max##NAME(TYPE x, TYPE y) { \
 }
 
 MAX(byte, Byte)
-MAX(short, Short)
-MAX(int, Integer)
-MAX(long long int, Long)
+MAX(int16_t, Short)
+MAX(int32_t, Integer)
+MAX(int64_t, Long)
 MAX(float, Float)
 MAX(double, Double)
 
@@ -245,9 +245,9 @@ TYPE min##NAME(TYPE x, TYPE y) { \
 }
 
 MIN(byte, Byte)
-MIN(short, Short)
-MIN(int, Integer)
-MIN(long long int, Long)
+MIN(int16_t, Short)
+MIN(int32_t, Integer)
+MIN(int64_t, Long)
 MIN(float, Float)
 MIN(double, Double)
 
@@ -258,9 +258,9 @@ boolean equals##NAME(TYPE x, TYPE y) { \
 
 EQUALS(char, Character)
 EQUALS(byte, Byte)
-EQUALS(short, Short)
-EQUALS(int, Integer)
-EQUALS(long long int, Long)
+EQUALS(int16_t, Short)
+EQUALS(int32_t, Integer)
+EQUALS(int64_t, Long)
 EQUALS(float, Float)
 EQUALS(double, Double)
 EQUALS(boolean, Boolean)
@@ -369,7 +369,7 @@ boolean isDefined(const char c) {
 /*---------------------------------------------------------------------------------*/
 
 /*---------------------------------Boolean Class---------------------------------*/
-int compare(const boolean x, const boolean y) {
+int32_t compare(const boolean x, const boolean y) {
     return x & y;
 }
 
@@ -506,7 +506,7 @@ Integer new_Integer(const int value) {
     };
 }
 
-Long new_Long(const long long int value) {
+Long new_Long(const int64_t value) {
     return (Long) {
         .value = value,
         .parse = parseLong,
