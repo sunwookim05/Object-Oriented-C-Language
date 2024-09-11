@@ -2,7 +2,7 @@
 
 ---------Object-Oriented-C-Language---------
 
-gcc -o main src\*.c -I inc\
+gcc -std=c99 -o main src\*.c -I inc\ -Wall
 
 .\main
 

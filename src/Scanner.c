@@ -11,56 +11,56 @@ char nextChar(void){
 
 byte nextByte(void){
     byte b;
-    scanf("%hhd", &b);
+    scanf("%" SCNd8, &b);
     getchar();
     return b;
 }
 
 int16_t nextShort(void){
     int16_t s;
-    scanf("%hd", &s);
+    scanf("%" SCNd16, &s);
     getchar();
     return s;
 }
 
 int32_t nextInt(void){
     int32_t i;
-    scanf("%d", &i);
+    scanf("%" SCNd32, &i);
     getchar();
     return i;
 }
 
 int64_t nextLong(void){
     int64_t l;
-    scanf("%lld", &l);
+    scanf("%" SCNd64, &l);
     getchar();
     return l;
 }
 
 ubyte nextUByte(void){
     ubyte b;
-    scanf("%hhu", &b);
+    scanf("%" SCNu8, &b);
     getchar();
     return b;
 }
 
 uint16_t nextUShort(void){
     uint16_t s;
-    scanf("%hu", &s);
+    scanf("%" SCNu16, &s);
     getchar();
     return s;
 }
 
 uint32_t nextUInt(void){
     uint32_t i;
-    scanf("%u", &i);
+    scanf("%" SCNu32, &i);
     getchar();
     return i;
 }
 
 uint64_t nextULong(void){
     uint64_t l;
-    scanf("%llu", &l);
+    scanf("%" SCNu64, &l);
     getchar();
     return l;
 }

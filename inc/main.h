@@ -1,12 +1,13 @@
-#ifndef __MAIN_H
-#define __MAIN_H
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <inttypes.h>
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
+
+#ifndef __MAIN_H
+#define __MAIN_H
 
 #define import extern
 #define final const

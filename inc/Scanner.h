@@ -1,7 +1,7 @@
+#include "main.h"
+
 #ifndef __Scanner_H
 #define __Scanner_H
-
-#include "main.h"
 
 struct __stdin_t;
 
