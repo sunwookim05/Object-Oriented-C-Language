@@ -28,10 +28,10 @@ SYSTEM System = {
 
 #define PARSE_INT(TYPE, FUNC, NAME) \
 TYPE parse##NAME(const string str, ...) { \
-    int radix = 10; \
+    int32_t radix = 10; \
     va_list ap; \
     va_start(ap, str); \
-    radix = va_arg(ap, int); \
+    radix = va_arg(ap, int32_t); \
     va_end(ap); \
     return (TYPE)FUNC(str, null, radix); \
 }
@@ -42,8 +42,8 @@ TYPE parse##NAME(const string str) { \
 }
 
 PARSE_INT(byte, strtol, Byte)
-PARSE_INT(short, strtol, Short)
-PARSE_INT(int, strtol, Integer)
+PARSE_INT(int16_t, strtol, Short)
+PARSE_INT(int32_t, strtol, Integer)
 PARSE_INT(int64_t, strtoll, Long)
 PARSE_FLOAT(float, strtof, Float)
 PARSE_FLOAT(double, strtod, Double)
@@ -151,7 +151,7 @@ BYTEVALUE(boolean, Boolean)
 
 #define SHORTVALUE(TYPE, NAME) \
 int16_t shortValue##NAME(TYPE value) { \
-    return (short)value; \
+    return (int16_t)value; \
 }
 
 SHORTVALUE(byte, Byte)
@@ -164,7 +164,7 @@ SHORTVALUE(boolean, Boolean)
 
 #define INTVALUE(TYPE, NAME) \
 int32_t intValue##NAME(TYPE value) { \
-    return (int)value; \
+    return (int32_t)value; \
 }
 
 INTVALUE(byte, Byte)
@@ -465,7 +465,7 @@ Byte new_Byte(const byte value) {
     };
 }
 
-Short new_Short(const short value) {
+Short new_Short(const int16_t value) {
     return (Short) {
         .value = value,
         .parse = parseShort,
@@ -485,7 +485,7 @@ Short new_Short(const short value) {
     };
 }
 
-Integer new_Integer(const int value) {
+Integer new_Integer(const int32_t value) {
     return (Integer) {
         .value = value,
         .parse = parseInteger,
