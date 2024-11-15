@@ -60,9 +60,7 @@ static void* queuePop(Queue* queue) {
 }
 
 static void queueClear(Queue* queue) {
-    for (size_t i = 0; i < queue->size; i++) {
-        free(*(queue->data + i));
-    }
+    for (size_t i = 0; i < queue->size; i++) free(*(queue->data + i));
     free(queue->data);
     queue->data = null;
     queue->size = 0;
@@ -119,9 +117,7 @@ static void* dequePopBack(Deque* deque) {
 }
 
 static void dequeClear(Deque* deque) {
-    for (size_t i = 0; i < deque->size; i++) {
-        free(*(deque->data + i));
-    }
+    for (size_t i = 0; i < deque->size; i++) free(*(deque->data + i));
     free(deque->data);
     deque->data = null;
     deque->size = 0;
@@ -164,9 +160,7 @@ static void* listRemove(List* list, size_t index) {
 }
 
 static void listClear(List* list) {
-    for (size_t i = 0; i < list->size; i++) {
-        free(*(list->data + i));
-    }
+    for (size_t i = 0; i < list->size; i++) free(*(list->data + i));
     free(list->data);
     list->data = null;
     list->size = 0;
