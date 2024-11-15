@@ -9,6 +9,7 @@ int main(void){
     Stack stack = new_Stack(int);
     Queue queue = new_Queue(int);
     Deque deque = new_Deque(int);
+    List list = new_List(int);
     int* value = (int*)malloc(sizeof(int) * 10);
 
     srand(time(NULL));
@@ -87,12 +88,33 @@ int main(void){
         System.out.println("");
     }
 
+    System.out.println("");
+
+    for(int i = 0; i < 10; i++){
+        *(value + i) = rand() % 100;
+        list.add(&list, value + i);
+        for(int j = 0; j < list.size; j++) System.out.printf("%d ", *(int*)*(list.data + j));
+        System.out.println("");
+    }
+
+    for (int i = 0; i < 10; i++) {
+        int* removedValue = (int*)list.remove(&list, 0);
+        if (removedValue) {
+            System.out.println("Popped: %d", *removedValue);
+            free(removedValue);
+        }
+        for (int j = 0; j < list.size; j++) System.out.printf("%d ", *(int*)*(list.data + j));
+        System.out.println("");
+    }
+
     deque.clear(&deque);
     deque.delete(&deque);
     stack.clear(&stack);
     stack.delete(&stack);
     queue.clear(&queue);
     queue.delete(&queue);
+    list.clear(&list);
+    list.delete(&list);
     free(value);
     return 0;
 }
