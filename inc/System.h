@@ -49,7 +49,7 @@ typedef struct String{
     string (*substring)(const string, size_t, size_t);
     string (*toLowerCase)(const string);
     string (*toUpperCase)(const string);
-    string (*trim)(const string);
+    string (*trim)(const string, ...);
 }String;
 #pragma pack(pop)
 
