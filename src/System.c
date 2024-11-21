@@ -281,9 +281,7 @@ size_t length(const string str) {
 string replace(const string str, char oldChar, char newChar) {
     size_t length = strlen(str);
     string replaced = (string)malloc(sizeof(char) * (length + 1));
-    for (size_t i = 0; i < length; i++) {
-        *(replaced + i) = *(str + i) == oldChar ? newChar : *(str + i);
-    }
+    for (size_t i = 0; i < length; i++) *(replaced + i) = *(str + i) == oldChar ? newChar : *(str + i);
     *(replaced + length) = '\0';
     return replaced;
 }
@@ -312,16 +310,45 @@ string stoUpperCase(const string str) {
     return upper;
 }
 
-string trim(const string str) {
+string trim(const string str, ...) {
     size_t length = strlen(str);
     size_t beginIndex = 0;
     size_t endIndex = length - 1;
-    while (*(str + beginIndex) == ' ' || *(str + beginIndex) == '\t' || *(str + beginIndex) == '\n' || *(str + beginIndex) == '\r') beginIndex++;
-    while (*(str + endIndex) == ' ' || *(str + endIndex) == '\t' || *(str + endIndex) == '\n' || *(str + endIndex) == '\r') endIndex--;
-    size_t size = endIndex - beginIndex + 1;
+    va_list args;
+    int hasArgs = 0;
+    char c;
+    char *criteria = (char*)malloc(sizeof(char));
+    
+    if (criteria == NULL) return NULL;
+    va_start(args, str); 
+    while ((c = (char)va_arg(args, int)) != '\0') {
+        criteria = (char*)realloc(criteria, (unsigned char)c + 1);
+        if (criteria == NULL) {
+            va_end(args);
+            return NULL;
+        }
+        criteria[(unsigned char)c] = 1;
+        hasArgs = 1;
+    }
+    if (!hasArgs) {
+        criteria[' '] = 1;
+        criteria['\t'] = 1;
+        criteria['\n'] = 1;
+        criteria['\r'] = 1;
+    }
+    while (criteria[(unsigned char)*(str + beginIndex)]) beginIndex++;
+    while (criteria[(unsigned char)*(str + endIndex)]) endIndex--;
+    va_end(args);
+    size_t size = (endIndex >= beginIndex) ? endIndex - beginIndex + 1 : 0;
     string trimmed = (string)malloc(sizeof(char) * (size + 1));
-    memcpy(trimmed, str + beginIndex, size);
+    if (trimmed == NULL) {
+        free(criteria);
+        return NULL;
+    }
+    if (size > 0) memcpy(trimmed, str + beginIndex, size);
     *(trimmed + size) = '\0';
+
+    free(criteria);
     return trimmed;
 }
 /*----------------------------------------------------------------------------------*/
@@ -390,7 +417,7 @@ boolean logicalXor(const boolean x, const boolean y) {
 }
 
 boolean parseBoolean(const string str) {
-    return !strcmp(str, "true") ? true : false;
+    return !(((*(str+0)|0x20)^'t') ^ ((*(str+1)|0x20)^'r') ^ ((*(str+2)|0x20)^'u') ^ ((*(str+3)|0x20)^'e')) ? true : false;
 }
 
 boolean valueOfBoolean(const boolean value) {
