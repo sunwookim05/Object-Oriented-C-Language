@@ -31,6 +31,9 @@ int main(void){
         System.out.println("");
     }
 
+    stack.clear(&stack);
+    stack.delete(&stack);
+
     System.out.println("");
 
     for (int i = 0; i < 10; i++) {
@@ -49,6 +52,9 @@ int main(void){
         for (int j = 0; j < queue.size; j++) System.out.printf("%d ", *(int*)*(queue.data + j));
         System.out.println("");
     }
+
+    queue.clear(&queue);
+    queue.delete(&queue);
 
     System.out.println("");
 
@@ -88,6 +94,9 @@ int main(void){
         System.out.println("");
     }
 
+    deque.clear(&deque);
+    deque.delete(&deque);
+
     System.out.println("");
 
     for(int i = 0; i < 10; i++){
@@ -107,14 +116,9 @@ int main(void){
         System.out.println("");
     }
 
-    deque.clear(&deque);
-    deque.delete(&deque);
-    stack.clear(&stack);
-    stack.delete(&stack);
-    queue.clear(&queue);
-    queue.delete(&queue);
     list.clear(&list);
     list.delete(&list);
+
     free(value);
     return 0;
 }
