@@ -55,7 +55,6 @@ static void* queuePop(Queue* queue) {
     memmove(queue->data, queue->data + 1, (queue->size - 1) * sizeof(void*));
     queue->data = (void**)realloc(queue->data, (queue->size - 1) * sizeof(void*));
     queue->size--;
-
     return removedData;
 }
 
@@ -104,7 +103,6 @@ static void* dequePopFront(Deque* deque) {
     memmove(deque->data, deque->data + 1, (deque->size - 1) * sizeof(void*));
     deque->data = (void**)realloc(deque->data, (deque->size - 1) * sizeof(void*));
     deque->size--;
-
     return removedData;
 }
 
@@ -155,7 +153,6 @@ static void* listRemove(List* list, size_t index) {
     memmove(list->data + index, list->data + index + 1, (list->size - index - 1) * sizeof(void*));
     list->data = (void**)realloc(list->data, (list->size - 1) * sizeof(void*));
     list->size--;
-
     return removedData;
 }
 
@@ -182,4 +179,38 @@ List new_list(size_t type) {
     list.delete = listDelete;
     list.size = 0;
     return list;
+}
+
+void treeAdd(Tree* tree, void* data){
+
+}
+
+Tree getChild(Tree* tree, size_t){
+
+}
+
+void* treeRemove(Tree* tree, size_t){
+
+}
+
+void treeClear(Tree* tree){
+
+}
+
+void treeDelete(Tree*){
+
+}
+
+Tree new_tree(size_t type){
+    Tree tree;
+    tree.data = null;
+    tree.byteSize = type;
+    tree.add = treeAdd;
+    tree.getChild = getChild;
+    tree.remove = treeRemove;
+    tree.clear = treeClear;
+    tree.delete = treeDelete;
+    tree.childNum = 0;
+    tree.size = 0;
+    return  tree;
 }
