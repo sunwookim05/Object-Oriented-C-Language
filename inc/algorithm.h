@@ -70,23 +70,4 @@ List new_list(size_t);
 
 #define new_List(type) new_list(sizeof(type))
 
-#pragma pack(push, 1)
-typedef struct TREE{
-    void* data;
-    struct TREE** child;
-    size_t size;
-    size_t byteSize;
-    size_t childNum;
-    void (*add)(struct TREE*, void*);
-    struct TREE* (*getChild)(struct TREE*, size_t);
-    void* (*remove)(struct TREE*, size_t);
-    void (*clear)(struct TREE*);
-    void (*delete)(struct TREE*);
-} Tree;
-#pragma pack(pop)
-
-Tree new_tree(size_t);
-
-#define new_Tree(type) new_tree(sizeof(type))
-
 #endif

@@ -180,37 +180,3 @@ List new_list(size_t type) {
     list.size = 0;
     return list;
 }
-
-void treeAdd(Tree* tree, void* data){
-
-}
-
-Tree getChild(Tree* tree, size_t){
-
-}
-
-void* treeRemove(Tree* tree, size_t){
-
-}
-
-void treeClear(Tree* tree){
-
-}
-
-void treeDelete(Tree*){
-
-}
-
-Tree new_tree(size_t type){
-    Tree tree;
-    tree.data = null;
-    tree.byteSize = type;
-    tree.add = treeAdd;
-    tree.getChild = getChild;
-    tree.remove = treeRemove;
-    tree.clear = treeClear;
-    tree.delete = treeDelete;
-    tree.childNum = 0;
-    tree.size = 0;
-    return  tree;
-}
