@@ -387,11 +387,11 @@ boolean isAlphabetic(const char c) {
 }
 
 boolean isSpaceChar(const char c) {
-    return c == ' ';
+    return !(c ^ ' ');
 }
 
 boolean isDefined(const char c) {
-    return c != '\0';
+    return (c ^ '\0');
 }
 /*---------------------------------------------------------------------------------*/
 

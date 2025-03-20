@@ -16,7 +16,7 @@ typedef struct STACK {
 } Stack;
 #pragma pack(pop)
 
-Stack new_stack(size_t type);
+Stack new_stack(size_t);
 
 #define new_Stack(type) new_stack(sizeof(type))
 
@@ -32,7 +32,7 @@ typedef struct QUEUE {
 } Queue;
 #pragma pack(pop)
 
-Queue new_queue(size_t type);
+Queue new_queue(size_t);
 
 #define new_Queue(type) new_queue(sizeof(type))
 
@@ -50,7 +50,7 @@ typedef struct DEQUE {
 } Deque;
 #pragma pack(pop)
 
-Deque new_deque(size_t type);
+Deque new_deque(size_t);
 
 #define new_Deque(type) new_deque(sizeof(type))
 
@@ -66,7 +66,7 @@ typedef struct LIST {
 } List;
 #pragma pack(pop)
 
-List new_list(size_t type);
+List new_list(size_t);
 
 #define new_List(type) new_list(sizeof(type))
 
