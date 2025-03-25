@@ -22,8 +22,7 @@
 #pragma pack(push, 1)
 typedef struct THREAD {
     ThreadHandle id;
-    void* (*function)(void*);
-    void* args; 
+    void* (*function)(void*, ...);
     void (*start)(struct THREAD*);
     void (*join)(struct THREAD*);
     void (*detach)(struct THREAD*);
@@ -33,7 +32,6 @@ typedef struct THREAD {
 } Thread;
 #pragma pack(pop)
 
-Thread new_thread(void* (*function)(void*), void* args);
-#define new_Thread(function, args) new_thread(function, args)
+Thread new_Thread(void* (*function)(void*, ...));
 
 #endif
