@@ -24,7 +24,7 @@
 #pragma pack(push, 1)
 typedef struct THREAD {
     ThreadHandle id;
-    void* (*function)(void*, ...);
+    void* (*function)(void*);
     void (*start)(struct THREAD*);
     void (*join)(struct THREAD*);
     void (*detach)(struct THREAD*);
@@ -34,6 +34,14 @@ typedef struct THREAD {
 } Thread;
 #pragma pack(pop)
 
-Thread new_Thread(void* (*function)(void*, ...));
+typedef struct MUTEX {
+    MutexHandle id;
+    void (*lock)(struct MUTEX*);
+    void (*unlock)(struct MUTEX*);
+    void (*delete)(struct MUTEX*);
+} Mutex;
+
+Thread new_Thread(void* (*function)(void*));
+Mutex new_Mutex();
 
 #endif
