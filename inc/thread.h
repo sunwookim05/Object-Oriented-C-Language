@@ -10,6 +10,7 @@
     typedef HANDLE MutexHandle;
     #define THREAD_FUNC_RETURN DWORD WINAPI
     #define THREAD_FUNC_PARAM LPVOID
+    #define SLEEP(ms) Sleep(ms)
 #else
     #include <pthread.h>
     #include <unistd.h>
@@ -17,6 +18,7 @@
     typedef pthread_mutex_t MutexHandle;
     #define THREAD_FUNC_RETURN void*
     #define THREAD_FUNC_PARAM void*
+    #define SLEEP(ms) usleep((ms)*1000)
 #endif
 
 #pragma pack(push, 1)
@@ -32,6 +34,6 @@ typedef struct THREAD {
 } Thread;
 #pragma pack(pop)
 
-Thread new_Thread(ThreadHandle, void* (*function)(void*, ...));
+Thread new_Thread(void* (*function)(void*, ...));
 
 #endif
