@@ -41,7 +41,7 @@ TYPE parse##NAME(const string str) { \
     return FUNC(str, null); \
 }
 
-PARSE_INT(byte, strtol, Byte)
+PARSE_INT(int8_t, strtol, Byte)
 PARSE_INT(int16_t, strtol, Short)
 PARSE_INT(int32_t, strtol, Integer)
 PARSE_INT(int64_t, strtoll, Long)
@@ -58,7 +58,7 @@ string toString##NAME(TYPE value) { \
     return str; \
 }
 
-TOSTRING(byte, "%" SCNd8, Byte)
+TOSTRING(int8_t, "%" SCNd8, Byte)
 TOSTRING(int16_t, "%" SCNd16, Short)
 TOSTRING(int32_t, "%" SCNd32, Integer)
 TOSTRING(int64_t, "%" SCNd64, Long)
@@ -88,7 +88,7 @@ string toBinaryString##NAME(TYPE value) { \
     return trimmedBinaryString; \
 }
 
-TOBINARAYSTRING(byte, 8, Byte)
+TOBINARAYSTRING(int8_t, 8, Byte)
 TOBINARAYSTRING(int16_t, 16, Short)
 TOBINARAYSTRING(int32_t, 32, Integer)
 TOBINARAYSTRING(int64_t, 64, Long)
@@ -102,7 +102,7 @@ string toOctalString##NAME(TYPE value) { \
     return str; \
 }
 
-TOOCTALSTRING(byte, "%" SCNo8, Byte)
+TOOCTALSTRING(int8_t, "%" SCNo8, Byte)
 TOOCTALSTRING(int16_t, "%" SCNo16, Short)
 TOOCTALSTRING(int32_t, "%" SCNo32, Integer)
 TOOCTALSTRING(int64_t, "%" SCNo64, Long)
@@ -116,7 +116,7 @@ string toHexString##NAME(TYPE value) { \
     return str; \
 }
 
-TOHEXSTRING(byte, "%" SCNx8, Byte)
+TOHEXSTRING(int8_t, "%" SCNx8, Byte)
 TOHEXSTRING(int16_t, "%" SCNx16, Short)
 TOHEXSTRING(int32_t, "%" SCNx32, Integer)
 TOHEXSTRING(int64_t, "%" SCNx64, Long)
@@ -131,17 +131,17 @@ size_t bitCount##NAME(TYPE value) { \
     return count; \
 }
 
-BITCOUNT(byte, Byte)
+BITCOUNT(int8_t, Byte)
 BITCOUNT(int16_t, Short)
 BITCOUNT(int32_t, Integer)
 BITCOUNT(int64_t, Long)
 
 #define BYTEVALUE(TYPE, NAME) \
-byte byteValue##NAME(TYPE value) { \
-    return (byte)value; \
+int8_t byteValue##NAME(TYPE value) { \
+    return (int8_t)value; \
 }
 
-BYTEVALUE(byte, Byte)
+BYTEVALUE(int8_t, Byte)
 BYTEVALUE(int16_t, Short)
 BYTEVALUE(int32_t, Integer)
 BYTEVALUE(int64_t, Long)
@@ -154,7 +154,7 @@ int16_t shortValue##NAME(TYPE value) { \
     return (int16_t)value; \
 }
 
-SHORTVALUE(byte, Byte)
+SHORTVALUE(int8_t, Byte)
 SHORTVALUE(int16_t, Short)
 SHORTVALUE(int32_t, Integer)
 SHORTVALUE(int64_t, Long)
@@ -167,7 +167,7 @@ int32_t intValue##NAME(TYPE value) { \
     return (int32_t)value; \
 }
 
-INTVALUE(byte, Byte)
+INTVALUE(int8_t, Byte)
 INTVALUE(int16_t, Short)
 INTVALUE(int32_t, Integer)
 INTVALUE(int64_t, Long)
@@ -180,7 +180,7 @@ int64_t longValue##NAME(TYPE value) { \
     return (int64_t)value; \
 }
 
-LONGVALUE(byte, Byte)
+LONGVALUE(int8_t, Byte)
 LONGVALUE(int16_t, Short)
 LONGVALUE(int32_t, Integer)
 LONGVALUE(int64_t, Long)
@@ -193,7 +193,7 @@ float floatValue##NAME(TYPE value) { \
     return (float)value; \
 }
 
-FLOATVALUE(byte, Byte)
+FLOATVALUE(int8_t, Byte)
 FLOATVALUE(int16_t, Short)
 FLOATVALUE(int32_t, Integer)
 FLOATVALUE(int64_t, Long)
@@ -206,7 +206,7 @@ double doubleValue##NAME(TYPE value) { \
     return (double)value; \
 }
 
-DOUBLEVALUE(byte, Byte)
+DOUBLEVALUE(int8_t, Byte)
 DOUBLEVALUE(int16_t, Short)
 DOUBLEVALUE(int32_t, Integer)
 DOUBLEVALUE(int64_t, Long)
@@ -219,7 +219,7 @@ boolean booleanValue##NAME(TYPE value) { \
     return value ? true : false; \
 }
 
-BOOLEANVALUE(byte, Byte)
+BOOLEANVALUE(int8_t, Byte)
 BOOLEANVALUE(int16_t, Short)
 BOOLEANVALUE(int32_t, Integer)
 BOOLEANVALUE(int64_t, Long)
@@ -232,7 +232,7 @@ TYPE max##NAME(TYPE x, TYPE y) { \
     return x > y ? x : y; \
 }
 
-MAX(byte, Byte)
+MAX(int8_t, Byte)
 MAX(int16_t, Short)
 MAX(int32_t, Integer)
 MAX(int64_t, Long)
@@ -244,7 +244,7 @@ TYPE min##NAME(TYPE x, TYPE y) { \
     return x < y ? x : y; \
 }
 
-MIN(byte, Byte)
+MIN(int8_t, Byte)
 MIN(int16_t, Short)
 MIN(int32_t, Integer)
 MIN(int64_t, Long)
@@ -257,7 +257,7 @@ boolean equals##NAME(TYPE x, TYPE y) { \
 }
 
 EQUALS(char, Character)
-EQUALS(byte, Byte)
+EQUALS(int8_t, Byte)
 EQUALS(int16_t, Short)
 EQUALS(int32_t, Integer)
 EQUALS(int64_t, Long)
@@ -471,7 +471,7 @@ Boolean new_Boolean(const boolean value) {
     };
 }
 
-Byte new_Byte(const byte value) {
+Byte new_Byte(const int8_t value) {
     return (Byte) {
         .value = value,
         .parse = parseByte,

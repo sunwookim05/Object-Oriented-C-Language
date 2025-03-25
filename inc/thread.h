@@ -32,6 +32,6 @@ typedef struct THREAD {
 } Thread;
 #pragma pack(pop)
 
-Thread new_Thread(void* (*function)(void*, ...));
+Thread new_Thread(ThreadHandle, void* (*function)(void*, ...));
 
 #endif

@@ -20,9 +20,9 @@ typedef struct Scanner{
     /**
      * @brief User input Byte
      * @param void
-     * @return byte
+     * @return int8_t
      */
-    byte (*nextByte)(void);
+    int8_t (*nextByte)(void);
 
     /**
      * @brief User input Short
@@ -48,9 +48,9 @@ typedef struct Scanner{
     /**
      * @brief User input Unsigned Byte
      * @param void
-     * @return ubyte
+     * @return uint8_t
      */
-    ubyte (*nextUByte)(void);
+    uint8_t (*nextUByte)(void);
 
     /**
      * @brief User input Unsigned Short

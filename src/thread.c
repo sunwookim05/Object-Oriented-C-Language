@@ -1,3 +1,5 @@
+#include "thread.h"
+
 void start(Thread* thread) {
     #ifdef _WIN32
         thread->id = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)thread->function, NULL, 0, NULL);
@@ -45,18 +47,15 @@ void delete_thread(Thread* thread) {
     free(thread);
 }
 
-Thread* new_Thread(void* (*function)(void*, ...)) {
-    Thread* thread = (Thread*)malloc(sizeof(Thread));
-    if (!thread) {
-        perror("Thread 메모리 할당 실패");
-        exit(EXIT_FAILURE);
-    }
-    thread->function = function;
-    thread->start = start;
-    thread->join = join;
-    thread->detach = detach;
-    thread->cancel = cancel;
-    thread->exit = exit_thread;
-    thread->delete = delete_thread;
-    return thread;
+Thread new_Thread(ThreadHandle id, void* (*function)(void*, ...)) {
+    return (Thread) {
+        .id = id,
+        .function = function,
+        .start = start,
+        .join = join,
+        .detach = detach,
+        .cancel = cancel,
+        .exit = exit_thread,
+        .delete = delete_thread
+    };
 }

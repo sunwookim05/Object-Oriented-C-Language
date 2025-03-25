@@ -86,22 +86,22 @@ typedef struct Boolean{
 
 #pragma pack(push, 1)
 typedef struct Byte{
-    byte value;
-    byte (*parse)(const string, ...);
-    string (*toString)(byte);
-    string (*toBinaryString)(byte);
-    string (*toOctalString)(byte);
-    string (*toHexString)(byte);
-    size_t (*bitCount)(byte);
-    byte (*byteValue)(byte);
-    int16_t (*shortValue)(byte);
-    int32_t (*intValue)(byte);
-    int64_t (*longValue)(byte);
-    float (*floatValue)(byte);
-    double (*doubleValue)(byte);
-    boolean (*booleanValue)(byte);
-    byte (*min)(byte, byte);
-    byte (*max)(byte, byte);
+    int8_t value;
+    int8_t (*parse)(const string, ...);
+    string (*toString)(int8_t);
+    string (*toBinaryString)(int8_t);
+    string (*toOctalString)(int8_t);
+    string (*toHexString)(int8_t);
+    size_t (*bitCount)(int8_t);
+    int8_t (*byteValue)(int8_t);
+    int16_t (*shortValue)(int8_t);
+    int32_t (*intValue)(int8_t);
+    int64_t (*longValue)(int8_t);
+    float (*floatValue)(int8_t);
+    double (*doubleValue)(int8_t);
+    boolean (*booleanValue)(int8_t);
+    int8_t (*min)(int8_t, int8_t);
+    int8_t (*max)(int8_t, int8_t);
 }Byte;
 #pragma pack(pop)
 
@@ -114,7 +114,7 @@ typedef struct Short{
     string (*toOctalString)(int16_t);
     string (*toHexString)(int16_t);
     size_t (*bitCount)(int16_t);
-    byte (*byteValue)(int16_t);
+    int8_t (*byteValue)(int16_t);
     int16_t (*shortValue)(int16_t);
     int32_t (*intValue)(int16_t);
     int64_t (*longValue)(int16_t);
@@ -135,7 +135,7 @@ typedef struct Intrger{
     string (*toOctalString)(int32_t);
     string (*toHexString)(int32_t);
     size_t (*bitCount)(int32_t);
-    byte (*byteValue)(int32_t);
+    int8_t (*byteValue)(int32_t);
     int16_t (*shortValue)(int32_t);
     int32_t (*intValue)(int32_t);
     int64_t (*longValue)(int32_t);
@@ -156,7 +156,7 @@ typedef struct Long{
     string (*toOctalString)(int64_t);
     string (*toHexString)(int64_t);
     size_t (*bitCount)(int64_t);
-    byte (*byteValue)(int64_t);
+    int8_t (*byteValue)(int64_t);
     int16_t (*shortValue)(int64_t);
     int32_t (*intValue)(int64_t);
     int64_t (*longValue)(int64_t);
@@ -173,7 +173,7 @@ typedef struct Float{
     float value;
     float (*parse)(const string);
     string (*toString)(float);
-    byte (*byteValue)(float);
+    int8_t (*byteValue)(float);
     int16_t (*shortValue)(float);
     int32_t (*intValue)(float);
     int64_t (*longValue)(float);
@@ -190,7 +190,7 @@ typedef struct Double{
     double value;
     double (*parse)(const string);
     string (*toString)(double);
-    byte (*byteValue)(double);
+    int8_t (*byteValue)(double);
     int16_t (*shortValue)(double);
     int32_t (*intValue)(double);
     int64_t (*longValue)(double);
@@ -204,7 +204,7 @@ typedef struct Double{
 
 String new_String(string str);
 Character new_Character(char c);
-Byte new_Byte(byte b);
+Byte new_Byte(int8_t b);
 Short new_Short(int16_t s);
 Integer new_Integer(int32_t i);
 Long new_Long(int64_t l);

@@ -9,8 +9,8 @@ char nextChar(void){
     return c;
 }
 
-byte nextByte(void){
-    byte b;
+int8_t nextByte(void){
+    int8_t b;
     scanf("%" SCNd8, &b);
     getchar();
     return b;
@@ -37,8 +37,8 @@ int64_t nextLong(void){
     return l;
 }
 
-ubyte nextUByte(void){
-    ubyte b;
+uint8_t nextUByte(void){
+    uint8_t b;
     scanf("%" SCNu8, &b);
     getchar();
     return b;
