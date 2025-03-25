@@ -42,7 +42,7 @@ void* timer(void* arg) {
 void* display(void* arg) {
     while (threadRun) {
         mutex.lock(&mutex);
-        System.out.printf("%02d:%02d:%02d\r", tim.hour, tim.minute, tim.second);
+        System.out.printf("\t%02d:%02d:%02d\r", tim.hour, tim.minute, tim.second);
         mutex.unlock(&mutex);
         SLEEP(100);
     }
