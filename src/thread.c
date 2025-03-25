@@ -47,7 +47,7 @@ void delete_thread(Thread* thread) {
     free(thread);
 }
 
-Thread new_Thread(void* (*function)(void*, ...)) {
+Thread new_Thread(void* (*function)(void*)) {
     return (Thread) {
         .id = 0,
         .function = function,
@@ -58,4 +58,45 @@ Thread new_Thread(void* (*function)(void*, ...)) {
         .exit = exit_thread,    
         .delete = delete_thread
     };
+}
+
+#ifdef _WIN32
+    void lock_mutex(Mutex* mutex) {
+        WaitForSingleObject(mutex->id, INFINITE);
+    }
+
+    void unlock_mutex(Mutex* mutex) {
+        ReleaseMutex(mutex->id);
+    }
+
+    void delete_mutex(Mutex* mutex) {
+        CloseHandle(mutex->id);
+    }
+#else
+    void lock_mutex(Mutex* mutex) {
+        pthread_mutex_lock(&mutex->id);
+    }
+
+    void unlock_mutex(Mutex* mutex) {
+        pthread_mutex_unlock(&mutex->id);
+    }
+
+    void delete_mutex(Mutex* mutex) {
+        pthread_mutex_destroy(&mutex->id);
+    }
+#endif
+
+Mutex new_Mutex() {
+    Mutex mutex;
+    #ifdef _WIN32
+        mutex.id = CreateMutex(NULL, FALSE, NULL);
+    #else
+        pthread_mutex_init(&mutex.id, NULL);
+    #endif
+
+    mutex.lock = lock_mutex;
+    mutex.unlock = unlock_mutex;
+    mutex.delete = delete_mutex;
+        
+    return mutex;
 }
