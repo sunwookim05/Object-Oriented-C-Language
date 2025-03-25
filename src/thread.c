@@ -47,15 +47,15 @@ void delete_thread(Thread* thread) {
     free(thread);
 }
 
-Thread new_Thread(ThreadHandle id, void* (*function)(void*, ...)) {
+Thread new_Thread(void* (*function)(void*, ...)) {
     return (Thread) {
-        .id = id,
+        .id = 0,
         .function = function,
         .start = start,
         .join = join,
         .detach = detach,
         .cancel = cancel,
-        .exit = exit_thread,
+        .exit = exit_thread,    
         .delete = delete_thread
     };
 }
