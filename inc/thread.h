@@ -25,7 +25,7 @@
 typedef struct THREAD {
     ThreadHandle id;
     void* (*function)(void*);
-    void (*start)(struct THREAD*);
+    void (*start)(struct THREAD*, ...);
     void (*join)(struct THREAD*);
     void (*detach)(struct THREAD*);
     void (*cancel)(struct THREAD*);

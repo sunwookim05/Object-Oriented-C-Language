@@ -12,14 +12,14 @@ typedef struct TIM {
     uint8_t second;
 } TIM;
 
-Mutex mutex;
 volatile TIM tim;
 volatile boolean threadRun = true;
 
 void* timer(void* arg) {
+    Mutex* mutex = (Mutex*)arg;
     uint16_t i = 0;
     while (threadRun) {
-        mutex.lock(&mutex);
+        mutex->lock(mutex);
         i++;
         if(i >= 10) {
             i = 0;
@@ -33,29 +33,31 @@ void* timer(void* arg) {
             tim.minute = 0;
             tim.hour++;
         }
-        mutex.unlock(&mutex);
+        mutex->unlock(mutex);
         SLEEP(100);
     }
     return NULL;
 }
 
 void* display(void* arg) {
+    Mutex* mutex = (Mutex*)arg;
     while (threadRun) {
-        mutex.lock(&mutex);
-        System.out.printf("\t%02d:%02d:%02d\r", tim.hour, tim.minute, tim.second);
-        mutex.unlock(&mutex);
+        mutex->lock(mutex);
+        System.out.printf("  %02d:%02d:%02d\r", tim.hour, tim.minute, tim.second);
+        mutex->unlock(mutex);
         SLEEP(100);
     }
     return NULL;
 }
 
 void* stop(void* arg) {
+    Mutex* mutex = (Mutex*)arg;
     for(int i = 0; i < 300; i++) {
         SLEEP(100);
     }
-    mutex.lock(&mutex);
+    mutex->lock(mutex);
     threadRun = false;
-    mutex.unlock(&mutex);
+    mutex->unlock(mutex);
     return NULL;
 }
 
@@ -63,7 +65,7 @@ int main(void) {
     Thread timerThread = new_Thread(timer);
     Thread displayThread = new_Thread(display);
     Thread stopThread = new_Thread(stop);
-    mutex = new_Mutex();
+    Mutex mutex = new_Mutex();
     
     tim = (TIM) {
         .hour = 12,
@@ -71,9 +73,9 @@ int main(void) {
         .second = 40,
     };
 
-    timerThread.start(&timerThread);
-    displayThread.start(&displayThread);
-    stopThread.start(&stopThread);
+    timerThread.start(&timerThread, &mutex);
+    displayThread.start(&displayThread, &mutex);
+    stopThread.start(&stopThread, &mutex);
     
     timerThread.join(&timerThread);
     displayThread.join(&displayThread);
