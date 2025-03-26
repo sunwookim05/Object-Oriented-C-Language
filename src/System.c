@@ -26,6 +26,8 @@ SYSTEM System = {
     }
 };
 
+/*------------------------------Time Class------------------------------*/
+
 void getSystemTime(Time* t) {
     if (t == NULL) return; // NULL 체크
 
@@ -195,6 +197,8 @@ Time new_Time(void) {
 
     return t;
 }
+
+/*----------------------------------------------------------------------*/
 
 #define PARSE_INT(TYPE, FUNC, NAME) \
 TYPE parse##NAME(const string str, ...) { \
