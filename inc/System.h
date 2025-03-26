@@ -47,6 +47,67 @@ typedef struct SYSTEM{
 
 #pragma pack(push, 1)
 /**
+ * @struct TIME
+ * @brief Represents a time object with utility functions.
+ */
+typedef struct TIME {
+    uint16_t year; ///< The year.
+    uint8_t month; ///< The month.
+    uint8_t day; ///< The day.
+    uint8_t hour; ///< The hour.
+    uint8_t minute; ///< The minute.
+    uint8_t second;//< The second.
+    boolean running; ///< The running state.
+    ThreadHandle thread; ///< The thread handle.
+    MutexHandle mutex; ///< The mutex handle.
+    /**
+     * @brief Gets the current system time.
+     * @param t The time object.
+     * @return void.
+     */
+    void (*getSystemTime)(struct TIME*);
+    /**
+     * @brief Gets the time.
+     * @param t The time object.
+     * @return void.
+     */
+    void (*getTime)(struct TIME*);
+    /**
+     * @brief Sets the time.
+     * @param t The time object.
+     * @param year The year.
+     * @param month The month.
+     * @param day The day.
+     * @param hour The hour.
+     * @param minute The minute.
+     * @param second The second.
+     * @return void.
+    */
+    void (*setTime)(struct TIME*, uint16_t, uint8_t, uint8_t, uint8_t, uint8_t, uint8_t);
+    /**
+     * @brief Runs the time.
+     * @param t The time object.
+     * @return void.
+    */
+    void (*run)(struct TIME*);
+    /**
+     * @brief Stops the time.
+     * @param t The time object.
+     * @return void.
+    */
+    void (*stop)(struct TIME*);
+} Time;
+#pragma pack(pop)
+
+/**
+ * @brief Constructs a new {@code Time} object.
+ * @param void
+ * @return The new {@code Time} object.
+ */
+Time new_Time(void);
+
+#pragma pack(push, 1)
+/**
  * @struct String
  * @brief Represents a string object with utility functions.
  */
