@@ -1,12 +1,23 @@
 #include "thread.h"
 
-void start(Thread* thread) {
+#include <stdarg.h>
+#include <stdlib.h>
+
+void start(Thread* thread, ...) {
+    va_list args;
+    va_start(args, thread);
+    
+    void* arg = va_arg(args, void*);
+    
+    va_end(args);
+
     #ifdef _WIN32
-        thread->id = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)thread->function, NULL, 0, NULL);
+        thread->id = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)thread->function, arg, 0, NULL);
     #else
-        pthread_create(&thread->id, NULL, thread->function, NULL);
+        pthread_create(&thread->id, NULL, thread->function, arg);
     #endif
 }
+
 
 void join(Thread* thread) {
     #ifdef _WIN32
