@@ -99,12 +99,13 @@ Thread new_Thread(void* (*function)(void*)) {
 
 Mutex new_Mutex() {
     Mutex mutex;
+
     #ifdef _WIN32
         mutex.id = CreateMutex(NULL, FALSE, NULL);
     #else
         pthread_mutex_init(&mutex.id, NULL);
     #endif
-
+    
     mutex.lock = lock_mutex;
     mutex.unlock = unlock_mutex;
     mutex.delete = delete_mutex;

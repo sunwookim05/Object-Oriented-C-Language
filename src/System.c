@@ -26,6 +26,176 @@ SYSTEM System = {
     }
 };
 
+void getSystemTime(Time* t) {
+    if (t == NULL) return; // NULL 체크
+
+    #ifdef _WIN32
+        SYSTEMTIME st;
+        GetLocalTime(&st);
+        t->year = (uint16_t)st.wYear;
+        t->month = (uint8_t)st.wMonth;
+        t->day = (uint8_t)st.wDay;
+        t->hour = (uint8_t)st.wHour;
+        t->minute = (uint8_t)st.wMinute;
+        t->second = (uint8_t)st.wSecond;
+    #else
+        time_t now = time(NULL);
+        struct tm* tm_info = localtime(&now);
+
+        if (tm_info == NULL) { // localtime() 실패 시 0으로 초기화
+            *t = (Time){ 0 };
+            return;
+        }
+
+        t->year = (uint16_t)(tm_info->tm_year + 1900);
+        t->month = (uint8_t)(tm_info->tm_mon + 1);
+        t->day = (uint8_t)tm_info->tm_mday;
+        t->hour = (uint8_t)tm_info->tm_hour;
+        t->minute = (uint8_t)tm_info->tm_min;
+        t->second = (uint8_t)tm_info->tm_sec;
+    #endif
+}
+
+void getTime(Time* t) {
+    t->year = t->year;
+    t->month = t->month;
+    t->day = t->day;
+    t->hour = t->hour;
+    t->minute = t->minute;
+    t->second = t->second;
+}
+
+void setTime(Time* t, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second) {
+    t->year = year;
+    t->month = month;
+    t->day = day;
+    t->hour = hour;
+    t->minute = minute;
+    t->second = second;
+}
+
+#ifdef _WIN32
+DWORD WINAPI timRun(LPVOID arg) {
+#else
+void* timRun(void* arg) {
+#endif
+    Time* t = (Time*)arg;
+    boolean isLeapYear;
+    uint8_t daysInMonth;
+    uint8_t temp = 0;
+
+    isLeapYear = (t->year % 4 == 0 && (t->year % 100 != 0 || t->year % 400 == 0));
+
+    switch (t->month) {
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            daysInMonth = 31;
+            break;
+        case 4: case 6: case 9: case 11:
+            daysInMonth = 30;
+            break;
+        case 2:
+            daysInMonth = isLeapYear ? 29 : 28;
+            break;
+        default:
+            daysInMonth = 0;
+            break;
+    }
+
+    while (t->running) {
+        SLEEP(100);
+
+#ifdef _WIN32
+        WaitForSingleObject(&t->mutex, INFINITE);
+#else
+        pthread_mutex_lock(&t->mutex);
+#endif
+        temp++;
+
+        if(temp >= 10) {
+            temp = 0;
+            t->second++;
+        }
+        if (t->second >= 60) {
+            t->second = 0;
+            t->minute++;
+        }
+
+        if (t->minute >= 60) {
+            t->minute = 0;
+            t->hour++;
+        }
+
+        if (t->hour >= 24) {
+            t->hour = 0;
+            t->day++;
+
+            if (t->day > daysInMonth) {
+                t->day = 1;
+                t->month++;
+
+                if (t->month > 12) {
+                    t->month = 1;
+                    t->year++;
+                }
+            }
+        }
+
+#ifdef _WIN32
+        ReleaseMutex(&t->mutex);
+#else
+        pthread_mutex_unlock(&t->mutex);
+#endif
+    }
+
+    return 0;
+}
+
+void runTime(Time* t) {
+    if (!t->running) {
+        t->running = true;
+#ifdef _WIN32
+        t->thread = CreateThread(NULL, 0, timRun, t, 0, NULL);
+#else
+        pthread_create(&t->thread, NULL, timRun, t);
+#endif
+    }
+}
+
+void stopTime(Time* t) {
+    t->running = false;
+#ifdef _WIN32
+    WaitForSingleObject(t->thread, INFINITE);
+    CloseHandle(t->thread);
+#else
+    pthread_join(t->thread, NULL);
+#endif
+}
+
+Time new_Time(void) {
+    Time t;
+    
+    #ifdef _WIN32
+        CreateMutex(NULL, FALSE, NULL);
+    #else
+        pthread_mutex_init(&t.mutex, NULL);
+    #endif
+
+    t.second = 0;
+    t.minute = 0;
+    t.hour = 0;
+    t.day = 1;
+    t.month = 1;
+    t.year = 1970;
+    t.getSystemTime = getSystemTime;
+    t.getTime = getTime;
+    t.setTime = setTime;
+    t.run = runTime;
+    t.stop = stopTime;
+    t.running = false;
+
+    return t;
+}
+
 #define PARSE_INT(TYPE, FUNC, NAME) \
 TYPE parse##NAME(const string str, ...) { \
     int32_t radix = 10; \
