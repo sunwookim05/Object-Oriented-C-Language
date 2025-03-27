@@ -6,7 +6,6 @@
 
 import SYSTEM System;
 
-
 int main(void) {
 
     return 0;

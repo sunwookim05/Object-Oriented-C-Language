@@ -47,6 +47,56 @@ typedef struct SYSTEM{
 
 #pragma pack(push, 1)
 /**
+ * @struct File
+ * @brief Represents a file object with utility functions.
+ */
+typedef struct __FILE{
+    FILE* file; ///< The underlying file object.
+    /** 
+     * @brief Reads a line from the file.
+     * @param f The file object.
+     * @return The line read from the file.
+     */
+    int (*scanf)(struct __FILE*, const string, ...); ///< The scanf function.
+    /**
+     * @brief Reads a line from the file.
+     * @param f The file object.
+     * @return The line read from the file.
+     */
+    int (*printf)(struct __FILE*, const string, ...); ///< The printf function.
+    /**
+     * @brief Reads a line from the file.
+     * @param f The file object.
+     * @return The line read from the file.
+     */
+    int (*println)(struct __FILE*, const string, ...); ///< The println function.
+    /**
+     * @brief Opens the file.
+     * @param f The file object.
+     * @param name The file name.
+     * @param mode The file mode.
+     * @return The file object.
+     */
+    int (*open)(struct __FILE*, const string, const string); ///< The open function.
+    /**
+     * @brief Closes the file.
+     * @param f The file object.
+     * @return void.
+     */
+    void (*close)(struct __FILE*);
+}File;
+#pragma pack(pop)
+
+/**
+ * @brief Constructs a new {@code File} object.
+ * @param name The file name.
+ * @param mode The file mode.
+ * @return The new {@code File} object.
+ */
+File new_File(const string, const string);
+
+#pragma pack(push, 1)
+/**
  * @struct TIME
  * @brief Represents a time object with utility functions.
  */
@@ -89,7 +139,7 @@ typedef struct TIME {
      * @param t The time object.
      * @return void.
     */
-    void (*run)(struct TIME*);
+    void (*start)(struct TIME*);
     /**
      * @brief Stops the time.
      * @param t The time object.
