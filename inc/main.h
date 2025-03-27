@@ -16,7 +16,7 @@
     typedef HANDLE MutexHandle;   // Mutex handle type for Windows
     #define THREAD_FUNC_RETURN DWORD WINAPI  // Thread function return type for Windows
     #define THREAD_FUNC_PARAM LPVOID         // Thread function parameter type for Windows
-    #define SLEEP(ms) Sleep(ms)              // Sleep function for Windows
+    #define sleep(ms) Sleep(ms)              // Sleep function for Windows
 #else
     #include <pthread.h>
     #include <unistd.h>
@@ -24,7 +24,7 @@
     typedef pthread_mutex_t MutexHandle; // Mutex handle type for POSIX
     #define THREAD_FUNC_RETURN void*     // Thread function return type for POSIX
     #define THREAD_FUNC_PARAM void*      // Thread function parameter type for POSIX
-    #define SLEEP(ms) usleep((ms)*1000)  // Sleep function for POSIX
+    #define sleep(ms) usleep((ms)*1000)  // Sleep function for POSIX
 #endif
 
 #define import extern

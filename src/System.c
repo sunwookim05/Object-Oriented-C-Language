@@ -26,6 +26,51 @@ SYSTEM System = {
     }
 };
 
+static int fileScanf(File* f, const string format, ...) {
+    va_list ap;
+    va_start(ap, format);
+    int result = vfscanf(f->file, format, ap);
+    va_end(ap);
+    return result;
+}
+
+static int filePrintf(File* f, const string format, ...) {
+    va_list ap;
+    va_start(ap, format);
+    int result = vfprintf(f->file, format, ap);
+    va_end(ap);
+    return result;
+}
+
+static int filePrintln(File* f, const string format, ...) {
+    va_list ap;
+    va_start(ap, format);
+    int result = vfprintf(f->file, format, ap);
+    va_end(ap);
+    fprintf(f->file, "\n");
+    return result;
+}
+
+static int fileOpen(File* f, const string name, const string mode) {
+    f->file = fopen(name, mode);
+    return f->file == NULL ? 1 : 0;
+}
+
+static void fileClose(File* f) {
+    fclose(f->file);
+}
+
+File new_File(const string name, const string mode) {
+    File f;
+    f.file = fopen(name, mode);
+    f.scanf = fileScanf;
+    f.printf = filePrintf;
+    f.println = filePrintln;
+    f.open = fileOpen;
+    f.close = fileClose;
+    return f;
+}
+
 /*------------------------------Time Class------------------------------*/
 
 void getSystemTime(Time* t) {
@@ -104,7 +149,7 @@ void* timRun(void* arg) {
     }
 
     while (t->running) {
-        SLEEP(100);
+        sleep(100);
 
 #ifdef _WIN32
         WaitForSingleObject(&t->mutex, INFINITE);
@@ -152,7 +197,7 @@ void* timRun(void* arg) {
     return 0;
 }
 
-void runTime(Time* t) {
+void startTime(Time* t) {
     if (!t->running) {
         t->running = true;
 #ifdef _WIN32
@@ -191,7 +236,7 @@ Time new_Time(void) {
     t.getSystemTime = getSystemTime;
     t.getTime = getTime;
     t.setTime = setTime;
-    t.run = runTime;
+    t.start = startTime;
     t.stop = stopTime;
     t.running = false;
 
