@@ -33,11 +33,13 @@ void* isRunning(void* arg) {
 
     t.start(&t);
 
-    while(t.hour < 1);
+    while(t.minute < 2);
 
     mutex->lock(mutex);
     running = false;
     mutex->unlock(mutex);
+
+    t.stop(&t);
 
     return null;
 }
@@ -69,6 +71,11 @@ int main(void) {
     
     t.stop(&t);
     
+    timThread.join(&timThread);
+    timThread.delete(&timThread);
+
+    console.setCursorVisibility(true);
+    console.setTextColor(RESET);
     console.clear();
 
     return 0;
