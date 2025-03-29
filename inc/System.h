@@ -107,6 +107,7 @@ typedef struct TIME {
     uint8_t hour; ///< The hour.
     uint8_t minute; ///< The minute.
     uint8_t second;//< The second.
+    uint16_t millisecond; ///< The millisecond.
     boolean running; ///< The running state.
     ThreadHandle thread; ///< The thread handle.
     MutexHandle mutex; ///< The mutex handle.

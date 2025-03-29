@@ -126,6 +126,9 @@ void printlnXY(int x, int y, const string format, ...) {
 
 Console new_console(void) {
     Console console;
+    console.clear = clear;
+    console.setTextColor = setTextColor;
+    console.setBackgroundColor = setBackgroundColor;
     console.resetColor = resetColor;
     console.setCursorPos = setCursorPos;
     console.setCursorVisibility = setCursorVisibility;

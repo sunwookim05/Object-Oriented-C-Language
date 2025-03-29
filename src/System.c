@@ -85,21 +85,20 @@ void getSystemTime(Time* t) {
         t->hour = (uint8_t)st.wHour;
         t->minute = (uint8_t)st.wMinute;
         t->second = (uint8_t)st.wSecond;
+        t->millisecond = (uint16_t)st.wMilliseconds;
     #else
-        time_t now = time(NULL);
-        struct tm* tm_info = localtime(&now);
-
-        if (tm_info == NULL) { // localtime() 실패 시 0으로 초기화
-            *t = (Time){ 0 };
-            return;
-        }
-
-        t->year = (uint16_t)(tm_info->tm_year + 1900);
-        t->month = (uint8_t)(tm_info->tm_mon + 1);
-        t->day = (uint8_t)tm_info->tm_mday;
-        t->hour = (uint8_t)tm_info->tm_hour;
-        t->minute = (uint8_t)tm_info->tm_min;
-        t->second = (uint8_t)tm_info->tm_sec;
+        struct timespec ts;
+    struct tm now;
+    clock_gettime(CLOCK_REALTIME, &ts);
+    localtime_r(&ts.tv_sec, &now);
+    t->year = (uint16_t)now.tm_year + 1900;
+    t->month = (uint8_t)now.tm_mon + 1;
+    t->day = (uint8_t)now.tm_mday;
+    t->hour = (uint8_t)now.tm_hour;
+    t->minute = (uint8_t)now.tm_min;
+    t->second = (uint8_t)now.tm_sec;
+    t->millisecond = (uint16_t)(ts.tv_nsec / 1.0e6);
+        
     #endif
 }
 
@@ -110,6 +109,7 @@ void getTime(Time* t) {
     t->hour = t->hour;
     t->minute = t->minute;
     t->second = t->second;
+    t->millisecond = t->millisecond;
 }
 
 void setTime(Time* t, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second) {
@@ -119,18 +119,18 @@ void setTime(Time* t, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, u
     t->hour = hour;
     t->minute = minute;
     t->second = second;
+    t->millisecond = 0;
 }
 
 #ifdef _WIN32
-DWORD WINAPI timRun(LPVOID arg) {
+DWORD WINAPI _timRun(LPVOID arg) {
 #else
-void* timRun(void* arg) {
+void* _timRun(void* arg) {
 #endif
     Time* t = (Time*)arg;
     boolean isLeapYear;
     uint8_t daysInMonth;
-    uint8_t temp = 0;
-
+    
     isLeapYear = (t->year % 4 == 0 && (t->year % 100 != 0 || t->year % 400 == 0));
 
     switch (t->month) {
@@ -148,49 +148,61 @@ void* timRun(void* arg) {
             break;
     }
 
+    uint16_t prev = 0;
+
     while (t->running) {
-        sleep(100);
+        uint16_t current;
+
+#ifdef _WIN32
+        SYSTEMTIME st;
+        GetLocalTime(&st);
+        current = st.wMilliseconds;
+#else
+        struct timespec ts;
+        clock_gettime(CLOCK_REALTIME, &ts);
+        current = ts.tv_nsec / 1.0e6;
+#endif
+        uint16_t elapsed = (current >= prev) ? (current - prev) : (1000 - prev + current);
+        prev = current;
 
 #ifdef _WIN32
         WaitForSingleObject(&t->mutex, INFINITE);
 #else
         pthread_mutex_lock(&t->mutex);
 #endif
-        temp++;
-
-        if(temp >= 10) {
-            temp = 0;
+        t->millisecond += elapsed;
+        while (t->millisecond >= 1000) {
+            t->millisecond -= 1000;
             t->second++;
-        }
-        if (t->second >= 60) {
-            t->second = 0;
-            t->minute++;
-        }
 
-        if (t->minute >= 60) {
-            t->minute = 0;
-            t->hour++;
-        }
-
-        if (t->hour >= 24) {
-            t->hour = 0;
-            t->day++;
-
-            if (t->day > daysInMonth) {
-                t->day = 1;
-                t->month++;
-
-                if (t->month > 12) {
-                    t->month = 1;
-                    t->year++;
+            if (t->second >= 60) {
+                t->second = 0;
+                t->minute++;
+            }
+            if (t->minute >= 60) {
+                t->minute = 0;
+                t->hour++;
+            }
+            if (t->hour >= 24) {
+                t->hour = 0;
+                t->day++;
+                if (t->day > daysInMonth) {
+                    t->day = 1;
+                    t->month++;
+                    if (t->month > 12) {
+                        t->month = 1;
+                        t->year++;
+                    }
                 }
             }
         }
 
 #ifdef _WIN32
         ReleaseMutex(&t->mutex);
+        sleep(1);
 #else
         pthread_mutex_unlock(&t->mutex);
+        sleep(1);
 #endif
     }
 
@@ -201,9 +213,9 @@ void startTime(Time* t) {
     if (!t->running) {
         t->running = true;
 #ifdef _WIN32
-        t->thread = CreateThread(NULL, 0, timRun, t, 0, NULL);
+        t->thread = CreateThread(NULL, 0, _timRun, t, 0, NULL);
 #else
-        pthread_create(&t->thread, NULL, timRun, t);
+        pthread_create(&t->thread, NULL, _timRun, t);
 #endif
     }
 }
@@ -227,6 +239,7 @@ Time new_Time(void) {
         pthread_mutex_init(&t.mutex, NULL);
     #endif
 
+    t.millisecond = 0;
     t.second = 0;
     t.minute = 0;
     t.hour = 0;
