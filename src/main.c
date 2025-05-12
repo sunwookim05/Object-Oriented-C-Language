@@ -33,7 +33,7 @@ void* isRunning(void* arg) {
 
     t.start(&t);
 
-    while(t.minute < 2);
+    while(t.minute < 1);
 
     mutex->lock(mutex);
     running = false;
@@ -47,6 +47,7 @@ void* isRunning(void* arg) {
 int main(void) {
     Time t = new_Time();
     Thread timThread = new_Thread(timRun);
+    Thread runThread = new_Thread(isRunning);
     Console console = new_console();
     Mutex mutex = new_Mutex();
 
@@ -58,6 +59,7 @@ int main(void) {
     t.getSystemTime(&t);
 
     timThread.start(&timThread, &mutex);
+    runThread.start(&runThread, &mutex);
 
     t.start(&t);
 
@@ -70,9 +72,6 @@ int main(void) {
     }
     
     t.stop(&t);
-    
-    timThread.join(&timThread);
-    timThread.delete(&timThread);
 
     console.setCursorVisibility(true);
     console.setTextColor(RESET);
