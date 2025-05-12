@@ -9,7 +9,8 @@ Translated to English
 
 ---
 
-You can view the translation in your preferred language by clicking on the corresponding link below:
+You can view the translation in your preferred language by clicking on the corresponding link below.
+
 🌍 [English](README.md) | [한국어](translations/ko.md) | [中文](translations/zh.md) | [日本語](translations/ja.md) | [Русский](translations/ru.md)
 
 ---
