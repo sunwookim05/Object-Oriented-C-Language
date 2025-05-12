@@ -9,10 +9,12 @@ Translated to English
 
 ---
 
-<!-- 🧰 Tech Stack & 🔧 Dynamic Status (2줄 구성) -->
-<div align="center" style="font-size: 0.85rem;">
+You can view the translation in your preferred language by clicking on the corresponding link below:
+🌍 [English](README.md) | [한국어](translations/ko.md) | [中文](translations/zh.md) | [日本語](translations/ja.md) | [Русский](translations/ru.md)
 
-  <!-- Line 1: 기술 스택 13개 -->
+---
+
+<div align="center" style="font-size: 0.85rem;">
   <img src="https://img.shields.io/badge/C-00599C?style=flat&logo=c&logoColor=white" alt="C" />
   <img src="https://img.shields.io/badge/GCC-333333?style=flat&logo=gnu&logoColor=white" alt="GCC" />
   <img src="https://img.shields.io/badge/Make-064F8C?style=flat&logo=cmake&logoColor=white" alt="Make" />
@@ -28,12 +30,9 @@ Translated to English
   <img src="https://img.shields.io/badge/CLion-000000?style=flat&logo=jetbrains&logoColor=white" alt="CLion" />
 
   <br />
-
-  <!-- Line 2: 다이나믹 상태 3개 -->
   <img src="https://img.shields.io/badge/Commits-1234-blue?style=flat" alt="Commits" />
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat" alt="License" />
   <img src="https://img.shields.io/badge/Version-1.0.0-orange?style=flat" alt="Version" />
-
 </div>
 
 ## 📖 Overview
@@ -117,8 +116,6 @@ gcc -std=c99 -Wall -I inc -o main src/*.c -lpthread
 
 ```
 Object-Oriented-C-Language/
-├── LICENSE                # License information
-├── README.md              # Project description (this file)
 ├── inc/                   # Header files
 │   ├── algorithm.h
 │   ├── console.h
@@ -126,13 +123,20 @@ Object-Oriented-C-Language/
 │   ├── Scanner.h
 │   ├── System.h
 │   └── thread.h
-└── src/                   # Source files
-    ├── algorithm.c
-    ├── console.c
-    ├── main.c
-    ├── Scanner.c
-    ├── System.c
-    └── thread.c
+├── src/                   # Source files
+│   ├── algorithm.c
+│   ├── console.c
+│   ├── main.c
+│   ├── Scanner.c
+│   ├── System.c
+│   └── thread.c
+├── translations/          # Translations folder
+│   ├── ja.md              # Japanese
+│   ├── ko.md              # Korean
+│   ├── ru.md              # Russian
+│   └── zh.md              # Chinese
+├── LICENSE                # License information
+└── README.md              # Project description (this file)
 ```
 
 ## 🔧 Development & Build
