@@ -1,7 +1,7 @@
 #include "main.h"
 
-#ifndef ___CONSOLE_H
-#define ___CONSOLE_H
+#ifndef __CONSOLE_H
+#define __CONSOLE_H
 
 typedef int32_t ColorType;
 

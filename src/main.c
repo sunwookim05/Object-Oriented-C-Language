@@ -33,7 +33,7 @@ void* isRunning(void* arg) {
 
     t.start(&t);
 
-    while(t.minute < 5);
+    while(t.minute < 1);
 
     mutex->lock(mutex);
     running = false;
