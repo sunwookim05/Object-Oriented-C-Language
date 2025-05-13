@@ -6,7 +6,8 @@
 
 Вы можете просмотреть перевод на предпочитаемом языке, щелкнув по соответствей ссылке.
 
-🌍 [English](../README.md) | [한국어](ko.md) | [中文](zh.md) | [日本語](ja.md) | [Русский](ru.md)
+🌍 [English](../README.md) | [한국어](ko.md) | [中文](zh.md) | [日本語](ja.md) | [Русский](ru.md) | [Français](fr.md) | [Español](es.md) | [Italiano](it.md) | [Português](pt.md) | [हिन्दी](hi.md) | [العربية](ar.md)
+
 
 ---
 
@@ -112,27 +113,33 @@ gcc -std=c99 -Wall -I inc -o main src/*.c -lpthread
 
 ````
 Object-Oriented-C-Language/
-├── inc/                   # Заголовочные файлы
+├── inc/                      # Заголовочные файлы
 │   ├── algorithm.h
 │   ├── console.h
 │   ├── main.h
 │   ├── Scanner.h
 │   ├── System.h
 │   └── thread.h
-├── src/                   # Исходные файлы
+├── src/                      # Исходные файлы
 │   ├── algorithm.c
 │   ├── console.c
 │   ├── main.c
 │   ├── Scanner.c
 │   ├── System.c
 │   └── thread.c
-├── translations/          # Папка переводов
-│   ├── ja.md              # Японский
-│   ├── ko.md              # Корейский
-│   ├── ru.md              # Русский (этот файл)
-│   └── zh.md              # Китайский
-├── LICENSE                # Информация о лицензии
-└── README.md              # Описание проекта 
+├── translations/             # Файлы перевода
+│   ├── ar.md                 # Арабский
+│   ├── es.md                 # Испанский
+│   ├── fr.md                 # Французский
+│   ├── hi.md                 # Хинди
+│   ├── it.md                 # Итальянский
+│   ├── ja.md                 # Японский
+│   ├── ko.md                 # Корейский
+│   ├── pt.md                 # Португальский
+│   ├── ru.md                 # Русский  (этот файл)
+│   └── zh.md                 # Китайский
+├── LICENSE                   # Лицензия
+└── README.md                 # Описание проекта
 ````
 
 ## 🔧 Разработка и сборка
