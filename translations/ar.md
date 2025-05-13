@@ -68,7 +68,7 @@
 | ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **خيوط POSIX**: دعم تعدد الخيوط في أنظمة Unix (`pthread.h`)                                       |
 | ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **مكتبة C القياسية**: `stdio.h`, `stdlib.h`, `string.h`, `time.h` وغيرها                          |
 | ![OOP](https://img.shields.io/badge/Object--Oriented%20Programming-000000?style=flat)                                | **البرمجة كائنية التوجه في C**: التغليف، التجريد، التعددية الشكلية باستخدام struct ومؤشرات الدوال |
-| ![Algorithms](https://img.shields.io/badge/Algorithms%20\(Stack,%20Queue,%20List\)-000000?style=flat)                | **الخوارزميات**: تنفيذ هياكل البيانات Stack، Queue، Deque، List                                   |
+| ![Algorithms](https://img.shields.io/badge/Algorithms%20-000000?style=flat)                | **الخوارزميات**: تنفيذ هياكل البيانات Stack، Queue، Deque، List                                   |
 | ![Git](https://img.shields.io/badge/Git-F05032?style=flat\&logo=git\&logoColor=white)                                | **Git**: نظام التحكم في الإصدارات                                                                 |
 | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat\&logo=github\&logoColor=white)                       | **GitHub**: منصة لمشاركة الكود ومراجعاته                                                          |
 | ![Vim](https://img.shields.io/badge/Vim-019733?style=flat\&logo=vim\&logoColor=white)                                | **Vim**: محرر نصوص قابل للتخصيص بقوة                                                              |

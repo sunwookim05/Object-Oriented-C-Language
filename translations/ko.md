@@ -66,7 +66,7 @@
 | ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **POSIX 스레드**: 유닉스 기반 시스템의 멀티스레딩 지원(`pthread.h`)                                |
 | ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **C 표준 라이브러리**: `stdio.h`, `stdlib.h`, `string.h`, `time.h` 등 핵심 라이브러리          |
 | ![OOP](https://img.shields.io/badge/Object--Oriented%20Programming-000000?style=flat)                                | **C에서의 OOP**: struct와 함수 포인터를 통한 캡슐화, 추상화, 다형성                                  |
-| ![Algorithms](https://img.shields.io/badge/Algorithms%20\(Stack,%20Queue,%20List\)-000000?style=flat)                | **알고리즘**: Stack, Queue, Deque, List 등 데이터 구조 구현                                 |
+| ![Algorithms](https://img.shields.io/badge/Algorithms%20-000000?style=flat)                | **알고리즘**: Stack, Queue, Deque, List 등 데이터 구조 구현                                 |
 | ![Git](https://img.shields.io/badge/Git-F05032?style=flat\&logo=git\&logoColor=white)                                | **Git**: 코드 변경 관리를 위한 버전 관리 시스템                                                 |
 | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat\&logo=github\&logoColor=white)                       | **GitHub**: 코드 공유 및 리뷰를 위한 플랫폼                                                  |
 | ![Vim](https://img.shields.io/badge/Vim-019733?style=flat\&logo=vim\&logoColor=white)                                | **Vim**: 효율적인 텍스트 편집을 위한 고도로 구성 가능한 편집기                                         |
