@@ -1,8 +1,3 @@
-<!--
-README.md for Object-Oriented C Language
-Translated to English
--->
-
 # Object-Oriented C Language
 
 > An example project implementing object-oriented programming paradigms using pure C.
@@ -11,7 +6,7 @@ Translated to English
 
 You can view the translation in your preferred language by clicking on the corresponding link below.
 
-🌍 [English](README.md) | [한국어](translations/ko.md) | [中文](translations/zh.md) | [日本語](translations/ja.md) | [Русский](translations/ru.md)
+🌍 [English](README.md) | [한국어](translations/ko.md) | [中文](translations/zh.md) | [日本語](translations/ja.md) | [Русский](translations/ru.md) | [Français](translations/fr.md) | [Español](translations/es.md) | [Italiano](translations/it.md) | [Português](translations/pt.md) | [हिन्दी](translations/hi.md) | [العربية](translations/ar.md)
 
 ---
 
@@ -117,27 +112,33 @@ gcc -std=c99 -Wall -I inc -o main src/*.c -lpthread
 
 ```
 Object-Oriented-C-Language/
-├── inc/                   # Header files
+├── inc/                      # Header files
 │   ├── algorithm.h
 │   ├── console.h
 │   ├── main.h
 │   ├── Scanner.h
 │   ├── System.h
 │   └── thread.h
-├── src/                   # Source files
+├── src/                      # Source files
 │   ├── algorithm.c
 │   ├── console.c
 │   ├── main.c
 │   ├── Scanner.c
 │   ├── System.c
 │   └── thread.c
-├── translations/          # Translations folder
-│   ├── ja.md              # Japanese
-│   ├── ko.md              # Korean
-│   ├── ru.md              # Russian
-│   └── zh.md              # Chinese
-├── LICENSE                # License information
-└── README.md              # Project description (this file)
+├── translations/             # Translation files
+│   ├── ar.md                 # Arabic
+│   ├── es.md                 # Spanish
+│   ├── fr.md                 # French
+│   ├── hi.md                 # Hindi
+│   ├── it.md                 # Italian
+│   ├── ja.md                 # Japanese
+│   ├── ko.md                 # Korean 
+│   ├── pt.md                 # Portuguese
+│   ├── ru.md                 # Russian
+│   └── zh.md                 # Chinese
+├── LICENSE                   # License information
+└── README.md                 # Project description (this file)
 ```
 
 ## 🔧 Development & Build
