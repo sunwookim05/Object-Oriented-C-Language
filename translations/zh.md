@@ -61,7 +61,7 @@
 | ![Make](https://img.shields.io/badge/Make-064F8C?style=flat\&logo=cmake\&logoColor=white)                            | **Make**：用于自动化编译与链接源文件的工具                                               |
 | ![Makefile](https://img.shields.io/badge/Makefile-000000?style=flat)                                                 | **Makefile**：编写 Make 命令的构建指令文件                                          |
 | ![Windows](https://img.shields.io/badge/Windows-0078D4?style=flat\&logo=windows\&logoColor=white)                    | **Windows API**：Windows 系统函数与多线程支持（`windows.h`, `conio.h`, `process.h`） |
-| ![Linux](https://img.shields.io/badge/Linux-000000?style=flat\&logo=linux\&logoColor=white)                          | **Linux**：广泛使用的开源操作系统                                                   |
+| ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat\&logo=linux\&logoColor=white)                          | **Linux**：广泛使用的开源操作系统                                                   |
 | ![MACOS](https://img.shields.io/badge/MACOS-000000?style=flat\&logo=apple\&logoColor=white)                          | **macOS**：支持 Unix 命令的 Mac 硬件操作系统                                        |
 | ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **POSIX 线程**：Unix 系统的多线程支持（`pthread.h`）                                 |
 | ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **C 标准库**：核心库如 `stdio.h`, `stdlib.h`, `string.h`, `time.h`              |

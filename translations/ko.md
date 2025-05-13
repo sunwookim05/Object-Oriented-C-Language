@@ -61,7 +61,7 @@
 | ![Make](https://img.shields.io/badge/Make-064F8C?style=flat\&logo=cmake\&logoColor=white)                            | **Make**: 소스 파일 컴파일 및 링크 자동화 도구                                                 |
 | ![Makefile](https://img.shields.io/badge/Makefile-000000?style=flat)                                                 | **Makefile**: Make 명령을 위한 빌드 지침 구성 파일                                           |
 | ![Windows](https://img.shields.io/badge/Windows-0078D4?style=flat\&logo=windows\&logoColor=white)                    | **Windows API**: Windows 시스템 함수 및 멀티스레딩 지원(`windows.h`, `conio.h`, `process.h`) |
-| ![Linux](https://img.shields.io/badge/Linux-000000?style=flat\&logo=linux\&logoColor=white)                          | **Linux**: 프로그래밍 및 개발에 널리 사용되는 오픈 소스 운영체제                                       |
+| ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat\&logo=linux\&logoColor=white)                          | **Linux**: 프로그래밍 및 개발에 널리 사용되는 오픈 소스 운영체제                                       |
 | ![MACOS](https://img.shields.io/badge/MACOS-000000?style=flat\&logo=apple\&logoColor=white)                          | **macOS**: Unix 계열 명령어를 지원하는 Mac 하드웨어 운영체제                                      |
 | ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **POSIX 스레드**: 유닉스 기반 시스템의 멀티스레딩 지원(`pthread.h`)                                |
 | ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **C 표준 라이브러리**: `stdio.h`, `stdlib.h`, `string.h`, `time.h` 등 핵심 라이브러리          |
