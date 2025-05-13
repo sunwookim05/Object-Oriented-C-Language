@@ -61,7 +61,7 @@ Ce projet est un exemple modulable implémentant, uniquement en langage C (stand
 | ![Make](https://img.shields.io/badge/Make-064F8C?style=flat\&logo=cmake\&logoColor=white)                            | **Make** : Outil d’automatisation de compilation                                  |
 | ![Makefile](https://img.shields.io/badge/Makefile-000000?style=flat)                                                 | **Makefile** : Fichier de configuration pour les instructions de build            |
 | ![Windows](https://img.shields.io/badge/Windows-0078D4?style=flat\&logo=windows\&logoColor=white)                    | **API Windows** : Fonctions système et support multithreading (`windows.h`)       |
-| ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat\&logo=linux\&logoColor=white)                          | **Linux** : Système d’exploitation open source couramment utilisé                 |
+| ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat\&logo=linux\&logoColor=black)                          | **Linux** : Système d’exploitation open source couramment utilisé                 |
 | ![MACOS](https://img.shields.io/badge/MACOS-000000?style=flat\&logo=apple\&logoColor=white)                          | **macOS** : Système Unix sur matériel Apple                                       |
 | ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **Threads POSIX** : Support multithreading Unix (`pthread.h`)                     |
 | ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **Bibliothèque standard C** : `stdio.h`, `stdlib.h`, `string.h`, `time.h`         |
