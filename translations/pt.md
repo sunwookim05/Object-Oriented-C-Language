@@ -4,7 +4,7 @@
 
 ---
 
-Você pode visualizar a documentação traduzida no idioma desejado clicando nos links abaixo:
+Clique no link abaixo para visualizar o conteúdo traduzido no idioma desejado.
 
 🌍 [English](../README.md) | [한국어](ko.md) | [中文](zh.md) | [日本語](ja.md) | [Русский](ru.md) | [Français](fr.md) | [Español](es.md) | [Italiano](it.md) | [Português](pt.md) | [हिन्दी](hi.md) | [العربية](ar.md)
 
@@ -33,57 +33,57 @@ Você pode visualizar a documentação traduzida no idioma desejado clicando nos
 
 ## 📖 Visão Geral
 
-Este projeto é um exemplo modular que usa apenas a linguagem C (padrão C99) para implementar conceitos fundamentais de programação orientada a objetos, como abstração, encapsulamento, herança e polimorfismo. Componentes como Sistema (`System`), Thread, Console I/O (`Console`), Scanner de entrada e Algoritmos (`Algorithm`) são representados como objetos usando structs e ponteiros para funções.
+Este projeto é um exemplo que implementa os conceitos principais de programação orientada a objetos (abstração, encapsulamento, herança, polimorfismo) usando apenas a linguagem C pura (padrão C99) em uma estrutura modular. Diversos componentes do sistema (`System`), threads (`Thread`), entrada/saída de console (`Console`), scanner de entrada (`Scanner`) e algoritmos (`Algorithm`) são representados como objetos utilizando structs e ponteiros para funções.
 
-## ⚙️ Principais Funcionalidades
+## ⚙️ Funcionalidades Principais
 
 * **System**: entrada/saída básica, I/O de arquivos, temporizador, abstração de plataforma
 * **Thread**: criação e gerenciamento de threads leves
 * **Console**: formatação e controle de I/O de console
-* **Scanner**: utilitários para fluxo de entrada
-* **Algorithm**: coleções de dados como pilha (stack), fila (queue), deque e listas
+* **Scanner**: utilitários de fluxo de entrada
+* **Algorithm**: coleções Stack, Queue, Deque, List
 
-## 🧰 Stack Tecnológico
+## 🧰 Stack de Tecnologias
 
-| Badge                                                                                                                | Descrição                                                                       |
-| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| ![C](https://img.shields.io/badge/C-00599C?style=flat\&logo=c\&logoColor=white)                                      | **Linguagem C**: padrão C99, implementação OO via structs e ponteiros de função |
-| ![GCC](https://img.shields.io/badge/GCC-333333?style=flat\&logo=gnu\&logoColor=white)                                | **GCC**: GNU Compiler Collection, usado para compilar o programa C              |
-| ![Make](https://img.shields.io/badge/Make-064F8C?style=flat\&logo=cmake\&logoColor=white)                            | **Make**: ferramenta de automação para compilação e linkagem                    |
-| ![Makefile](https://img.shields.io/badge/Makefile-000000?style=flat)                                                 | **Makefile**: arquivo de configuração para Make                                 |
-| ![Windows](https://img.shields.io/badge/Windows-0078D4?style=flat\&logo=windows\&logoColor=white)                    | **Windows API**: funções de sistema e suporte a multithreading                  |
-| ![Linux](https://img.shields.io/badge/Linux-000000?style=flat\&logo=linux\&logoColor=white)                          | **Linux**: sistema operacional de código aberto                                 |
-| ![MACOS](https://img.shields.io/badge/MACOS-000000?style=flat\&logo=apple\&logoColor=white)                          | **macOS**: sistema operacional Unix-based da Apple                              |
-| ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **POSIX Threads**: multithreading em sistemas Unix                              |
-| ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **Biblioteca padrão C**: `stdio.h`, `stdlib.h`, `string.h`, `time.h`, etc.      |
-| ![OOP](https://img.shields.io/badge/Object--Oriented%20Programming-000000?style=flat)                                | **OOP em C**: encapsulamento, abstração, polimorfismo via structs e ponteiros   |
-| ![Algorithms](https://img.shields.io/badge/Algorithms%20\(Stack,%20Queue,%20List\)-000000?style=flat)                | **Algoritmos**: implementações de pilha, fila, deque e listas                   |
-| ![Git](https://img.shields.io/badge/Git-F05032?style=flat\&logo=git\&logoColor=white)                                | **Git**: sistema de controle de versão                                          |
-| ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat\&logo=github\&logoColor=white)                       | **GitHub**: plataforma de colaboração e revisão de código                       |
-| ![Vim](https://img.shields.io/badge/Vim-019733?style=flat\&logo=vim\&logoColor=white)                                | **Vim**: editor de texto altamente configurável para codificação eficiente      |
-| ![Visual Studio](https://img.shields.io/badge/Visual%20Studio-5C2D91?style=flat\&logo=visualstudio\&logoColor=white) | **Visual Studio**: IDE com ferramentas de depuração, análise e testes           |
-| ![VSCode](https://img.shields.io/badge/VSCode-007ACC?style=flat\&logo=visualstudiocode\&logoColor=white)             | **Visual Studio Code**: editor de código leve e versátil                        |
-| ![CLion](https://img.shields.io/badge/CLion-000000?style=flat\&logo=jetbrains\&logoColor=white)                      | **CLion**: IDE da JetBrains para desenvolvimento em C/C++                       |
+| Badge                                                                                                                | Descrição                                                                                            |
+| -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| ![C](https://img.shields.io/badge/C-00599C?style=flat\&logo=c\&logoColor=white)                                      | **Linguagem C**: padrão C99, programação orientada a objetos usando structs e ponteiros para funções |
+| ![GCC](https://img.shields.io/badge/GCC-333333?style=flat\&logo=gnu\&logoColor=white)                                | **GCC**: GNU Compiler Collection, usado para compilar programas em C                                 |
+| ![Make](https://img.shields.io/badge/Make-064F8C?style=flat\&logo=cmake\&logoColor=white)                            | **Make**: ferramenta de automação de compilação e linkagem                                           |
+| ![Makefile](https://img.shields.io/badge/Makefile-000000?style=flat)                                                 | **Makefile**: arquivo de instruções de build para Make                                               |
+| ![Windows](https://img.shields.io/badge/Windows-0078D4?style=flat\&logo=windows\&logoColor=white)                    | **Windows API**: funções de sistema e suporte a multithreading (`windows.h`, `conio.h`, `process.h`) |
+| ![Linux](https://img.shields.io/badge/Linux-000000?style=flat\&logo=linux\&logoColor=white)                          | **Linux**: sistema operacional de código aberto amplamente usado para desenvolvimento                |
+| ![MACOS](https://img.shields.io/badge/MACOS-000000?style=flat\&logo=apple\&logoColor=white)                          | **macOS**: sistema operacional Unix para hardware Apple                                              |
+| ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **Threads POSIX**: suporte a multithreading em sistemas Unix (`pthread.h`)                           |
+| ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **Biblioteca Padrão C**: `stdio.h`, `stdlib.h`, `string.h`, `time.h` etc.                            |
+| ![OOP](https://img.shields.io/badge/Object--Oriented%20Programming-000000?style=flat)                                | **OOP em C**: encapsulamento, abstração e polimorfismo via structs e ponteiros                       |
+| ![Algorithms](https://img.shields.io/badge/Algorithms%20\(Stack,%20Queue,%20List\)-000000?style=flat)                | **Algoritmos**: implementação de Stack, Queue, Deque, List                                           |
+| ![Git](https://img.shields.io/badge/Git-F05032?style=flat\&logo=git\&logoColor=white)                                | **Git**: sistema de controle de versão                                                               |
+| ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat\&logo=github\&logoColor=white)                       | **GitHub**: plataforma de hospedagem e revisão de código                                             |
+| ![Vim](https://img.shields.io/badge/Vim-019733?style=flat\&logo=vim\&logoColor=white)                                | **Vim**: editor de texto altamente configurável                                                      |
+| ![Visual Studio](https://img.shields.io/badge/Visual%20Studio-5C2D91?style=flat\&logo=visualstudio\&logoColor=white) | **Visual Studio**: IDE poderosa com ferramentas de depuração e análise                               |
+| ![VSCode](https://img.shields.io/badge/VSCode-007ACC?style=flat\&logo=visualstudiocode\&logoColor=white)             | **Visual Studio Code**: editor de código com suporte a depuração                                     |
+| ![CLion](https://img.shields.io/badge/CLion-000000?style=flat\&logo=jetbrains\&logoColor=white)                      | **CLion**: IDE da JetBrains com análise de código e integração CMake                                 |
 
 ## 🖥️ Compatibilidade de Plataformas
 
-Este projeto foi testado nos seguintes sistemas:
+Este projeto foi testado e executado nas seguintes plataformas:
 
 * 🪟 **Windows** 10 / 11
 * 🐧 **Linux**
 * 🍎 **macOS**
 
-## 🛣️ Roteiro
+## 🛣️ Roadmap
 
-* [x] Programação orientada a objetos em C
-* [x] Abstração de threads e mutexes
+* [x] OOP em C
+* [x] Abstração de threads e mutex
 * [x] Utilitários de I/O de console
-* [x] Scanner de entrada
-* [x] Estruturas de dados: pilha, fila, lista
+* [x] Scanner de entrada de tipos primitivos
+* [x] Estruturas de dados: Stack, Queue, List
 * [ ] Utilitários avançados de arquivos
-* [ ] Camada GUI com SDL ou ncurses (planejado)
+* [ ] Camada GUI usando SDL ou ncurses (planejado)
 
-## 🏗️ Instruções de Build por Plataforma
+## 🏗️ Instruções de Build por SO
 
 ### 🪟 Windows (GCC MinGW)
 
@@ -92,7 +92,7 @@ gcc -std=c99 -Wall -I inc -o main.exe src/*.c
 main.exe
 ```
 
-### 🪟 Windows (Prompt MSVC)
+### 🪟 Windows (MSVC Command Prompt)
 
 ```cmd
 cl /I inc /Fe:main.exe src\*.c
@@ -106,27 +106,27 @@ gcc -std=c99 -Wall -I inc -o main src/*.c -lpthread
 ./main
 ```
 
-> **Nota**: para suporte a multithreading, adicione a opção `-lpthread`.
+> **Nota**: `-lpthread` é necessário para suporte a multithreading.
 
 ## 📂 Estrutura de Diretórios
 
 ```
 Object-Oriented-C-Language/
-├── inc/                      # Arquivos de cabeçalho
+├── inc/                      # arquivos de cabeçalho
 │   ├── algorithm.h
 │   ├── console.h
 │   ├── main.h
 │   ├── Scanner.h
 │   ├── System.h
 │   └── thread.h
-├── src/                      # Arquivos-fonte
+├── src/                      # arquivos fonte
 │   ├── algorithm.c
 │   ├── console.c
 │   ├── main.c
 │   ├── Scanner.c
 │   ├── System.c
 │   └── thread.c
-├── translations/             # Arquivos de tradução
+├── translations/             # arquivos de tradução
 │   ├── ar.md                 # Árabe
 │   ├── es.md                 # Espanhol
 │   ├── fr.md                 # Francês
@@ -137,11 +137,11 @@ Object-Oriented-C-Language/
 │   ├── pt.md                 # Português (este arquivo)
 │   ├── ru.md                 # Russo
 │   └── zh.md                 # Chinês
-├── LICENSE                   # Informações de licença
-└── README.md                 # Descrição do projeto
+├── LICENSE                   # informações de licença
+└── README.md                 # descrição do projeto
 ```
 
-## 🔧 Desenvolvimento e Compilação
+## 🔧 Desenvolvimento e Build
 
 ### Requisitos
 
@@ -151,13 +151,13 @@ Object-Oriented-C-Language/
 ### Compilação Manual
 
 ```bash
-# Execute a partir da raiz do projeto
+# na raiz do projeto
 gcc -std=c99 -Wall -I inc/ -o main src/*.c
 ```
 
 ### Exemplo de Makefile
 
-```makefile
+```Makefile
 CC = gcc
 CFLAGS = -std=c99 -Wall -I inc
 SRCS = $(wildcard src/*.c)
@@ -176,51 +176,51 @@ clean:
 	rm -f src/*.o $(TARGET)
 ```
 
-## 🚀 Execução
+## 🚀 Como Executar
 
 ```bash
-# Após a compilação
+# após build
 ./main
 ```
 
-O executável realiza automaticamente exemplos de criação de objetos, chamadas de métodos e testes de multithreading.
+O exemplo cria objetos, chama métodos e testa threads.
 
 ## 📑 Estrutura da API
 
-### 1. System e Tipos Básicos
+### 1. System e Tipos Primitivos
 
 * **SYSTEM out**
 
-  * `out.printf(const string format, ...)` : impressão formatada
-  * `out.println(const string format, ...)` : impressão formatada com nova linha
+  * `out.printf(const string format, ...)` : saída formatada
+  * `out.println(const string format, ...)` : saída formatada com quebra de linha
 
 * **SYSTEM in**
 
-  * `in.read() -> int32_t` : lê um caractere do stdin e retorna seu valor inteiro
+  * `in.read() -> int32_t` : lê um caractere do stdin como inteiro
 
 * **File**
 
   * Construtor: `File new_File(const string path, const string mode)`
   * Métodos:
 
-    * `f.scanf(const string format, ...)` : leitura formatada de arquivo
-    * `f.printf(const string format, ...)` : impressão formatada em arquivo
-    * `f.println(const string format, ...)` : impressão com nova linha em arquivo
-    * `f.open(const string path, const string mode)` : abre um arquivo
-    * `f.close()` : fecha o arquivo
-    * `f.readLine() -> string` : lê uma linha do arquivo
+    * `f.scanf(const string format, ...)` : lê entrada formatada de arquivo
+    * `f.printf(const string format, ...)` : saída formatada em arquivo
+    * `f.println(const string format, ...)` : saída com quebra de linha em arquivo
+    * `f.open(const string path, const string mode)` : abre arquivo
+    * `f.close()` : fecha arquivo
+    * `f.readLine() -> string` : lê uma linha de arquivo
 
 * **Time**
 
   * Construtor: `Time new_Time(void)`
   * Métodos:
 
-    * `t.getSystemTime(Time* t)` : obtém o horário do sistema
-    * `t.getTime(Time* t)` : obtém o valor interno do temporizador
-    * `t.setTime(...)` : define data e hora (ano, mês, dia, hora, minuto, segundo)
-    * `t.start()` / `t.stop()` : controla o temporizador
+    * `t.getSystemTime(Time* t)` : obtém hora atual do sistema
+    * `t.getTime(Time* t)` : obtém valor interno de tempo
+    * `t.setTime(...)` : define tempo (ano, mês, dia, hora, minuto, segundo)
+    * `t.start()` / `t.stop()` : controla thread temporizadora
 
-* **Wrappers de Tipos Primitivos**
+* **Construtores de Wrappers Primitivos**
 
   * `new_String(string s)`
 
@@ -235,8 +235,8 @@ O executável realiza automaticamente exemplos de criação de objetos, chamadas
 
     * Métodos comuns: `x.getValue()`, `x.toString()`, `x.equals(...)`, `x.compareTo(...)`
     * Métodos estáticos: `Wrapper.parse<Type>(...)`, `Wrapper.valueOf(...)`
-    * Especializações de Byte: `b.byteValue()`, `b.toUnsigned()`, `Byte.parseByte(string, base)`
-    * Especializações de Boolean: `b.booleanValue()`, `b.isTrue()`, `b.isFalse()`, `Boolean.parseBoolean(...)`
+    * Exclusivos de Byte: `b.byteValue()`, `b.toUnsigned()`, `Byte.parseByte(string, base)`
+    * Exclusivos de Boolean: `b.booleanValue()`, `b.isTrue()`, `b.isFalse()`, `Boolean.parseBoolean(...)`
 
 ### 2. Thread e Mutex
 
@@ -250,7 +250,9 @@ O executável realiza automaticamente exemplos de criação de objetos, chamadas
 * **Mutex**
 
   * Construtor: `Mutex new_Mutex()`
-  * Métodos: `lock()`, `unlock()`, `delete()`
+  * Métodos:
+
+    * `lock()`, `unlock()`, `delete()`
 
 ### 3. Console
 
@@ -274,7 +276,7 @@ O executável realiza automaticamente exemplos de criação de objetos, chamadas
     * `nextBoolean()`, `nextFloat()`, `nextDouble()`, `nextLDouble()`
     * `next() -> string`, `nextLine() -> string`
 
-    (utiliza espaços em branco como delimitadores por padrão e suporta leitura de linhas completas)
+    (por padrão usa espaços como delimitadores e suporta leitura por linhas.)
 
 ### 5. Coleções (Algorithm)
 
@@ -300,14 +302,14 @@ O executável realiza automaticamente exemplos de criação de objetos, chamadas
 
 ## 🛠️ Guia de Contribuição
 
-1. Faça um **fork** do projeto.
-2. Crie um branch para sua funcionalidade: `git checkout -b feature/SuaFuncionalidade`
-3. Implemente sua funcionalidade.
-4. Escreva testes e atualize a documentação.
-5. Abra uma pull request para discutir suas mudanças.
+1. **Fork** este projeto
+2. **Crie uma branch de recurso**: `git checkout -b feature/YourFeature`
+3. **Implemente o recurso**
+4. **Escreva testes e atualize a documentação**
+5. **Abra um Pull Request**
 
-Abra uma issue para discutir ideias antes de contribuir.
+Para discutir ideias, abra uma issue primeiro.
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a [MIT License](../LICENSE).
+Este projeto está licenciado sob a [Licença MIT](../LICENSE).
