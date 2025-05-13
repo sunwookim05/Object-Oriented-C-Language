@@ -61,7 +61,7 @@
 | ![Make](https://img.shields.io/badge/Make-064F8C?style=flat\&logo=cmake\&logoColor=white)                            | **Make**: ソースファイルのコンパイルとリンクを自動化するツール                                              |
 | ![Makefile](https://img.shields.io/badge/Makefile-000000?style=flat)                                                 | **Makefile**: Make コマンドのビルド指示を記述した設定ファイル                                          |
 | ![Windows](https://img.shields.io/badge/Windows-0078D4?style=flat\&logo=windows\&logoColor=white)                    | **Windows API**: Windows のシステム関数とマルチスレッドサポート（`windows.h`, `conio.h`, `process.h`） |
-| ![Linux](https://img.shields.io/badge/Linux-000000?style=flat\&logo=linux\&logoColor=white)                          | **Linux**: プログラミングと開発で広く使用されているオープンソース OS                                         |
+| ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat\&logo=linux\&logoColor=white)                          | **Linux**: プログラミングと開発で広く使用されているオープンソース OS                                         |
 | ![MACOS](https://img.shields.io/badge/MACOS-000000?style=flat\&logo=apple\&logoColor=white)                          | **macOS**: Unix 系のコマンドをサポートする Mac ハードウェア用 OS                                      |
 | ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **POSIX スレッド**: Unix 系システムのマルチスレッドサポート（`pthread.h`）                               |
 | ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **C 標準ライブラリ**: `stdio.h`, `stdlib.h`, `string.h`, `time.h` などのコアライブラリ             |
