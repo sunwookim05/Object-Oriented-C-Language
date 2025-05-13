@@ -66,7 +66,7 @@ Ce projet est un exemple modulable implémentant, uniquement en langage C (stand
 | ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **Threads POSIX** : Support multithreading Unix (`pthread.h`)                     |
 | ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **Bibliothèque standard C** : `stdio.h`, `stdlib.h`, `string.h`, `time.h`         |
 | ![OOP](https://img.shields.io/badge/Object--Oriented%20Programming-000000?style=flat)                                | **POO en C** : Encapsulation, abstraction, polymorphisme via structs et pointeurs |
-| ![Algorithms](https://img.shields.io/badge/Algorithms%20\(Stack,%20Queue,%20List\)-000000?style=flat)                | **Algorithmes** : Implémentation de Stack, Queue, Deque, List                     |
+| ![Algorithms](https://img.shields.io/badge/Algorithms%20-000000?style=flat)                | **Algorithmes** : Implémentation de Stack, Queue, Deque, List                     |
 | ![Git](https://img.shields.io/badge/Git-F05032?style=flat\&logo=git\&logoColor=white)                                | **Git** : Système de contrôle de version                                          |
 | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat\&logo=github\&logoColor=white)                       | **GitHub** : Plateforme de partage et revue de code                               |
 | ![Vim](https://img.shields.io/badge/Vim-019733?style=flat\&logo=vim\&logoColor=white)                                | **Vim** : Éditeur de texte hautement configurable                                 |
