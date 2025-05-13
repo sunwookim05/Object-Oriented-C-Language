@@ -126,7 +126,7 @@ Object-Oriented-C-Language/
 │   ├── Scanner.c
 │   ├── System.c
 │   └── thread.c
-├──              # 번역 파일
+├── translations/             # 번역 파일
 │   ├── ar.md                 # 아랍어
 │   ├── es.md                 # 스페인어
 │   ├── fr.md                 # 프랑스어
