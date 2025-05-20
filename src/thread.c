@@ -1,49 +1,49 @@
-#include "thread.h"
+#include "self.h"
 
 #include <stdarg.h>
 #include <stdlib.h>
 
-void start(Thread* thread, ...) {
+void start(Thread* self, ...) {
     va_list args;
-    va_start(args, thread);
+    va_start(args, self);
     
     void* arg = va_arg(args, void*);
     
     va_end(args);
 
     #ifdef _WIN32
-        thread->id = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)thread->function, arg, 0, NULL);
+        self->id = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)self->function, arg, 0, NULL);
     #else
-        pthread_create(&thread->id, NULL, thread->function, arg);
+        pthread_create(&self->id, NULL, self->function, arg);
     #endif
 }
 
 
-void join(Thread* thread) {
+void join(Thread* self) {
     #ifdef _WIN32
-        WaitForSingleObject(thread->id, INFINITE);
+        WaitForSingleObject(self->id, INFINITE);
     #else
-        pthread_join(thread->id, NULL);
+        pthread_join(self->id, NULL);
     #endif
 }
 
-void detach(Thread* thread) {
+void detach(Thread* self) {
     #ifdef _WIN32
-        CloseHandle(thread->id);
+        CloseHandle(self->id);
     #else
-        pthread_detach(thread->id);
+        pthread_detach(self->id);
     #endif
 }
 
-void cancel(Thread* thread) {
+void cancel(Thread* self) {
     #ifdef _WIN32
-        TerminateThread(thread->id, 0);
+        TerminateThread(self->id, 0);
     #else
-        pthread_cancel(thread->id);
+        pthread_cancel(self->id);
     #endif
 }
 
-void exit_thread(Thread* thread) {
+void exit_thread(Thread* self) {
     #ifdef _WIN32
         ExitThread(0);
     #else
@@ -51,11 +51,11 @@ void exit_thread(Thread* thread) {
     #endif
 }
 
-void delete_thread(Thread* thread) {
+void delete_thread(Thread* self) {
     #ifdef _WIN32
-        CloseHandle(thread->id);
+        CloseHandle(self->id);
     #endif
-    free(thread);
+    free(self);
 }
 
 Thread new_Thread(void* (*function)(void*)) {
@@ -72,28 +72,28 @@ Thread new_Thread(void* (*function)(void*)) {
 }
 
 #ifdef _WIN32
-    void lock_mutex(Mutex* mutex) {
-        WaitForSingleObject(mutex->id, INFINITE);
+    void lock_mutex(Mutex* self) {
+        WaitForSingleObject(self->id, INFINITE);
     }
 
-    void unlock_mutex(Mutex* mutex) {
-        ReleaseMutex(mutex->id);
+    void unlock_mutex(Mutex* self) {
+        ReleaseMutex(self->id);
     }
 
-    void delete_mutex(Mutex* mutex) {
-        CloseHandle(mutex->id);
+    void delete_mutex(Mutex* self) {
+        CloseHandle(self->id);
     }
 #else
-    void lock_mutex(Mutex* mutex) {
-        pthread_mutex_lock(&mutex->id);
+    void lock_mutex(Mutex* self) {
+        pthread_mutex_lock(&self->id);
     }
 
-    void unlock_mutex(Mutex* mutex) {
-        pthread_mutex_unlock(&mutex->id);
+    void unlock_mutex(Mutex* self) {
+        pthread_mutex_unlock(&self->id);
     }
 
-    void delete_mutex(Mutex* mutex) {
-        pthread_mutex_destroy(&mutex->id);
+    void delete_mutex(Mutex* self) {
+        pthread_mutex_destroy(&self->id);
     }
 #endif
 
@@ -110,5 +110,5 @@ Mutex new_Mutex() {
     mutex.unlock = unlock_mutex;
     mutex.delete = delete_mutex;
         
-    return mutex;
+    return self;
 }

@@ -125,17 +125,17 @@ void printlnXY(int x, int y, const string format, ...) {
 #endif
 
 Console new_console(void) {
-    Console console;
-    console.clear = clear;
-    console.setTextColor = setTextColor;
-    console.setBackgroundColor = setBackgroundColor;
-    console.resetColor = resetColor;
-    console.setCursorPos = setCursorPos;
-    console.setCursorVisibility = setCursorVisibility;
-    console.setWindowSize = setWindowSize;
-    console.setWindowTitle = setWindowTitle;
-    console.printfXY = printfXY;
-    console.printlnXY = printlnXY;
-    console.kbhit = kbhit;
-    return console;
+    return (Console){
+        .clear = clear,
+        .setTextColor = setTextColor,
+        .setBackgroundColor = setBackgroundColor,
+        .resetColor = resetColor,
+        .setCursorPos = setCursorPos,
+        .setCursorVisibility = setCursorVisibility,
+        .setWindowSize = setWindowSize,
+        .setWindowTitle = setWindowTitle,
+        .printfXY = printfXY,
+        .printlnXY = printlnXY,
+        .kbhit = kbhit
+    };
 }

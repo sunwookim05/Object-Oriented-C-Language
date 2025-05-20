@@ -26,100 +26,100 @@ SYSTEM System = {
     }
 };
 
-static int fileScanf(File* f, const string format, ...) {
+static int fileScanf(File* self, const string format, ...) {
     va_list ap;
     va_start(ap, format);
-    int result = vfscanf(f->file, format, ap);
+    int result = vfscanf(self->file, format, ap);
     va_end(ap);
     return result;
 }
 
-static int filePrintf(File* f, const string format, ...) {
+static int filePrintf(File* self, const string format, ...) {
     va_list ap;
     va_start(ap, format);
-    int result = vfprintf(f->file, format, ap);
+    int result = vfprintf(self->file, format, ap);
     va_end(ap);
     return result;
 }
 
-static int filePrintln(File* f, const string format, ...) {
+static int filePrintln(File* self, const string format, ...) {
     va_list ap;
     va_start(ap, format);
-    int result = vfprintf(f->file, format, ap);
+    int result = vfprintf(self->file, format, ap);
     va_end(ap);
-    fprintf(f->file, "\n");
+    fprintf(self->file, "\n");
     return result;
 }
 
-static int fileOpen(File* f, const string name, const string mode) {
-    f->file = fopen(name, mode);
-    return f->file == NULL ? 1 : 0;
+static int fileOpen(File* self, const string name, const string mode) {
+    self->file = fopen(name, mode);
+    return self->file == NULL ? 1 : 0;
 }
 
-static void fileClose(File* f) {
-    fclose(f->file);
+static void fileClose(File* self) {
+    fclose(self->file);
 }
 
 File new_File(const string name, const string mode) {
-    File f;
-    f.file = fopen(name, mode);
-    f.scanf = fileScanf;
-    f.printf = filePrintf;
-    f.println = filePrintln;
-    f.open = fileOpen;
-    f.close = fileClose;
-    return f;
+    return (File) {
+        .file = NULL,
+        .open = fileOpen,
+        .close = fileClose,
+        .scanf = fileScanf,
+        .printf = filePrintf,
+        .println = filePrintln
+    };
 }
 
 /*------------------------------Time Class------------------------------*/
 
-void getSystemTime(Time* t) {
-    if (t == NULL) return; // NULL 체크
+void getSystemTime(Time* self) {
+    if (self == NULL) return; // NULL 체크
 
     #ifdef _WIN32
         SYSTEMTIME st;
         GetLocalTime(&st);
-        t->year = (uint16_t)st.wYear;
-        t->month = (uint8_t)st.wMonth;
-        t->day = (uint8_t)st.wDay;
-        t->hour = (uint8_t)st.wHour;
-        t->minute = (uint8_t)st.wMinute;
-        t->second = (uint8_t)st.wSecond;
-        t->millisecond = (uint16_t)st.wMilliseconds;
+        self->year = (uint16_t)st.wYear;
+        self->month = (uint8_t)st.wMonth;
+        self->day = (uint8_t)st.wDay;
+        self->hour = (uint8_t)st.wHour;
+        self->minute = (uint8_t)st.wMinute;
+        self->second = (uint8_t)st.wSecond;
+        self->millisecond = (uint16_t)st.wMilliseconds;
     #else
         struct timespec ts;
     struct tm now;
     clock_gettime(CLOCK_REALTIME, &ts);
     localtime_r(&ts.tv_sec, &now);
-    t->year = (uint16_t)now.tm_year + 1900;
-    t->month = (uint8_t)now.tm_mon + 1;
-    t->day = (uint8_t)now.tm_mday;
-    t->hour = (uint8_t)now.tm_hour;
-    t->minute = (uint8_t)now.tm_min;
-    t->second = (uint8_t)now.tm_sec;
-    t->millisecond = (uint16_t)(ts.tv_nsec / 1.0e6);
+    self->year = (uint16_t)now.tm_year + 1900;
+    self->month = (uint8_t)now.tm_mon + 1;
+    self->day = (uint8_t)now.tm_mday;
+    self->hour = (uint8_t)now.tm_hour;
+    self->minute = (uint8_t)now.tm_min;
+    self->second = (uint8_t)now.tm_sec;
+    self->millisecond = (uint16_t)(ts.tv_nsec / 1.0e6);
         
     #endif
 }
 
-void getTime(Time* t) {
-    t->year = t->year;
-    t->month = t->month;
-    t->day = t->day;
-    t->hour = t->hour;
-    t->minute = t->minute;
-    t->second = t->second;
-    t->millisecond = t->millisecond;
+void getTime(Time* self) {
+    self->year = self->year;
+    self->month = self->month;
+    self->day = self->day;
+    self->hour = self->hour;
+    self->minute = self->minute;
+    self->second = self->second;
+    self->millisecond = self->millisecond;
 }
 
-void setTime(Time* t, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second) {
-    t->year = year;
-    t->month = month;
-    t->day = day;
-    t->hour = hour;
-    t->minute = minute;
-    t->second = second;
-    t->millisecond = 0;
+void setTime(Time* self, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second) {
+    self->year = year;
+    self->month = month;
+    self->day = day;
+    self->hour = hour;
+    self->minute = minute;
+    self->second = second;
+    self->millisecond = 0;
 }
 
 #ifdef _WIN32
@@ -127,13 +127,13 @@ DWORD WINAPI _timRun(LPVOID arg) {
 #else
 void* _timRun(void* arg) {
 #endif
-    Time* t = (Time*)arg;
+    Time* self = (Time*)arg;
     boolean isLeapYear;
     uint8_t daysInMonth;
     
-    isLeapYear = (t->year % 4 == 0 && (t->year % 100 != 0 || t->year % 400 == 0));
+    isLeapYear = (self->year % 4 == 0 && (self->year % 100 != 0 || self->year % 400 == 0));
 
-    switch (t->month) {
+    switch (self->month) {
         case 1: case 3: case 5: case 7: case 8: case 10: case 12:
             daysInMonth = 31;
             break;
@@ -150,7 +150,7 @@ void* _timRun(void* arg) {
 
     uint16_t prev = 0;
 
-    while (t->running) {
+    while (self->running) {
         uint16_t current;
 
 #ifdef _WIN32
@@ -166,42 +166,42 @@ void* _timRun(void* arg) {
         prev = current;
 
 #ifdef _WIN32
-        WaitForSingleObject(&t->mutex, INFINITE);
+        WaitForSingleObject(&self->mutex, INFINITE);
 #else
-        pthread_mutex_lock(&t->mutex);
+        pthread_mutex_lock(&self->mutex);
 #endif
-        t->millisecond += elapsed;
-        while (t->millisecond >= 1000) {
-            t->millisecond -= 1000;
-            t->second++;
+        self->millisecond += elapsed;
+        while (self->millisecond >= 1000) {
+            self->millisecond -= 1000;
+            self->second++;
 
-            if (t->second >= 60) {
-                t->second = 0;
-                t->minute++;
+            if (self->second >= 60) {
+                self->second = 0;
+                self->minute++;
             }
-            if (t->minute >= 60) {
-                t->minute = 0;
-                t->hour++;
+            if (self->minute >= 60) {
+                self->minute = 0;
+                self->hour++;
             }
-            if (t->hour >= 24) {
-                t->hour = 0;
-                t->day++;
-                if (t->day > daysInMonth) {
-                    t->day = 1;
-                    t->month++;
-                    if (t->month > 12) {
-                        t->month = 1;
-                        t->year++;
+            if (self->hour >= 24) {
+                self->hour = 0;
+                self->day++;
+                if (self->day > daysInMonth) {
+                    self->day = 1;
+                    self->month++;
+                    if (self->month > 12) {
+                        self->month = 1;
+                        self->year++;
                     }
                 }
             }
         }
 
 #ifdef _WIN32
-        ReleaseMutex(&t->mutex);
+        ReleaseMutex(&self->mutex);
         sleep(1);
 #else
-        pthread_mutex_unlock(&t->mutex);
+        pthread_mutex_unlock(&self->mutex);
         sleep(1);
 #endif
     }
@@ -209,51 +209,50 @@ void* _timRun(void* arg) {
     return 0;
 }
 
-void startTime(Time* t) {
-    if (!t->running) {
-        t->running = true;
-#ifdef _WIN32
-        t->thread = CreateThread(NULL, 0, _timRun, t, 0, NULL);
-#else
-        pthread_create(&t->thread, NULL, _timRun, t);
-#endif
+void startTime(Time* self) {
+    if (!self->running) {
+        self->running = true;
+        #ifdef _WIN32
+                self->thread = CreateThread(NULL, 0, _timRun, self, 0, NULL);
+        #else
+                pthread_create(&self->thread, NULL, _timRun, self);
+        #endif
     }
 }
 
-void stopTime(Time* t) {
-    t->running = false;
+void stopTime(Time* self) {
+    self->running = false;
 #ifdef _WIN32
-    WaitForSingleObject(t->thread, INFINITE);
-    CloseHandle(t->thread);
+    WaitForSingleObject(self->thread, INFINITE);
+    CloseHandle(self->thread);
 #else
-    pthread_join(t->thread, NULL);
+    pthread_join(self->thread, NULL);
 #endif
 }
 
 Time new_Time(void) {
-    Time t;
-    
+    Time time;
     #ifdef _WIN32
         CreateMutex(NULL, FALSE, NULL);
     #else
-        pthread_mutex_init(&t.mutex, NULL);
+        pthread_mutex_init(&time.mutex, NULL);
     #endif
 
-    t.millisecond = 0;
-    t.second = 0;
-    t.minute = 0;
-    t.hour = 0;
-    t.day = 1;
-    t.month = 1;
-    t.year = 1970;
-    t.getSystemTime = getSystemTime;
-    t.getTime = getTime;
-    t.setTime = setTime;
-    t.start = startTime;
-    t.stop = stopTime;
-    t.running = false;
+    time.millisecond = 0;
+    time.second = 0;
+    time.minute = 0;
+    time.hour = 0;
+    time.day = 1;
+    time.month = 1;
+    time.year = 1970;
+    time.getSystemTime = getSystemTime;
+    time.getTime = getTime;
+    time.setTime = setTime;
+    time.start = startTime;
+    time.stop = stopTime;
+    time.running = false;
 
-    return t;
+    return time;
 }
 
 /*----------------------------------------------------------------------*/
@@ -564,7 +563,7 @@ string trim(const string str, ...) {
     }
     if (!hasArgs) {
         criteria[' '] = 1;
-        criteria['\t'] = 1;
+        criteria['\self'] = 1;
         criteria['\n'] = 1;
         criteria['\r'] = 1;
     }
@@ -649,7 +648,7 @@ boolean logicalXor(const boolean x, const boolean y) {
 }
 
 boolean parseBoolean(const string str) {
-    return !(((*(str+0)|0x20)^'t') ^ ((*(str+1)|0x20)^'r') ^ ((*(str+2)|0x20)^'u') ^ ((*(str+3)|0x20)^'e')) ? true : false;
+    return !(((*(str+0)|0x20)^'self') ^ ((*(str+1)|0x20)^'r') ^ ((*(str+2)|0x20)^'u') ^ ((*(str+3)|0x20)^'e')) ? true : false;
 }
 
 boolean valueOfBoolean(const boolean value) {
