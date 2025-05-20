@@ -26,14 +26,18 @@
   <img src="https://img.shields.io/badge/CLion-000000?style=flat&logo=jetbrains&logoColor=white" alt="CLion" />
 
   <br />
+  <img src="https://img.shields.io/github/languages/top/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Top Language" />
   <img src="https://img.shields.io/github/commit-activity/t/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Commits" />
   <img src="https://img.shields.io/github/last-commit/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Last Commit" />
-  <img src="https://img.shields.io/github/stars/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Stars" />
-  <img src="https://img.shields.io/github/forks/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Forks" />
   <img src="https://img.shields.io/github/issues/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Issues" />
+  <img src="https://img.shields.io/github/issues-pr/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Open Pull Requests" />
+  <img src="https://img.shields.io/github/issues-pr-closed/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Closed Pull Requests" />
   <img src="https://img.shields.io/github/repo-size/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Repo Size" />
   <img src="https://img.shields.io/github/license/sunwookim05/Object-Oriented-C-Language?style=flat" alt="License" />
   <img src="https://img.shields.io/github/v/release/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Version" />
+  <img src="https://img.shields.io/github/stars/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Stars" />
+  <img src="https://img.shields.io/github/forks/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Forks" />
+  <img src="https://img.shields.io/github/watchers/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Watchers" />
 </div>
 
 ## 📖 개요
@@ -57,12 +61,12 @@
 | ![Make](https://img.shields.io/badge/Make-064F8C?style=flat\&logo=cmake\&logoColor=white)                            | **Make**: 소스 파일 컴파일 및 링크 자동화 도구                                                 |
 | ![Makefile](https://img.shields.io/badge/Makefile-000000?style=flat)                                                 | **Makefile**: Make 명령을 위한 빌드 지침 구성 파일                                           |
 | ![Windows](https://img.shields.io/badge/Windows-0078D4?style=flat\&logo=windows\&logoColor=white)                    | **Windows API**: Windows 시스템 함수 및 멀티스레딩 지원(`windows.h`, `conio.h`, `process.h`) |
-| ![Linux](https://img.shields.io/badge/Linux-000000?style=flat\&logo=linux\&logoColor=white)                          | **Linux**: 프로그래밍 및 개발에 널리 사용되는 오픈 소스 운영체제                                       |
+| ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat\&logo=linux\&logoColor=black)                          | **Linux**: 프로그래밍 및 개발에 널리 사용되는 오픈 소스 운영체제                                       |
 | ![MACOS](https://img.shields.io/badge/MACOS-000000?style=flat\&logo=apple\&logoColor=white)                          | **macOS**: Unix 계열 명령어를 지원하는 Mac 하드웨어 운영체제                                      |
 | ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **POSIX 스레드**: 유닉스 기반 시스템의 멀티스레딩 지원(`pthread.h`)                                |
 | ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **C 표준 라이브러리**: `stdio.h`, `stdlib.h`, `string.h`, `time.h` 등 핵심 라이브러리          |
 | ![OOP](https://img.shields.io/badge/Object--Oriented%20Programming-000000?style=flat)                                | **C에서의 OOP**: struct와 함수 포인터를 통한 캡슐화, 추상화, 다형성                                  |
-| ![Algorithms](https://img.shields.io/badge/Algorithms%20\(Stack,%20Queue,%20List\)-000000?style=flat)                | **알고리즘**: Stack, Queue, Deque, List 등 데이터 구조 구현                                 |
+| ![Algorithms](https://img.shields.io/badge/Algorithms%20-000000?style=flat)                | **알고리즘**: Stack, Queue, Deque, List 등 데이터 구조 구현                                 |
 | ![Git](https://img.shields.io/badge/Git-F05032?style=flat\&logo=git\&logoColor=white)                                | **Git**: 코드 변경 관리를 위한 버전 관리 시스템                                                 |
 | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat\&logo=github\&logoColor=white)                       | **GitHub**: 코드 공유 및 리뷰를 위한 플랫폼                                                  |
 | ![Vim](https://img.shields.io/badge/Vim-019733?style=flat\&logo=vim\&logoColor=white)                                | **Vim**: 효율적인 텍스트 편집을 위한 고도로 구성 가능한 편집기                                         |

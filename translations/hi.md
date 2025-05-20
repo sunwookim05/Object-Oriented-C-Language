@@ -26,14 +26,18 @@
   <img src="https://img.shields.io/badge/CLion-000000?style=flat&logo=jetbrains&logoColor=white" alt="CLion" />
 
   <br />
+  <img src="https://img.shields.io/github/languages/top/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Top Language" />
   <img src="https://img.shields.io/github/commit-activity/t/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Commits" />
   <img src="https://img.shields.io/github/last-commit/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Last Commit" />
-  <img src="https://img.shields.io/github/stars/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Stars" />
-  <img src="https://img.shields.io/github/forks/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Forks" />
   <img src="https://img.shields.io/github/issues/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Issues" />
+  <img src="https://img.shields.io/github/issues-pr/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Open Pull Requests" />
+  <img src="https://img.shields.io/github/issues-pr-closed/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Closed Pull Requests" />
   <img src="https://img.shields.io/github/repo-size/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Repo Size" />
   <img src="https://img.shields.io/github/license/sunwookim05/Object-Oriented-C-Language?style=flat" alt="License" />
   <img src="https://img.shields.io/github/v/release/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Version" />
+  <img src="https://img.shields.io/github/stars/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Stars" />
+  <img src="https://img.shields.io/github/forks/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Forks" />
+  <img src="https://img.shields.io/github/watchers/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Watchers" />
 </div>
 
 ## 📖 अवलोकन
@@ -62,7 +66,7 @@
 | ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                             | **POSIX थ्रेड**: Unix-आधारित सिस्टम में मल्टीथ्रेडिंग समर्थन (`pthread.h`)                              |
 | ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                               | **C मानक लाइब्रेरी**: `stdio.h`, `stdlib.h`, `string.h`, `time.h` आदि मूल लाइब्रेरी                     |
 | ![OOP](https://img.shields.io/badge/Object--Oriented%20Programming-000000?style=flat)                                | **OOP in C**: struct और फ़ंक्शन पॉइंटर द्वारा एनकैप्सुलेशन, सारांशण, बहुरूपता                           |
-| ![Algorithms](https://img.shields.io/badge/Algorithms%20\(Stack,%20Queue,%20List\)-000000?style=flat)                | **एल्गोरिथ्म**: Stack, Queue, Deque, List जैसी डेटा संरचनाएँ                                            |
+| ![Algorithms](https://img.shields.io/badge/Algorithms%20-000000?style=flat)                | **एल्गोरिथ्म**: Stack, Queue, Deque, List जैसी डेटा संरचनाएँ                                            |
 | ![Git](https://img.shields.io/badge/Git-F05032?style=flat\&logo=git\&logoColor=white)                                | **Git**: कोड संस्करण नियंत्रण के लिए सिस्टम                                                             |
 | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat\&logo=github\&logoColor=white)                       | **GitHub**: कोड साझा करने और समीक्षा के लिए मंच                                                         |
 | ![Vim](https://img.shields.io/badge/Vim-019733?style=flat\&logo=vim\&logoColor=white)                                | **Vim**: कुशल टेक्स्ट संपादन के लिए एक अत्यधिक अनुकूलनीय संपादक                                         |

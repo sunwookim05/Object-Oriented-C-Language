@@ -26,14 +26,18 @@ You can view the translation in your preferred language by clicking on the corre
   <img src="https://img.shields.io/badge/CLion-000000?style=flat&logo=jetbrains&logoColor=white" alt="CLion" />
 
   <br />
+  <img src="https://img.shields.io/github/languages/top/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Top Language" />
   <img src="https://img.shields.io/github/commit-activity/t/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Commits" />
   <img src="https://img.shields.io/github/last-commit/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Last Commit" />
-  <img src="https://img.shields.io/github/stars/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Stars" />
-  <img src="https://img.shields.io/github/forks/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Forks" />
   <img src="https://img.shields.io/github/issues/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Issues" />
+  <img src="https://img.shields.io/github/issues-pr/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Open Pull Requests" />
+  <img src="https://img.shields.io/github/issues-pr-closed/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Closed Pull Requests" />
   <img src="https://img.shields.io/github/repo-size/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Repo Size" />
   <img src="https://img.shields.io/github/license/sunwookim05/Object-Oriented-C-Language?style=flat" alt="License" />
   <img src="https://img.shields.io/github/v/release/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Version" />
+  <img src="https://img.shields.io/github/stars/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Stars" />
+  <img src="https://img.shields.io/github/forks/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Forks" />
+  <img src="https://img.shields.io/github/watchers/sunwookim05/Object-Oriented-C-Language?style=flat" alt="Watchers" />
 </div>
 
 ## 📖 Overview
@@ -57,12 +61,12 @@ This project is an example that implements key concepts of object-oriented progr
 | ![Make](https://img.shields.io/badge/Make-064F8C?style=flat&logo=cmake&logoColor=white)                           | **Make**: Build automation tool used for compiling and linking source files                                  |
 | ![Makefile](https://img.shields.io/badge/Makefile-000000?style=flat)                                              | **Makefile**: Configuration file used by Make for specifying build instructions                              |
 | ![Windows](https://img.shields.io/badge/Windows-0078D4?style=flat&logo=windows&logoColor=white)                   | **Windows API**: Windows system functions and multithreading support (`windows.h`, `conio.h`, `process.h`)   |
-| ![Linux](https://img.shields.io/badge/Linux-000000?style=flat&logo=linux&logoColor=white)                          | **Linux**: Open-source operating system widely used in programming and development                           |
+| ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black)                          | **Linux**: Open-source operating system widely used in programming and development                           |
 | ![MACOS](https://img.shields.io/badge/MACOS-000000?style=flat&logo=apple&logoColor=white)                          | **macOS**: Operating system used for Mac hardware with Unix-like commands                                    |
 | ![POSIX](https://img.shields.io/badge/POSIX%20Threads-000000?style=flat)                                          | **POSIX Threads**: `pthread.h`, used for multithreading in Unix-based systems                                |
 | ![Standard Lib](https://img.shields.io/badge/C%20Standard%20Library-000000?style=flat)                            | **C Standard Library**: Core libraries including `stdio.h`, `stdlib.h`, `string.h`, `time.h`                 |
 | ![OOP](https://img.shields.io/badge/Object--Oriented%20Programming-000000?style=flat)                             | **OOP in C**: Encapsulation, abstraction, and polymorphism via structs and function pointers                 |
-| ![Algorithms](https://img.shields.io/badge/Algorithms%20\(Stack,%20Queue,%20List\)-000000?style=flat)             | **Algorithms**: Implementations of data structures like stack, queue, deque, and list                        |
+| ![Algorithms](https://img.shields.io/badge/Algorithms%20-000000?style=flat)             | **Algorithms**: Implementations of data structures like stack, queue, deque, and list                        |
 | ![Git](https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white)                               | **Git**: Version control system for managing code changes                                                    |
 | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)                      | **GitHub**: Platform for version control and collaboration, enabling sharing and review of code              |
 | ![Vim](https://img.shields.io/badge/Vim-019733?style=flat&logo=vim&logoColor=white)                               | **Vim**: Highly configurable text editor for efficient text editing                                          |
