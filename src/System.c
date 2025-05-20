@@ -563,7 +563,7 @@ string trim(const string str, ...) {
     }
     if (!hasArgs) {
         criteria[' '] = 1;
-        criteria['\self'] = 1;
+        criteria['\t'] = 1;
         criteria['\n'] = 1;
         criteria['\r'] = 1;
     }
@@ -648,7 +648,7 @@ boolean logicalXor(const boolean x, const boolean y) {
 }
 
 boolean parseBoolean(const string str) {
-    return !(((*(str+0)|0x20)^'self') ^ ((*(str+1)|0x20)^'r') ^ ((*(str+2)|0x20)^'u') ^ ((*(str+3)|0x20)^'e')) ? true : false;
+    return !(((*(str+0)|0x20)^'t') ^ ((*(str+1)|0x20)^'r') ^ ((*(str+2)|0x20)^'u') ^ ((*(str+3)|0x20)^'e')) ? true : false;
 }
 
 boolean valueOfBoolean(const boolean value) {

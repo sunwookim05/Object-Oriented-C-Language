@@ -1,4 +1,4 @@
-#include "self.h"
+#include "thread.h"
 
 #include <stdarg.h>
 #include <stdlib.h>
@@ -110,5 +110,5 @@ Mutex new_Mutex() {
     mutex.unlock = unlock_mutex;
     mutex.delete = delete_mutex;
         
-    return self;
+    return mutex;
 }

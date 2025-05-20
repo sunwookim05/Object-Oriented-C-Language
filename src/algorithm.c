@@ -80,7 +80,7 @@ Queue new_queue(size_t type) {
         .clear = queueClear,
         .delete = queueDelete,
         .size = 0
-    }
+    };
 }
 
 static void dequePushFront(Deque* self, void* data) {
