@@ -21,7 +21,7 @@ void* timRun(void* arg) {
         t.getSystemTime(&t);
         System.out.printf("Use get Sys Tim %04hd-%02hhd-%02hhd %02hhd:%02hhd:%02hhd\r", t.year, t.month, t.day, t.hour, t.minute, t.second);
         mutex->unlock(mutex);
-    } 
+    }
 
     return null;
 }
