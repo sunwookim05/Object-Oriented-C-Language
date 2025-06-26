@@ -57,7 +57,7 @@ int main(void) {
     console.setCursorVisibility(false);
 
     t.getSystemTime(&t);
-
+ 
     timThread.start(&timThread, &mutex);
     runThread.start(&runThread, &mutex);
 
