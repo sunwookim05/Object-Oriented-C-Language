@@ -88,17 +88,16 @@ void getSystemTime(Time* self) {
         self->millisecond = (uint16_t)st.wMilliseconds;
     #else
         struct timespec ts;
-    struct tm now;
-    clock_gettime(CLOCK_REALTIME, &ts);
-    localtime_r(&ts.tv_sec, &now);
-    self->year = (uint16_t)now.tm_year + 1900;
-    self->month = (uint8_t)now.tm_mon + 1;
-    self->day = (uint8_t)now.tm_mday;
-    self->hour = (uint8_t)now.tm_hour;
-    self->minute = (uint8_t)now.tm_min;
-    self->second = (uint8_t)now.tm_sec;
-    self->millisecond = (uint16_t)(ts.tv_nsec / 1.0e6);
-        
+        struct tm now;
+        clock_gettime(CLOCK_REALTIME, &ts);
+        localtime_r(&ts.tv_sec, &now);
+        self->year = (uint16_t)now.tm_year + 1900;
+        self->month = (uint8_t)now.tm_mon + 1;
+        self->day = (uint8_t)now.tm_mday;
+        self->hour = (uint8_t)now.tm_hour;
+        self->minute = (uint8_t)now.tm_min;
+        self->second = (uint8_t)now.tm_sec;
+        self->millisecond = (uint16_t)(ts.tv_nsec / 1.0e6);
     #endif
 }
 
@@ -130,51 +129,40 @@ void* _timRun(void* arg) {
     Time* self = (Time*)arg;
     boolean isLeapYear;
     uint8_t daysInMonth;
+    uint16_t prev = 0;
     
     isLeapYear = (self->year % 4 == 0 && (self->year % 100 != 0 || self->year % 400 == 0));
-
     switch (self->month) {
-        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            daysInMonth = 31;
-            break;
-        case 4: case 6: case 9: case 11:
-            daysInMonth = 30;
-            break;
-        case 2:
-            daysInMonth = isLeapYear ? 29 : 28;
-            break;
-        default:
-            daysInMonth = 0;
-            break;
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12: daysInMonth = 31; break;
+        case 4: case 6: case 9: case 11: daysInMonth = 30; break;
+        case 2: daysInMonth = isLeapYear ? 29 : 28; break;
+        default: daysInMonth = 0; break;
     }
-
-    uint16_t prev = 0;
 
     while (self->running) {
         uint16_t current;
 
-#ifdef _WIN32
-        SYSTEMTIME st;
-        GetLocalTime(&st);
-        current = st.wMilliseconds;
-#else
-        struct timespec ts;
-        clock_gettime(CLOCK_REALTIME, &ts);
-        current = ts.tv_nsec / 1.0e6;
-#endif
-        uint16_t elapsed = (current >= prev) ? (current - prev) : (1000 - prev + current);
-        prev = current;
+        #ifdef _WIN32
+                SYSTEMTIME st;
+                GetLocalTime(&st);
+                current = st.wMilliseconds;
+        #else
+                struct timespec ts;
+                clock_gettime(CLOCK_REALTIME, &ts);
+                current = ts.tv_nsec / 1.0e6;
+        #endif
+                uint16_t elapsed = (current >= prev) ? (current - prev) : (1000 - prev + current);
+                prev = current;
 
-#ifdef _WIN32
-        WaitForSingleObject(&self->mutex, INFINITE);
-#else
-        pthread_mutex_lock(&self->mutex);
-#endif
+        #ifdef _WIN32
+                WaitForSingleObject(&self->mutex, INFINITE);
+        #else
+                pthread_mutex_lock(&self->mutex);
+        #endif
         self->millisecond += elapsed;
         while (self->millisecond >= 1000) {
             self->millisecond -= 1000;
             self->second++;
-
             if (self->second >= 60) {
                 self->second = 0;
                 self->minute++;
@@ -196,14 +184,13 @@ void* _timRun(void* arg) {
                 }
             }
         }
-
-#ifdef _WIN32
-        ReleaseMutex(&self->mutex);
-        sleep(1);
-#else
-        pthread_mutex_unlock(&self->mutex);
-        sleep(1);
-#endif
+        #ifdef _WIN32
+                ReleaseMutex(&self->mutex);
+                sleep(1);
+        #else
+                pthread_mutex_unlock(&self->mutex);
+                sleep(1);
+        #endif
     }
 
     return 0;
@@ -221,13 +208,13 @@ void startTime(Time* self) {
 }
 
 void stopTime(Time* self) {
-    self->running = false;
-#ifdef _WIN32
-    WaitForSingleObject(self->thread, INFINITE);
-    CloseHandle(self->thread);
-#else
-    pthread_join(self->thread, NULL);
-#endif
+        self->running = false;
+    #ifdef _WIN32
+        WaitForSingleObject(self->thread, INFINITE);
+        CloseHandle(self->thread);
+    #else
+        pthread_join(self->thread, NULL);
+    #endif
 }
 
 Time new_Time(void) {
