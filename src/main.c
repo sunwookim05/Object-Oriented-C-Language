@@ -7,75 +7,137 @@
 
 import SYSTEM System;
 
-boolean running = true;
+typedef struct {
+    Mutex* mutex;
+    boolean* running;
+    boolean* exitFlag;
+} ThreadData;
 
-void* timRun(void* arg) {
-    Mutex* mutex = (Mutex*)arg;
-    Time t = new_Time();
-    Console console = new_console();
+HHOOK hook;
+static ThreadData* gData = NULL;
+Console console;
 
-    while (running) {
-        mutex->lock(mutex);
-        console.setCursorPos(0, 1);
-        console.setTextColor(BLUE);
-        t.getSystemTime(&t);
-        System.out.printf("Use get Sys Tim %04hd-%02hhd-%02hhd %02hhd:%02hhd:%02hhd\r", t.year, t.month, t.day, t.hour, t.minute, t.second);
-        mutex->unlock(mutex);
+void* SpamThread(void* arg) {
+    ThreadData* data = (ThreadData*)arg;
+    while (1) {
+        data->mutex->lock(data->mutex);
+        boolean state = *(data->running);
+        boolean exit = *(data->exitFlag);
+        data->mutex->unlock(data->mutex);
+
+        if (exit) break;
+
+        if (state) {
+            keybd_event(VK_F5, 0, 0, 0);
+            keybd_event(VK_F5, 0, KEYEVENTF_KEYUP, 0);
+        }
+        Sleep(10);
     }
-
-    return null;
+    return NULL;
 }
 
-void* isRunning(void* arg) {
-    Mutex* mutex = (Mutex*)arg;
-    Time t = new_Time();
-    t.setTime(&t, 0, 0, 0, 0, 0, 0);
+LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
+    if (!gData) return CallNextHookEx(NULL, nCode, wParam, lParam);
 
-    t.start(&t);
+    KBDLLHOOKSTRUCT* kbd = (KBDLLHOOKSTRUCT*)lParam;
 
-    while(t.minute < 1);
+    if (nCode == HC_ACTION && wParam == WM_KEYDOWN) {
+        if (kbd->vkCode == VK_F1) {
+            gData->mutex->lock(gData->mutex);
+            *(gData->running) = true;
+            gData->mutex->unlock(gData->mutex);
+            return 1;
+        }
+        if (kbd->vkCode == VK_F2) {
+            gData->mutex->lock(gData->mutex);
+            *(gData->running) = false;
+            gData->mutex->unlock(gData->mutex);
+            return 1;
+        }
+        if (kbd->vkCode == VK_F3) {
+            gData->mutex->lock(gData->mutex);
+            *(gData->running) = false;
+            *(gData->exitFlag) = true;
+            gData->mutex->unlock(gData->mutex);
+            PostQuitMessage(0);
+            return 1;
+        }
+    }
 
-    mutex->lock(mutex);
-    running = false;
-    mutex->unlock(mutex);
+    return CallNextHookEx(NULL, nCode, wParam, lParam);
+}
 
-    t.stop(&t);
+void* HookThread(void* arg) {
+    gData = (ThreadData*)arg;
 
-    return null;
+    hook = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, NULL, 0);
+
+    MSG msg;
+    while (!*(gData->exitFlag)) {
+        if (GetMessage(&msg, NULL, 0, 0) <= 0) break;
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+    UnhookWindowsHookEx(hook);
+    return NULL;
+}
+
+void* StatusThread(void* arg) {
+    ThreadData* data = (ThreadData*)arg;
+    while (1) {
+        data->mutex->lock(data->mutex);
+        boolean running = *(data->running);
+        boolean exit = *(data->exitFlag);
+        data->mutex->unlock(data->mutex);
+
+        if (exit) {
+            console.setTextColor(YELLOW);
+            console.printlnXY(0, 0, "Program terminated        ");
+            break;
+        } else if (running) {
+            console.setTextColor(RED);
+            console.printlnXY(0, 0, "SpamThread is running...  ");
+        } else {
+            console.setTextColor(BLUE);
+            console.printlnXY(0, 0, "SpamThread is stopped     ");
+        }
+
+        Sleep(10);
+    }
+    return NULL;
 }
 
 int main(void) {
-    Time t = new_Time();
-    Thread timThread = new_Thread(timRun);
-    Thread runThread = new_Thread(isRunning);
-    Console console = new_console();
+    console = new_console();
+    console.clear();
+    console.setTextColor(YELLOW);
+    console.printlnXY(0, 0, "Program started                  ");
+
+    boolean running = false;
+    boolean exitFlag = false;
     Mutex mutex = new_Mutex();
 
-    running = true;
+    ThreadData data;
+    data.mutex = &mutex;
+    data.running = &running;
+    data.exitFlag = &exitFlag;
 
-    console.clear();
-    console.setCursorVisibility(false);
+    Thread spam = new_Thread(SpamThread);
+    Thread hookT = new_Thread(HookThread);
+    Thread status = new_Thread(StatusThread);
 
-    t.getSystemTime(&t);
- 
-    timThread.start(&timThread, &mutex);
-    runThread.start(&runThread, &mutex);
+    spam.start(&spam, &data);
+    hookT.start(&hookT, &data);
+    status.start(&status, &data);
 
-    t.start(&t);
-
-    while(running){
-        mutex.lock(&mutex);
-        console.setCursorPos(0, 0);
-        console.setTextColor(RED);
-        System.out.printf("Use Time Thread %04hd-%02hhd-%02hhd %02hhd:%02hhd:%02hhd\r", t.year, t.month, t.day, t.hour, t.minute, t.second);
-        mutex.unlock(&mutex);
+    while (!exitFlag) {
+        Sleep(100);
     }
 
-    t.stop(&t);
-
-    console.setCursorVisibility(true);
-    console.setTextColor(RESET);
-    console.clear();
+    console.setTextColor(YELLOW);
+    console.printlnXY(0, 0, "Program terminated                  ");
+    console.resetColor();
 
     return 0;
 }
