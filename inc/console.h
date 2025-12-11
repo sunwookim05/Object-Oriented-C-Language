@@ -123,6 +123,6 @@ typedef struct Console{
  * @brief Creates a new console instance.
  * @return A new Console instance.
  */
-Console new_console(void);
+Console new_Console(void);
 
 #endif

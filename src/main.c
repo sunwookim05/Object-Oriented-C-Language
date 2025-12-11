@@ -1,3 +1,6 @@
+#include <winsock2.h>
+#include <ws2tcpip.h>
+
 #include "main.h"
 #include "System.h"
 #include "algorithm.h"
@@ -7,137 +10,136 @@
 
 import SYSTEM System;
 
-typedef struct {
-    Mutex* mutex;
-    boolean* running;
-    boolean* exitFlag;
-} ThreadData;
+int checkStatus() {
+    Console console = new_Console();
+    const char *ip = "6.1.5.113";
+    const char *path = "/ui";
+    int port = 9090;
 
-HHOOK hook;
-static ThreadData* gData = NULL;
-Console console;
+    console.setTextColor(WHITE);
+    System.out.println("[DEBUG] Creating socket...");
+    SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (sock == INVALID_SOCKET) {
+        console.setTextColor(RED);
+        System.out.println("[ERROR] socket() failed: %d", WSAGetLastError());
+        return -1;
+    }
 
-void* SpamThread(void* arg) {
-    ThreadData* data = (ThreadData*)arg;
+    struct sockaddr_in serv_addr;
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(port);
+    if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) {
+        console.setTextColor(RED);
+        System.out.println("[ERROR] inet_pton() failed");
+        closesocket(sock);
+        return -1;
+    }
+
+    console.setTextColor(WHITE);
+    System.out.println("[DEBUG] Connecting to server BIGDATA...", ip, port);
+    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == SOCKET_ERROR) {
+        System.out.println("[ERROR] connect() failed: %d", WSAGetLastError());
+        closesocket(sock);
+        return -1;
+    }
+
+    char request[512];
+    snprintf(request, sizeof(request),"GET %s HTTP/1.1\r\n""Host: %s:%d\r\n""Connection: close\r\n\r\n",path, ip, port);
+
+    console.setTextColor(WHITE);
+    System.out.println("[DEBUG] Sending HTTP GET request...");
+    send(sock, request, (int)strlen(request), 0);
+
+    char buffer[2048];
+    console.setTextColor(WHITE);
+    System.out.println("[DEBUG] Receiving response...");
+    int bytes = recv(sock, buffer, sizeof(buffer) - 1, 0);
+    if (bytes <= 0) {
+        console.setTextColor(RED);
+        System.out.println("[ERROR] recv() failed: %d", WSAGetLastError());
+        closesocket(sock);
+        return -1;
+    }
+    buffer[bytes] = '\0';
+
+    char http_version[16];
+    int status_code = 0;
+    char status_text[64] = {0};
+
+    console.setTextColor(WHITE);
+    System.out.println("[DEBUG] Parsing HTTP status code...");
+    sscanf(buffer, "%15s %d %63[^\r\n]", http_version, &status_code, status_text);
+
+    closesocket(sock);
+    return status_code;
+}
+
+void* checkBIGDATA(void* arg) {
+    Console console = new_Console();
+    Time tm = new_Time();
     while (1) {
-        data->mutex->lock(data->mutex);
-        boolean state = *(data->running);
-        boolean exit = *(data->exitFlag);
-        data->mutex->unlock(data->mutex);
+        console.setTextColor(CYAN);
+        System.out.println("[INFO] Checking server status...");
+        int code = checkStatus();
 
-        if (exit) break;
-
-        if (state) {
-            keybd_event(VK_F5, 0, 0, 0);
-            keybd_event(VK_F5, 0, KEYEVENTF_KEYUP, 0);
-        }
-        Sleep(10);
-    }
-    return NULL;
-}
-
-LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
-    if (!gData) return CallNextHookEx(NULL, nCode, wParam, lParam);
-
-    KBDLLHOOKSTRUCT* kbd = (KBDLLHOOKSTRUCT*)lParam;
-
-    if (nCode == HC_ACTION && wParam == WM_KEYDOWN) {
-        if (kbd->vkCode == VK_F1) {
-            gData->mutex->lock(gData->mutex);
-            *(gData->running) = true;
-            gData->mutex->unlock(gData->mutex);
-            return 1;
-        }
-        if (kbd->vkCode == VK_F2) {
-            gData->mutex->lock(gData->mutex);
-            *(gData->running) = false;
-            gData->mutex->unlock(gData->mutex);
-            return 1;
-        }
-        if (kbd->vkCode == VK_F3) {
-            gData->mutex->lock(gData->mutex);
-            *(gData->running) = false;
-            *(gData->exitFlag) = true;
-            gData->mutex->unlock(gData->mutex);
-            PostQuitMessage(0);
-            return 1;
-        }
-    }
-
-    return CallNextHookEx(NULL, nCode, wParam, lParam);
-}
-
-void* HookThread(void* arg) {
-    gData = (ThreadData*)arg;
-
-    hook = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, NULL, 0);
-
-    MSG msg;
-    while (!*(gData->exitFlag)) {
-        if (GetMessage(&msg, NULL, 0, 0) <= 0) break;
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
-
-    UnhookWindowsHookEx(hook);
-    return NULL;
-}
-
-void* StatusThread(void* arg) {
-    ThreadData* data = (ThreadData*)arg;
-    while (1) {
-        data->mutex->lock(data->mutex);
-        boolean running = *(data->running);
-        boolean exit = *(data->exitFlag);
-        data->mutex->unlock(data->mutex);
-
-        if (exit) {
-            console.setTextColor(YELLOW);
-            console.printlnXY(0, 0, "Program terminated        ");
-            break;
-        } else if (running) {
+        // 404 -> Not Found, others -> OK
+        tm.getSystemTime(&tm);
+        if (code == 404) {
             console.setTextColor(RED);
-            console.printlnXY(0, 0, "SpamThread is running...  ");
+            System.out.println("[%04d-%02d-%02d %02d:%02d:%02d] Status: 404 Not Found",tm.year, tm.month, tm.day, tm.hour, tm.minute, tm.second);
+            File file = new_File("BIGDATAServerMonitorLog.txt", "a");
+            file.println(&file, "[%04d-%02d-%02d %02d:%02d:%02d] Status: 404 Not Found",tm.year, tm.month, tm.day, tm.hour, tm.minute, tm.second);
+            file.close(&file);
+        } else if (code > 0) {
+            console.setTextColor(GREEN);
+            System.out.println("[%04d-%02d-%02d %02d:%02d:%02d] Status: OK (%d)",tm.year, tm.month, tm.day, tm.hour, tm.minute, tm.second, code);
         } else {
-            console.setTextColor(BLUE);
-            console.printlnXY(0, 0, "SpamThread is stopped     ");
+            console.setTextColor(YELLOW);
+            System.out.println("[%04d-%02d-%02d %02d:%02d:%02d] Status: Connection Failed",tm.year, tm.month, tm.day, tm.hour, tm.minute, tm.second);
+            File file = new_File("BIGDATAServerMonitorLog.txt", "a");
+            file.println(&file, "[%04d-%02d-%02d %02d:%02d:%02d] Status: Connection Failed",tm.year, tm.month, tm.day, tm.hour, tm.minute, tm.second);
+            file.close(&file);
         }
 
-        Sleep(10);
+        fflush(stdout);
+        sleep(10000);  // 10 seconds
+        console.setTextColor(RESET);
     }
     return NULL;
 }
 
-int main(void) {
-    console = new_console();
+void initlize() {
+    Console console = new_Console();
+    File file = new_File("BIGDATAServerMonitorLog.txt", "a");
     console.clear();
-    console.setTextColor(YELLOW);
-    console.printlnXY(0, 0, "Program started                  ");
+    console.setWindowTitle("BIGDATA Server Monitor");
+    console.setWindowSize(100, 30);
+    console.setCursorVisibility(false);
 
-    boolean running = false;
-    boolean exitFlag = false;
-    Mutex mutex = new_Mutex();
+    file.println(&file, "----- BIGDATA Server Monitor Log Started -----");
+    file.close(&file);
 
-    ThreadData data;
-    data.mutex = &mutex;
-    data.running = &running;
-    data.exitFlag = &exitFlag;
-
-    Thread spam = new_Thread(SpamThread);
-    Thread hookT = new_Thread(HookThread);
-    Thread status = new_Thread(StatusThread);
-
-    spam.start(&spam, &data);
-    hookT.start(&hookT, &data);
-    status.start(&status, &data);
-
-    while (!exitFlag) {
-        Sleep(100);
+    console.setTextColor(CYAN);
+    System.out.println("[INFO] Initializing Winsock...");
+    WSADATA wsaData;
+    if (WSAStartup(MAKEWORD(2,2), &wsaData) != 0) {
+        console.setTextColor(RED);
+        System.out.println("[ERROR] WSAStartup failed");
+        exit(1);
     }
+    console.setTextColor(CYAN);
+    System.out.println("[INFO] Winsock initialized successfully.");
+}
 
-    console.setTextColor(YELLOW);
-    console.printlnXY(0, 0, "Program terminated                  ");
-    console.resetColor();
+int main() {
+    Thread checkBIGDATAThread = new_Thread(checkBIGDATA);
+    
+    initlize();
+    checkBIGDATAThread.start(&checkBIGDATAThread);
+    checkBIGDATAThread.join(&checkBIGDATAThread);
 
+    checkBIGDATAThread.delete(&checkBIGDATAThread);
+
+    WSACleanup();
     return 0;
 }

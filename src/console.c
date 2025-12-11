@@ -124,7 +124,7 @@ void printlnXY(int x, int y, const string format, ...) {
     }
 #endif
 
-Console new_console(void) {
+Console new_Console(void) {
     return (Console){
         .clear = clear,
         .setTextColor = setTextColor,
