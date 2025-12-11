@@ -62,7 +62,7 @@ static void fileClose(File* self) {
 
 File new_File(const string name, const string mode) {
     return (File) {
-        .file = NULL,
+        .file = fopen(name, mode),
         .open = fileOpen,
         .close = fileClose,
         .scanf = fileScanf,
