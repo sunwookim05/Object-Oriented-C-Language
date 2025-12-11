@@ -108,15 +108,55 @@ void* checkBIGDATA(void* arg) {
     return NULL;
 }
 
+void* checkTime(void* arg){
+    Time tm = new_Time();
+    while (1) {
+        tm.getSystemTime(&tm);
+        if(!tm.hour && !tm.minute){
+            tm.getSystemTime(&tm);
+            File file = new_File("BIGDATAServerMonitorLog.txt", "a");
+            file.println(&file, "----- BIGDATA Server Monitor Log Ended %04d-%02d-%02d -----", tm.year, tm.month, tm.day);
+        }
+        sleep(100);
+    }
+
+    return NULL;
+
+}
+
+void* screenTime(void* arg){
+    Time tm = new_Time();
+    Console console = new_Console();
+    tm.setTime(&tm, 0, 0, 0, 0, 0, 0);
+    tm.start(&tm);
+    while (1) {
+        if(tm.minute == 3){
+            console.setTextColor(BLUE);
+            System.out.println("Simulating key press to prevent screen lock...");
+            console.setTextColor(RESET);
+            tm.setTime(&tm, 0, 0, 0, 0, 0, 0);
+            keybd_event(VK_NONCONVERT, 0, 0, 0);
+            keybd_event(VK_NONCONVERT, 0, KEYEVENTF_KEYUP, 0);
+        }
+        sleep(10000);
+    }
+    tm.stop(&tm);
+
+    return NULL;
+}
+
 void initlize() {
     Console console = new_Console();
     File file = new_File("BIGDATAServerMonitorLog.txt", "a");
+    Time tm = new_Time();
+
     console.clear();
     console.setWindowTitle("BIGDATA Server Monitor");
     console.setWindowSize(100, 30);
     console.setCursorVisibility(false);
 
-    file.println(&file, "----- BIGDATA Server Monitor Log Started -----");
+    tm.getSystemTime(&tm);
+    file.println(&file, "----- BIGDATA Server Monitor Log Started %04d-%02d-%02d -----", tm.year, tm.month, tm.day);
     file.close(&file);
 
     console.setTextColor(CYAN);
@@ -133,12 +173,21 @@ void initlize() {
 
 int main() {
     Thread checkBIGDATAThread = new_Thread(checkBIGDATA);
+    Thread checkTimeThread = new_Thread(checkTime);
+    Thread screenTimeThread = new_Thread(screenTime);
     
     initlize();
     checkBIGDATAThread.start(&checkBIGDATAThread);
+    checkTimeThread.start(&checkTimeThread);
+    screenTimeThread.start(&screenTimeThread);
+
     checkBIGDATAThread.join(&checkBIGDATAThread);
+    checkTimeThread.join(&checkTimeThread);
+    screenTimeThread.join(&screenTimeThread);
 
     checkBIGDATAThread.delete(&checkBIGDATAThread);
+    checkTimeThread.delete(&checkTimeThread);
+    screenTimeThread.delete(&screenTimeThread);
 
     WSACleanup();
     return 0;
