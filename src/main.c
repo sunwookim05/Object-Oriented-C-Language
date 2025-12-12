@@ -216,6 +216,7 @@ void initlize() {
 }
 
 int main() {
+    /*gcc -std=c99 -Wall -I inc -o main.exe src/*.c -lws2_32*/
     Thread checkBIGDATAThread = new_Thread(checkBIGDATA);
     Thread checkTimeThread = new_Thread(checkTime);
     Thread screenTimeThread = new_Thread(screenTime);
