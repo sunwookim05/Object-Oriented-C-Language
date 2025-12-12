@@ -13,6 +13,7 @@
     #include <windows.h>
     #include <process.h>
     #include <conio.h>
+    #include <tlhelp32.h>
     typedef HANDLE ThreadHandle;  // Thread handle type for Windows
     typedef HANDLE MutexHandle;   // Mutex handle type for Windows
     #define THREAD_FUNC_RETURN DWORD WINAPI  // Thread function return type for Windows
@@ -23,6 +24,10 @@
     #include <unistd.h>
     #include <termios.h>
     #include <fcntl.h>
+    #include <signal.h>
+    #include <sys/types.h>
+    #include <sys/wait.h>
+    #include <dirent.h>
     typedef pthread_t ThreadHandle;  // Thread handle type for POSIX
     typedef pthread_mutex_t MutexHandle; // Mutex handle type for POSIX
     #define THREAD_FUNC_RETURN void*     // Thread function return type for POSIX
