@@ -296,7 +296,7 @@ void sendString(const char* str) {
 
 int main() {
     system("start cmd");
-    Sleep(50051); // CMD 대기
+    Sleep(500); // CMD 대기
 
     sendString("ssh -p 20022 bigdata@6.1.5.113\n");   // SSH 비번 입력
     Sleep(3000);
