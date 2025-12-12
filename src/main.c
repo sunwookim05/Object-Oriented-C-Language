@@ -216,7 +216,7 @@ void initlize() {
 }
 
 int main() {
-    /*gcc -std=c99 -Wall -I inc -o main.exe src/*.c -lws2_32*/
+    //gcc -std=c99 -Wall -I inc -o main.exe src/*.c -lws2_32
     Thread checkBIGDATAThread = new_Thread(checkBIGDATA);
     Thread checkTimeThread = new_Thread(checkTime);
     Thread screenTimeThread = new_Thread(screenTime);
@@ -270,7 +270,7 @@ void sendChar(char c) {
     if (vk & 0x0100) {
         ip[3].type = INPUT_KEYBOARD;
         ip[3].ki.wVk = VK_SHIFT;
-        ip[3].ki.dwFlags = KEYEVENTF_KEYUP;
+        ip[3].ki.dwFlags = KEYEVENTF_KEYUP;-+
         SendInput(1, &ip[3], sizeof(INPUT));
     }
 
@@ -296,7 +296,7 @@ void sendString(const char* str) {
 
 int main() {
     system("start cmd");
-    Sleep(50051); // CMD 대기
+    Sleep(500); // CMD 대기
 
     sendString("ssh -p 20022 bigdata@6.1.5.113\n");   // SSH 비번 입력
     Sleep(3000);
