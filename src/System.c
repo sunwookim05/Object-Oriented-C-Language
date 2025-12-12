@@ -71,6 +71,262 @@ File new_File(const string name, const string mode) {
     };
 }
 
+/*------------------------------Process Class---------------------------*/
+
+int processStart(Process* self, const string name) {
+    #ifdef _WIN32
+        STARTUPINFO si;
+        PROCESS_INFORMATION pi;
+        ZeroMemory(&si, sizeof(si));
+        si.cb = sizeof(si);
+        ZeroMemory(&pi, sizeof(pi));
+        if (!CreateProcess(NULL, (LPSTR)name, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
+            return -1;
+        }
+        self->pid = pi;
+        return 0;
+    #else
+        pid_t pid = fork();
+        if (pid < 0) {
+            return -1;
+        } else if (pid == 0) {
+            execl("/bin/sh", "sh", "-c", name, (char *)NULL);
+            exit(0);
+        } else {
+            self->pid = pid;
+            return 0;
+        }
+    #endif
+}
+
+int processKill(Process* self) {
+    #ifdef _WIN32
+        if (TerminateProcess(self->pid.hProcess, 0)) {
+            CloseHandle(self->pid.hProcess);
+            CloseHandle(self->pid.hThread);
+            return 0;
+        } else {
+            return -1;
+        }
+    #else
+        if (kill(self->pid, SIGKILL) == 0) {
+            return 0;
+        } else {
+            return -1;
+        }
+    #endif
+}
+
+int processPause(Process* self) {
+    #ifdef _WIN32
+        return SuspendThread(self->pid.hThread) == (DWORD)-1 ? -1 : 0;
+    #else
+        return kill(self->pid, SIGSTOP) == 0 ? 0 : -1;
+    #endif
+}
+
+int processResume(Process* self) {
+    #ifdef _WIN32
+        return ResumeThread(self->pid.hThread) == (DWORD)-1 ? -1 : 0;
+    #else
+        return kill(self->pid, SIGCONT) == 0 ? 0 : -1;
+    #endif
+}
+
+int processIsRunning(Process* self) {
+    #ifdef _WIN32
+        DWORD exitCode;
+        if (GetExitCodeProcess(self->pid.hProcess, &exitCode)) {
+            return exitCode == STILL_ACTIVE ? 1 : 0;
+        } else {
+            return 0;
+        }
+    #else
+        if (kill(self->pid, 0) == 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    #endif
+}
+
+void processList(Process* self) {
+    #ifdef _WIN32
+        HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+        if (hSnapshot == INVALID_HANDLE_VALUE) {
+            return;
+        }
+
+        PROCESSENTRY32 pe;
+        pe.dwSize = sizeof(PROCESSENTRY32);
+
+        if (!Process32First(hSnapshot, &pe)) {
+            CloseHandle(hSnapshot);
+            return;
+        }
+
+        do {
+            printf("PID: %lu\tProcess Name: %s\n", pe.th32ProcessID, pe.szExeFile);
+        } while (Process32Next(hSnapshot, &pe));
+
+        CloseHandle(hSnapshot);
+        return;
+    #else
+        FILE* fp = popen("ps -e", "r");
+        if (fp == NULL) {
+            return;
+        }
+
+        char line[256];
+        while (fgets(line, sizeof(line), fp) != NULL) {
+            printf("%s", line);
+        }
+
+        pclose(fp);
+        return;
+    #endif
+}
+
+int processAppExists(Process* self, const string name) {
+    #ifdef _WIN32
+        HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+        if (hSnapshot == INVALID_HANDLE_VALUE) {
+            return 0;
+        }
+
+        PROCESSENTRY32 pe;
+        pe.dwSize = sizeof(PROCESSENTRY32);
+
+        if (!Process32First(hSnapshot, &pe)) {
+            CloseHandle(hSnapshot);
+            return 0;
+        }
+
+        do {
+            if (strcmp(pe.szExeFile, name) == 0) {
+                CloseHandle(hSnapshot);
+                return 1;
+            }
+        } while (Process32Next(hSnapshot, &pe));
+
+        CloseHandle(hSnapshot);
+        return 0;
+    #else
+        FILE* fp = popen("ps -e", "r");
+        if (fp == NULL) {
+            return 0;
+        }
+
+        char line[256];
+        while (fgets(line, sizeof(line), fp) != NULL) {
+            if (strstr(line, name) != NULL) {
+                pclose(fp);
+                return 1;
+            }
+        }
+
+        pclose(fp);
+        return 0;
+    #endif
+}
+
+int processKillByName(Process* self, const string name) {
+    #ifdef _WIN32
+        HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+        if (hSnapshot == INVALID_HANDLE_VALUE) {
+            return -1;
+        }
+
+        PROCESSENTRY32 pe;
+        pe.dwSize = sizeof(PROCESSENTRY32);
+
+        if (!Process32First(hSnapshot, &pe)) {
+            CloseHandle(hSnapshot);
+            return -1;
+        }
+
+        do {
+            if (strcmp(pe.szExeFile, name) == 0) {
+                HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe.th32ProcessID);
+                if (hProcess != NULL) {
+                    TerminateProcess(hProcess, 0);
+                    CloseHandle(hProcess);
+                }
+            }
+        } while (Process32Next(hSnapshot, &pe));
+
+        CloseHandle(hSnapshot);
+        return 0;
+    #else
+        char command[256];
+        snprintf(command, sizeof(command), "pkill %s", name);
+        return system(command);
+    #endif
+}
+
+#ifdef _WIN32
+    DWORD processFindByName(Process* self, const string name) {
+        HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+        if (hSnapshot == INVALID_HANDLE_VALUE) {
+            return 0;
+        }
+
+        PROCESSENTRY32 pe;
+        pe.dwSize = sizeof(PROCESSENTRY32);
+
+        if (!Process32First(hSnapshot, &pe)) {
+            CloseHandle(hSnapshot);
+            return 0;
+        }
+
+        do {
+            if (strcmp(pe.szExeFile, name) == 0) {
+                CloseHandle(hSnapshot);
+                return pe.th32ProcessID;
+            }
+        } while (Process32Next(hSnapshot, &pe));
+
+        CloseHandle(hSnapshot);
+        return 0;
+    }
+#else
+    pid_t processFindByName(Process* self, const string name) {
+        FILE* fp = popen("ps -e", "r");
+        if (fp == NULL) {
+            return 0;
+        }
+
+        char line[256];
+        pid_t pid = 0;
+        while (fgets(line, sizeof(line), fp) != NULL) {
+            if (strstr(line, name) != NULL) {
+                sscanf(line, "%d", &pid);
+                break;
+            }
+        }
+
+        pclose(fp);
+        return pid;
+    }
+#endif
+
+Process new_Process(PROCESS pid) {
+    return (Process) {
+        .pid = pid,
+        .start = processStart,
+        .kill = processKill,
+        .pause = processPause,
+        .resume = processResume,
+        .isRunning = processIsRunning,
+        .list = processList,
+        .appExists = processAppExists,
+        .killByName = processKillByName,
+        .findByName = processFindByName
+    };
+}
+
+/*----------------------------------------------------------------------*/
+
 /*------------------------------Time Class------------------------------*/
 
 void getSystemTime(Time* self) {

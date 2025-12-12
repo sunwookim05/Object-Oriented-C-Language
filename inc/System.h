@@ -95,6 +95,103 @@ typedef struct __FILE{
  */
 File new_File(const string, const string);
 
+
+    #ifdef _WIN32
+        typedef PROCESS_INFORMATION PROCESS;
+    #else
+        typedef pid_t PROCESS;
+    #endif
+
+
+#pragma pack(push, 1)
+/**
+ * @struct Process
+ * @brief Represents a process object with utility functions.
+ */
+typedef struct Process{
+    PROCESS pid; //< The process ID.
+
+    /**
+     * @brief Starts a new process.
+     * @param process The process object.
+     * @param name The process name.
+     * @return The process object.
+    */
+    int (*start)(struct Process*, const string);
+    /**
+     * @brief Kills the process.
+     * @param process The process object.
+     * @return The process object.
+    */
+    int (*kill)(struct Process*);
+    /**
+     * @brief Pauses the process.
+     * @param process The process object.
+     * @return The process object.
+    */
+    int (*pause)(struct Process*);
+    /**
+     * @brief Resumes the process.
+     * @param process The process object.
+     * @return The process object.
+    */
+    int (*resume)(struct Process*);
+    /**
+     * @brief Checks if the process is running.
+     * @param process The process object.
+     * @return 1 if running, 0 otherwise.
+    */
+    int (*isRunning)(struct Process*);
+    /**
+     * @brief Lists all running processes.
+     * @param process The process object.
+     * @return void.
+    */
+    void (*list)(struct Process*);
+    /**
+     * @brief Checks if an application exists.
+     * @param process The process object.
+     * @param name The application name.
+     * @return 1 if exists, 0 otherwise.
+    */
+    int (*appExists)(struct Process*, const string);
+    /**
+     * @brief Kills a process by name.
+     * @param process The process object.
+     * @param name The process name.
+     * @return 0 on success, -1 on failure.
+    */
+    int (*killByName)(struct Process*, const string);
+
+    #ifdef _WIN32
+        /**
+         * @brief Finds a process by name.
+         * @param process The process object.
+         * @param name The process name.
+         * @return The process ID.
+        */
+        DWORD (*findByName)(struct Process*, const string);
+    #else
+        /**
+         * @brief Finds a process by name.
+         * @param process The process object.
+         * @param name The process name.
+         * @return The process ID.
+        */
+        pid_t (*findByName)(struct Process*, const string);
+    #endif
+} Process;
+#pragma pack(pop)
+
+
+
+/**
+ * @brief Constructs a new {@code Process} object.
+ * @param void
+ * @return The new {@code Process} object.
+ */
+Process new_Process(PROCESS pid);
+
 #pragma pack(push, 1)
 /**
  * @struct TIME
