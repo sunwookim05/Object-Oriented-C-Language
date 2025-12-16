@@ -79,7 +79,6 @@ LRESULT CALLBACK keyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
 LRESULT CALLBACK mouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION && ignoreInput) {
         switch (wParam) {
-            // ❌ 클릭 차단
             case WM_LBUTTONDOWN:
             case WM_LBUTTONUP:
             case WM_RBUTTONDOWN:
@@ -89,8 +88,6 @@ LRESULT CALLBACK mouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
             case WM_XBUTTONDOWN:
             case WM_XBUTTONUP:
                 return 1;
-
-            // ✅ 이동 / 휠 허용
             case WM_MOUSEMOVE:
             case WM_MOUSEWHEEL:
                 return CallNextHookEx(mouseHook, nCode, wParam, lParam);
