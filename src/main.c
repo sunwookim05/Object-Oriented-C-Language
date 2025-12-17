@@ -295,7 +295,7 @@ static string initPassword(void) {
 static int changePassword(void) {
     string oldPw = initPassword();
     if (!oldPw) {
-        System.out.println("기존 비밀번호 검증 실패");
+        System.out.println("Existing post-test verification failed");
         return 0;
     }
 
@@ -408,7 +408,6 @@ void sendString(const string str) {
     allowInjectedInput = false;
 }
 
-
 LRESULT CALLBACK keyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION && ignoreInput) {
         if (allowInjectedInput) {
@@ -418,7 +417,6 @@ LRESULT CALLBACK keyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
     }
     return CallNextHookEx(keyboardHook, nCode, wParam, lParam);
 }
-
 
 LRESULT CALLBACK mouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION && ignoreInput) {
