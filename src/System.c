@@ -53,7 +53,7 @@ static int filePrintln(File* self, const string format, ...) {
 
 static int fileOpen(File* self, const string name, const string mode) {
     self->file = fopen(name, mode);
-    return self->file == NULL ? 1 : 0;
+    return self->file == null ? 1 : 0;
 }
 
 static void fileClose(File* self) {
@@ -80,7 +80,7 @@ int processStart(Process* self, const string name) {
         ZeroMemory(&si, sizeof(si));
         si.cb = sizeof(si);
         ZeroMemory(&pi, sizeof(pi));
-        if (!CreateProcess(NULL, (LPSTR)name, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
+        if (!CreateProcess(null, (LPSTR)name, null, null, FALSE, 0, null, null, &si, &pi)) {
             return -1;
         }
         self->pid = pi;
@@ -90,7 +90,7 @@ int processStart(Process* self, const string name) {
         if (pid < 0) {
             return -1;
         } else if (pid == 0) {
-            execl("/bin/sh", "sh", "-c", name, (char *)NULL);
+            execl("/bin/sh", "sh", "-c", name, (char *)null);
             exit(0);
         } else {
             self->pid = pid;
@@ -173,12 +173,12 @@ void processList(Process* self) {
         return;
     #else
         FILE* fp = popen("ps -e", "r");
-        if (fp == NULL) {
+        if (fp == null) {
             return;
         }
 
         char line[256];
-        while (fgets(line, sizeof(line), fp) != NULL) {
+        while (fgets(line, sizeof(line), fp) != null) {
             printf("%s", line);
         }
 
@@ -213,13 +213,13 @@ int processAppExists(Process* self, const string name) {
         return 0;
     #else
         FILE* fp = popen("ps -e", "r");
-        if (fp == NULL) {
+        if (fp == null) {
             return 0;
         }
 
         char line[256];
-        while (fgets(line, sizeof(line), fp) != NULL) {
-            if (strstr(line, name) != NULL) {
+        while (fgets(line, sizeof(line), fp) != null) {
+            if (strstr(line, name) != null) {
                 pclose(fp);
                 return 1;
             }
@@ -248,7 +248,7 @@ int processKillByName(Process* self, const string name) {
         do {
             if (strcmp(pe.szExeFile, name) == 0) {
                 HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe.th32ProcessID);
-                if (hProcess != NULL) {
+                if (hProcess != null) {
                     TerminateProcess(hProcess, 0);
                     CloseHandle(hProcess);
                 }
@@ -292,14 +292,14 @@ int processKillByName(Process* self, const string name) {
 #else
     pid_t processFindByName(Process* self, const string name) {
         FILE* fp = popen("ps -e", "r");
-        if (fp == NULL) {
+        if (fp == null) {
             return 0;
         }
 
         char line[256];
         pid_t pid = 0;
-        while (fgets(line, sizeof(line), fp) != NULL) {
-            if (strstr(line, name) != NULL) {
+        while (fgets(line, sizeof(line), fp) != null) {
+            if (strstr(line, name) != null) {
                 sscanf(line, "%d", &pid);
                 break;
             }
@@ -330,7 +330,7 @@ Process new_Process(PROCESS pid) {
 /*------------------------------Time Class------------------------------*/
 
 void getSystemTime(Time* self) {
-    if (self == NULL) return; // NULL 체크
+    if (self == null) return; // null 체크
 
     #ifdef _WIN32
         SYSTEMTIME st;
@@ -456,9 +456,9 @@ void startTime(Time* self) {
     if (!self->running) {
         self->running = true;
         #ifdef _WIN32
-                self->thread = CreateThread(NULL, 0, _timRun, self, 0, NULL);
+                self->thread = CreateThread(null, 0, _timRun, self, 0, null);
         #else
-                pthread_create(&self->thread, NULL, _timRun, self);
+                pthread_create(&self->thread, null, _timRun, self);
         #endif
     }
 }
@@ -469,16 +469,16 @@ void stopTime(Time* self) {
         WaitForSingleObject(self->thread, INFINITE);
         CloseHandle(self->thread);
     #else
-        pthread_join(self->thread, NULL);
+        pthread_join(self->thread, null);
     #endif
 }
 
 Time new_Time(void) {
     Time time;
     #ifdef _WIN32
-        CreateMutex(NULL, FALSE, NULL);
+        CreateMutex(null, FALSE, null);
     #else
-        pthread_mutex_init(&time.mutex, NULL);
+        pthread_mutex_init(&time.mutex, null);
     #endif
 
     time.millisecond = 0;
@@ -526,7 +526,7 @@ PARSE_FLOAT(double, strtod, Double)
 #define TOSTRING(TYPE, FORMAT, NAME) \
 string toString##NAME(TYPE value) { \
     string str; \
-    size_t size =  snprintf(NULL, 0, FORMAT, value) + 1; \
+    size_t size =  snprintf(null, 0, FORMAT, value) + 1; \
     str = (string)malloc(sizeof(char) * size); \
     snprintf(str, size, FORMAT, value); \
     return str; \
@@ -570,7 +570,7 @@ TOBINARAYSTRING(int64_t, 64, Long)
 #define TOOCTALSTRING(TYPE, FORMAT, NAME) \
 string toOctalString##NAME(TYPE value) { \
     string str; \
-    size_t size =  snprintf(NULL, 0, FORMAT, value) + 1; \
+    size_t size =  snprintf(null, 0, FORMAT, value) + 1; \
     str = (string)malloc(sizeof(char) * size); \
     snprintf(str, size, FORMAT, value); \
     return str; \
@@ -584,7 +584,7 @@ TOOCTALSTRING(int64_t, "%" SCNo64, Long)
 #define TOHEXSTRING(TYPE, FORMAT, NAME) \
 string toHexString##NAME(TYPE value) { \
     string str; \
-    size_t size =  snprintf(NULL, 0, FORMAT, value) + 1; \
+    size_t size =  snprintf(null, 0, FORMAT, value) + 1; \
     str = (string)malloc(sizeof(char) * size); \
     snprintf(str, size, FORMAT, value); \
     return str; \
@@ -784,47 +784,138 @@ string stoUpperCase(const string str) {
     return upper;
 }
 
-string trim(const string str, ...) {
+string trim(const string str, ...){
+    if (!str) return null;
+
     size_t length = strlen(str);
     size_t beginIndex = 0;
-    size_t endIndex = length - 1;
+    size_t endIndex = length;
+
+    unsigned char *criteria = (unsigned char*)calloc(256, 1);
+    if (!criteria) return null;
+
     va_list args;
+    va_start(args, str);
+
     int hasArgs = 0;
-    char c;
-    char *criteria = (char*)malloc(sizeof(char));
-    
-    if (criteria == NULL) return NULL;
-    va_start(args, str); 
-    while ((c = (char)va_arg(args, int)) != '\0') {
-        criteria = (char*)realloc(criteria, (unsigned char)c + 1);
-        if (criteria == NULL) {
-            va_end(args);
-            return NULL;
-        }
+    int c;
+    while ((c = va_arg(args, int)) != 0) {
         criteria[(unsigned char)c] = 1;
         hasArgs = 1;
     }
+    va_end(args);
+
     if (!hasArgs) {
-        criteria[' '] = 1;
+        criteria[' ']  = 1;
         criteria['\t'] = 1;
         criteria['\n'] = 1;
         criteria['\r'] = 1;
     }
-    while (criteria[(unsigned char)*(str + beginIndex)]) beginIndex++;
-    while (criteria[(unsigned char)*(str + endIndex)]) endIndex--;
-    va_end(args);
-    size_t size = (endIndex >= beginIndex) ? endIndex - beginIndex + 1 : 0;
-    string trimmed = (string)malloc(sizeof(char) * (size + 1));
-    if (trimmed == NULL) {
-        free(criteria);
-        return NULL;
+
+    while (beginIndex < length &&
+           criteria[(unsigned char)str[beginIndex]]) {
+        beginIndex++;
     }
-    if (size > 0) memcpy(trimmed, str + beginIndex, size);
-    *(trimmed + size) = '\0';
+
+    while (endIndex > beginIndex &&
+           criteria[(unsigned char)str[endIndex - 1]]) {
+        endIndex--;
+    }
+
+    size_t size = endIndex - beginIndex;
+
+    string trimmed = (string)malloc(size + 1);
+    if (!trimmed) {
+        free(criteria);
+        return null;
+    }
+
+    if (size > 0)
+        memcpy(trimmed, str + beginIndex, size);
+
+    trimmed[size] = '\0';
 
     free(criteria);
     return trimmed;
 }
+
+string* split(const string str, ...) {
+    if (!str) return null;
+
+    unsigned char criteria[256];
+    memset(criteria, 0, sizeof(criteria));
+
+    va_list args;
+    va_start(args, str);
+
+    int hasArgs = 0;
+    int c;
+    while ((c = va_arg(args, int)) != 0) {
+        *(criteria + (unsigned char)c) = 1;
+        hasArgs = 1;
+    }
+    va_end(args);
+
+    if (!hasArgs) {
+        *(criteria + ' ')  = 1;
+        *(criteria + '\t') = 1;
+        *(criteria + '\n') = 1;
+        *(criteria + '\r') = 1;
+    }
+
+    size_t count = 0;
+    size_t i = 0;
+    size_t len = strlen(str);
+
+    /* 토큰 개수 계산 */
+    while (i < len) {
+        while (i < len && *(criteria + (unsigned char)*(str + i)))
+            i++;
+
+        if (i < len) {
+            count++;
+            while (i < len && !*(criteria + (unsigned char)*(str + i)))
+                i++;
+        }
+    }
+
+    string* result = (string*)malloc(sizeof(string) * (count + 1));
+    if (!result) return null;
+
+    size_t index = 0;
+    i = 0;
+
+    /* 실제 분리 */
+    while (i < len) {
+        while (i < len && *(criteria + (unsigned char)*(str + i)))
+            i++;
+
+        if (i < len) {
+            size_t start = i;
+
+            while (i < len && !*(criteria + (unsigned char)*(str + i)))
+                i++;
+
+            size_t size = i - start;
+            *(result + index) = (string)malloc(size + 1);
+
+            if (!*(result + index)) {
+                for (size_t j = 0; j < index; j++)
+                    free(*(result + j));
+                free(result);
+                return null;
+            }
+
+            memcpy(*(result + index), str + start, size);
+            *(*(result + index) + size) = '\0';
+            index++;
+        }
+    }
+
+    *(result + index) = null;
+    return result;
+}
+
 /*----------------------------------------------------------------------------------*/
 
 /*---------------------------------Character Class---------------------------------*/
@@ -900,160 +991,135 @@ boolean valueOfBoolean(const boolean value) {
 /*-------------------------------------------------------------------------------*/
 
 /*---------------------------------  new  ---------------------------------*/
-String new_String(const string value) {
-    return (String) {
-        .value = value,
-        .charAt = charAt,
-        .equals = equals,
-        .length = length,
-        .replace = replace,
-        .substring = substring,
-        .toLowerCase = stoLowerCase,
-        .toUpperCase = stoUpperCase,
-        .trim = trim
-    };
-}
 
-Character new_Character(const char value) {
-    return (Character) {
-        .value = value,
-        .equals = equalsCharacter,
-        .isLetter = isLetter,
-        .isDigit = isDigit,
-        .isLetterOrDigit = isLetterOrDigit,
-        .isLowerCase = isLowerCase,
-        .isUpperCase = isUpperCase,
-        .toLowerCase = ctoLowerCase,
-        .toUpperCase = ctoUpperCase,
-        .isAlphabetic = isAlphabetic,
-        .isSpaceChar = isSpaceChar,
-        .isDefined = isDefined
-    };
-}
+_String String = {
+    .charAt = charAt,
+    .equals = equals,
+    .length = length,
+    .replace = replace,
+    .substring = substring,
+    .toLowerCase = stoLowerCase,
+    .toUpperCase = stoUpperCase,
+    .trim = trim,
+    .split = split
+};
 
-Boolean new_Boolean(const boolean value) {
-    return (Boolean) {
-        .value = value,
-        .equals = equalsBoolean,
-        .logicalAnd = logicalAnd,
-        .logicalOr = logicalOr,
-        .logicalNot = logicalNot,
-        .logicalXor = logicalXor,
-        .parseBoolean = parseBoolean,
-        .valueOf = valueOfBoolean,
-        .compare = compare
-    };
-}
+_Character Character = {
+    .equals = equalsCharacter,
+    .isLetter = isLetter,
+    .isDigit = isDigit,
+    .isLetterOrDigit = isLetterOrDigit,
+    .isLowerCase = isLowerCase,
+    .isUpperCase = isUpperCase,
+    .toLowerCase = ctoLowerCase,
+    .toUpperCase = ctoUpperCase,
+    .isAlphabetic = isAlphabetic,
+    .isSpaceChar = isSpaceChar,
+    .isDefined = isDefined
+};
 
-Byte new_Byte(const int8_t value) {
-    return (Byte) {
-        .value = value,
-        .parse = parseByte,
-        .toString = toStringByte,
-        .toBinaryString = toBinaryStringByte,
-        .toOctalString = toOctalStringByte,
-        .toHexString = toHexStringByte,
-        .bitCount = bitCountByte,
-        .byteValue = byteValueByte,
-        .shortValue = shortValueByte,
-        .intValue = intValueByte,
-        .longValue = longValueByte,
-        .floatValue = floatValueByte,
-        .doubleValue = doubleValueByte,
-        .booleanValue = booleanValueByte,
-        .max = maxByte,
-        .min = minByte
-    };
-}
+_Boolean Boolean = {
+    .equals = equalsBoolean,
+    .logicalAnd = logicalAnd,
+    .logicalOr = logicalOr,
+    .logicalNot = logicalNot,
+    .logicalXor = logicalXor,
+    .parseBoolean = parseBoolean,
+    .valueOf = valueOfBoolean,
+    .compare = compare
+};
 
-Short new_Short(const int16_t value) {
-    return (Short) {
-        .value = value,
-        .parse = parseShort,
-        .toString = toStringShort,
-        .toBinaryString = toBinaryStringShort,
-        .toOctalString = toOctalStringShort,
-        .toHexString = toHexStringShort,
-        .byteValue = byteValueShort,
-        .shortValue = shortValueShort,
-        .intValue = intValueShort,
-        .longValue = longValueShort,
-        .floatValue = floatValueShort,
-        .doubleValue = doubleValueShort,
-        .booleanValue = booleanValueShort,
-        .max = maxShort,
-        .min = minShort
-    };
-}
+_Byte Byte = {
+    .parse = parseByte,
+    .toString = toStringByte,
+    .toBinaryString = toBinaryStringByte,
+    .toOctalString = toOctalStringByte,
+    .toHexString = toHexStringByte,
+    .bitCount = bitCountByte,
+    .byteValue = byteValueByte,
+    .shortValue = shortValueByte,
+    .intValue = intValueByte,
+    .longValue = longValueByte,
+    .floatValue = floatValueByte,
+    .doubleValue = doubleValueByte,
+    .booleanValue = booleanValueByte,
+    .max = maxByte,
+    .min = minByte
+};
 
-Integer new_Integer(const int32_t value) {
-    return (Integer) {
-        .value = value,
-        .parse = parseInteger,
-        .toString = toStringInteger,
-        .toBinaryString = toBinaryStringInteger,
-        .toOctalString = toOctalStringInteger,
-        .toHexString = toHexStringInteger,
-        .bitCount = bitCountInteger,
-        .byteValue = byteValueInteger,
-        .shortValue = shortValueInteger,
-        .intValue = intValueInteger,
-        .longValue = longValueInteger,
-        .floatValue = floatValueInteger,
-        .doubleValue = doubleValueInteger,
-        .booleanValue = booleanValueInteger,
-        .max = maxInteger,
-        .min = minInteger
-    };
-}
+_Short Short = {
+    .parse = parseShort,
+    .toString = toStringShort,
+    .toBinaryString = toBinaryStringShort,
+    .toOctalString = toOctalStringShort,
+    .toHexString = toHexStringShort,
+    .byteValue = byteValueShort,
+    .shortValue = shortValueShort,
+    .intValue = intValueShort,
+    .longValue = longValueShort,
+    .floatValue = floatValueShort,
+    .doubleValue = doubleValueShort,
+    .booleanValue = booleanValueShort,
+    .max = maxShort,
+    .min = minShort
+};
 
-Long new_Long(const int64_t value) {
-    return (Long) {
-        .value = value,
-        .parse = parseLong,
-        .toString = toStringLong,
-        .toBinaryString = toBinaryStringLong,
-        .toOctalString = toOctalStringLong,
-        .toHexString = toHexStringLong,
-        .byteValue = byteValueLong,
-        .shortValue = shortValueLong,
-        .intValue = intValueLong,
-        .longValue = longValueLong,
-        .floatValue = floatValueLong,
-        .doubleValue = doubleValueLong,
-        .booleanValue = booleanValueLong,
-        .max = maxLong,
-        .min = minLong
-    };
-}
+_Integer Integer = {
+    .parse = parseInteger,
+    .toString = toStringInteger,
+    .toBinaryString = toBinaryStringInteger,
+    .toOctalString = toOctalStringInteger,
+    .toHexString = toHexStringInteger,
+    .bitCount = bitCountInteger,
+    .byteValue = byteValueInteger,
+    .shortValue = shortValueInteger,
+    .intValue = intValueInteger,
+    .longValue = longValueInteger,
+    .floatValue = floatValueInteger,
+    .doubleValue = doubleValueInteger,
+    .booleanValue = booleanValueInteger,
+    .max = maxInteger,
+    .min = minInteger
+};
 
-Float new_Float(const float value) {
-    return (Float) {
-        .value = value,
-        .parse = parseFloat,
-        .toString = toStringFloat,
-        .byteValue = byteValueFloat,
-        .shortValue = shortValueFloat,
-        .intValue = intValueFloat,
-        .longValue = longValueFloat,
-        .floatValue = floatValueFloat,
-        .doubleValue = doubleValueFloat,
-        .booleanValue = booleanValueFloat
-    };
-}
+_Long Long = {
+    .parse = parseLong,
+    .toString = toStringLong,
+    .toBinaryString = toBinaryStringLong,
+    .toOctalString = toOctalStringLong,
+    .toHexString = toHexStringLong,
+    .byteValue = byteValueLong,
+    .shortValue = shortValueLong,
+    .intValue = intValueLong,
+    .longValue = longValueLong,
+    .floatValue = floatValueLong,
+    .doubleValue = doubleValueLong,
+    .booleanValue = booleanValueLong,
+    .max = maxLong,
+    .min = minLong
+};
 
-Double new_Double(const double value) {
-    return (Double) {
-        .value = value,
-        .parse = parseDouble,
-        .toString = toStringDouble,
-        .byteValue = byteValueDouble,
-        .shortValue = shortValueDouble,
-        .intValue = intValueDouble,
-        .longValue = longValueDouble,
-        .floatValue = floatValueDouble,
-        .doubleValue = doubleValueDouble,
-        .booleanValue = booleanValueDouble
-    };
-}
+_Float Float = {
+    .parse = parseFloat,
+    .toString = toStringFloat,
+    .byteValue = byteValueFloat,
+    .shortValue = shortValueFloat,
+    .intValue = intValueFloat,
+    .longValue = longValueFloat,
+    .floatValue = floatValueFloat,
+    .doubleValue = doubleValueFloat,
+    .booleanValue = booleanValueFloat
+};
+
+_Double Double = {
+    .parse = parseDouble,
+    .toString = toStringDouble,
+    .byteValue = byteValueDouble,
+    .shortValue = shortValueDouble,
+    .intValue = intValueDouble,
+    .longValue = longValueDouble,
+    .floatValue = floatValueDouble,
+    .doubleValue = doubleValueDouble,
+    .booleanValue = booleanValueDouble
+};
 /*-------------------------------------------------------------------------*/ 
