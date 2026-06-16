@@ -2,120 +2,148 @@
 #include "System.h"
 #include "Scanner.h"
 
+static void consumeLineBreak(void) {
+    int c = getchar();
+    if (c == '\r') {
+        int next = getchar();
+        if (next != '\n' && next != EOF) ungetc(next, stdin);
+    } else if (c != '\n' && c != EOF) {
+        ungetc(c, stdin);
+    }
+}
+
 char nextChar(void){
-    char c;
-    scanf("%c", &c);
-    getchar();
+    char c = '\0';
+    if (scanf("%c", &c) != 1) return '\0';
+    consumeLineBreak();
     return c;
 }
 
 int8_t nextByte(void){
-    int8_t b;
-    scanf("%" SCNd8, &b);
-    getchar();
+    int8_t b = 0;
+    if (scanf("%" SCNd8, &b) != 1) return 0;
+    consumeLineBreak();
     return b;
 }
 
 int16_t nextShort(void){
-    int16_t s;
-    scanf("%" SCNd16, &s);
-    getchar();
+    int16_t s = 0;
+    if (scanf("%" SCNd16, &s) != 1) return 0;
+    consumeLineBreak();
     return s;
 }
 
 int32_t nextInt(void){
-    int32_t i;
-    scanf("%" SCNd32, &i);
-    getchar();
+    int32_t i = 0;
+    if (scanf("%" SCNd32, &i) != 1) return 0;
+    consumeLineBreak();
     return i;
 }
 
 int64_t nextLong(void){
-    int64_t l;
-    scanf("%" SCNd64, &l);
-    getchar();
+    int64_t l = 0;
+    if (scanf("%" SCNd64, &l) != 1) return 0;
+    consumeLineBreak();
     return l;
 }
 
 uint8_t nextUByte(void){
-    uint8_t b;
-    scanf("%" SCNu8, &b);
-    getchar();
+    uint8_t b = 0;
+    if (scanf("%" SCNu8, &b) != 1) return 0;
+    consumeLineBreak();
     return b;
 }
 
 uint16_t nextUShort(void){
-    uint16_t s;
-    scanf("%" SCNu16, &s);
-    getchar();
+    uint16_t s = 0;
+    if (scanf("%" SCNu16, &s) != 1) return 0;
+    consumeLineBreak();
     return s;
 }
 
 uint32_t nextUInt(void){
-    uint32_t i;
-    scanf("%" SCNu32, &i);
-    getchar();
+    uint32_t i = 0;
+    if (scanf("%" SCNu32, &i) != 1) return 0;
+    consumeLineBreak();
     return i;
 }
 
 uint64_t nextULong(void){
-    uint64_t l;
-    scanf("%" SCNu64, &l);
-    getchar();
+    uint64_t l = 0;
+    if (scanf("%" SCNu64, &l) != 1) return 0;
+    consumeLineBreak();
     return l;
 }
 
 boolean nextBoolean(void){
-    boolean b = false;
-    string s = (string)calloc(0, sizeof(char) * 5);
-    scanf("%5s", s);
-    if(atoi(s) | !(((*(s+0)|0x20)^'t') ^ ((*(s+1)|0x20)^'r') ^ ((*(s+2)|0x20)^'u') ^ ((*(s+3)|0x20)^'e'))) b = true;
-    free(s);
-    return b;
+    char s[6] = {0};
+    if (scanf("%5s", s) != 1) return false;
+    consumeLineBreak();
+
+    if (strcmp(s, "1") == 0) return true;
+    return ((s[0] | 0x20) == 't' &&
+            (s[1] | 0x20) == 'r' &&
+            (s[2] | 0x20) == 'u' &&
+            (s[3] | 0x20) == 'e' &&
+            s[4] == '\0') ? true : false;
 }
 
 float nextFloat(void){
-    float f;
-    scanf("%f", &f);
-    getchar();
+    float f = 0.0f;
+    if (scanf("%f", &f) != 1) return 0.0f;
+    consumeLineBreak();
     return f;
 }
 
 double nextDouble(void){
-    double d;
-    scanf("%lf", &d);
-    getchar();
+    double d = 0.0;
+    if (scanf("%lf", &d) != 1) return 0.0;
+    consumeLineBreak();
     return d;
 }
 
 long double nextLDouble(void){
-    long double ld;
-    scanf("%Lf", &ld);
-    getchar();
+    long double ld = 0.0L;
+    if (scanf("%Lf", &ld) != 1) return 0.0L;
+    consumeLineBreak();
     return ld;
 }
 
 string next(void){
     string s = (string)calloc(4096, sizeof(char));
-    scanf("%4095s", s);
-    s = (string)realloc(s, sizeof(char) * (strlen(s) + 1));
-    getchar();
+    if (s == null) return null;
+
+    if (scanf("%4095s", s) != 1) {
+        free(s);
+        return null;
+    }
+
+    string resized = (string)realloc(s, strlen(s) + 1);
+    if (resized != null) s = resized;
+    consumeLineBreak();
     return s;
 }
 
 string nextLine(void){
-    char c;
-    uint16_t i = 0;
-    string s = (string)calloc(0, sizeof(char) * 2);
+    int c;
+    size_t i = 0;
+    string s = (string)malloc(1);
+    if (s == null) return null;
+
     while ((i < 4096 - 1) && ((c = fgetc(stdin)) != EOF) && (c != '\n')) {
-        *(s + i++) = c;
-        s = (string)realloc(s, sizeof(char) * (i + 1));
+        string resized = (string)realloc(s, i + 2);
+        if (resized == null) break;
+        s = resized;
+        *(s + i++) = (char)c;
     }
+
     *(s + i) = '\0';
     return s;
 }
 
 Scanner new_Scanner(struct __stdin_t source){
+    (void)source;
+
     return (Scanner){
         .nextChar = nextChar,
         .nextByte = nextByte,

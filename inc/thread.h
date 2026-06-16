@@ -3,7 +3,6 @@
 #ifndef __THREAD_H
 #define __THREAD_H
 
-#pragma pack(push, 1)
 /**
  * @struct THREAD
  * @brief Structure representing a thread object.
@@ -11,6 +10,7 @@
 typedef struct THREAD {
     ThreadHandle id; /**< Thread identifier */
     void* (*function)(void*); /**< Function pointer for thread execution */
+    void* arg; /**< Argument passed to the thread function */
     
     /**
      * @brief Starts the thread.
@@ -49,7 +49,6 @@ typedef struct THREAD {
      */
     void (*delete)(struct THREAD*);
 } Thread;
-#pragma pack(pop)
 
 /**
  * @struct MUTEX

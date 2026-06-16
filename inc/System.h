@@ -5,7 +5,6 @@
 
 struct __stdin_t;
 
-#pragma pack(push, 1)
 /**
  * @struct SYSTEM
  * @brief The System class contains several useful class fields and methods.
@@ -43,9 +42,7 @@ typedef struct SYSTEM{
         int32_t (*read)();
     } in;
 } SYSTEM;
-#pragma pack(pop)
 
-#pragma pack(push, 1)
 /**
  * @struct File
  * @brief Represents a file object with utility functions.
@@ -85,7 +82,6 @@ typedef struct __FILE{
      */
     void (*close)(struct __FILE*);
 }File;
-#pragma pack(pop)
 
 /**
  * @brief Constructs a new {@code File} object.
@@ -103,7 +99,6 @@ File new_File(const string, const string);
     #endif
 
 
-#pragma pack(push, 1)
 /**
  * @struct Process
  * @brief Represents a process object with utility functions.
@@ -181,7 +176,6 @@ typedef struct Process{
         pid_t (*findByName)(struct Process*, const string);
     #endif
 } Process;
-#pragma pack(pop)
 
 
 
@@ -192,7 +186,6 @@ typedef struct Process{
  */
 Process new_Process(PROCESS pid);
 
-#pragma pack(push, 1)
 /**
  * @struct TIME
  * @brief Represents a time object with utility functions.
@@ -245,7 +238,6 @@ typedef struct TIME {
     */
     void (*stop)(struct TIME*);
 } Time;
-#pragma pack(pop)
 
 /**
  * @brief Constructs a new {@code Time} object.
@@ -254,13 +246,11 @@ typedef struct TIME {
  */
 Time new_Time(void);
 
-#pragma pack(push, 1)
 /**
  * @struct String
  * @brief Represents a string object with utility functions.
  */
-typedef struct String{
-    string value;   ///< The underlying string value.
+typedef struct _String{
     /**
      * @brief Returns the character at the specified index.
      * @param str The string.
@@ -316,16 +306,20 @@ typedef struct String{
      * @return A trimmed string.
      */
     string (*trim)(const string, ...);
-} String;
-#pragma pack(pop)
+    /**
+     * @brief Splits the string into an array of substrings based on delimiters.
+     * @param str The string.
+     * @param ... Delimiters to split by.
+     * @return An array of substrings.
+    */
+    string* (*split)(const string, ...);
+} _String;
 
-#pragma pack(push, 1)
 /**
- * @struct Character
+ * @struct _Character
  * @brief Represents a character object with utility functions.
  */
-typedef struct Character{
-    char value;  ///< The underlying character value.
+typedef struct _Character{
     /**
      * @brief Compares two characters for equality.
      * @param a The first character.
@@ -393,16 +387,13 @@ typedef struct Character{
      * @return True if defined, otherwise false.
      */
     boolean (*isDefined)(const char);
-} Character;
-#pragma pack(pop)
+} _Character;
 
-#pragma pack(push, 1)
 /**
- * @struct Boolean
+ * @struct _Boolean
  * @brief Represents a boolean object with utility functions.
  */
-typedef struct Boolean{
-    boolean value;  ///< The underlying boolean value.
+typedef struct _Boolean{
     /**
      * @brief Compares two boolean values for equality.
      * @param a The first boolean.
@@ -456,16 +447,13 @@ typedef struct Boolean{
      * @return An integer result of the comparison.
      */
     int32_t (*compare)(const boolean, const boolean);
-} Boolean;
-#pragma pack(pop)
+} _Boolean;
 
-#pragma pack(push, 1)
 /**
- * @struct Byte
+ * @struct _Byte
  * @brief Represents an 8-bit integer object with utility functions.
  */
-typedef struct Byte{
-    int8_t value;  ///< The underlying 8-bit value.
+typedef struct _Byte{
     /**
      * @brief Parses a string into an 8-bit integer.
      * @param str The string to parse.
@@ -559,16 +547,13 @@ typedef struct Byte{
      * @return The larger of the two.
      */
     int8_t (*max)(int8_t, int8_t);
-} Byte;
-#pragma pack(pop)
+} _Byte;
 
-#pragma pack(push, 1)
 /**
- * @struct Short
+ * @struct _Short
  * @brief Represents a 16-bit integer object with utility functions.
  */
-typedef struct Short{
-    int16_t value;  ///< The underlying 16-bit value.
+typedef struct _Short{
     /**
      * @brief Parses a string into a 16-bit integer.
      * @param str The string to parse.
@@ -662,16 +647,13 @@ typedef struct Short{
      * @return The larger of the two.
      */
     int16_t (*max)(int16_t, int16_t);
-} Short;
-#pragma pack(pop)
+} _Short;
 
-#pragma pack(push, 1)
 /**
  * @struct Integer
  * @brief Represents a 32-bit integer object with utility functions.
  */
-typedef struct Intrger{
-    int32_t value;  ///< The underlying 32-bit value.
+typedef struct _Integer{
     /**
      * @brief Parses a string into a 32-bit integer.
      * @param str The string to parse.
@@ -765,16 +747,13 @@ typedef struct Intrger{
      * @return The larger of the two.
      */
     int32_t (*max)(int32_t, int32_t);
-} Integer;
-#pragma pack(pop)
+} _Integer;
 
-#pragma pack(push, 1)
 /**
- * @struct Long
+ * @struct _Long
  * @brief Represents a 64-bit integer object with utility functions.
  */
-typedef struct Long{
-    int64_t value;  ///< The underlying 64-bit value.
+typedef struct _Long{
     /**
      * @brief Parses a string into a 64-bit integer.
      * @param str The string to parse.
@@ -868,16 +847,13 @@ typedef struct Long{
      * @return The larger of the two.
      */
     int64_t (*max)(int64_t, int64_t);
-} Long;
-#pragma pack(pop)
+} _Long;
 
-#pragma pack(push, 1)
 /**
- * @struct Float
+ * @struct _Float
  * @brief Represents a floating-point object with utility functions.
  */
-typedef struct Float{
-    float value;  ///< The underlying float value.
+typedef struct _Float{
     /**
      * @brief Parses a string into a float.
      * @param str The string to parse.
@@ -946,16 +922,13 @@ typedef struct Float{
      * @return The larger of the two.
      */
     float (*max)(float, float);
-} Float;
-#pragma pack(pop)
+} _Float;
 
-#pragma pack(push, 1)
 /**
- * @struct Double
+ * @struct _Double
  * @brief Represents a double-precision floating-point object with utility functions.
  */
-typedef struct Double{
-    double value;  ///< The underlying double value.
+typedef struct _Double{
     /**
      * @brief Parses a string into a double.
      * @param str The string to parse.
@@ -1024,72 +997,6 @@ typedef struct Double{
      * @return The larger of the two.
      */
     double (*max)(double, double);
-} Double;
-#pragma pack(pop)
-
-/// Function declarations for creating new instances of the objects
-
-/**
- * @brief Creates a new String object.
- * @param str The initial string.
- * @return A new String instance.
- */
-String new_String(string str);
-
-/**
- * @brief Creates a new Character object.
- * @param c The initial character.
- * @return A new Character instance.
- */
-Character new_Character(char c);
-
-/**
- * @brief Creates a new Byte object.
- * @param b The initial 8-bit value.
- * @return A new Byte instance.
- */
-Byte new_Byte(int8_t b);
-
-/**
- * @brief Creates a new Short object.
- * @param s The initial 16-bit value.
- * @return A new Short instance.
- */
-Short new_Short(int16_t s);
-
-/**
- * @brief Creates a new Integer object.
- * @param i The initial 32-bit value.
- * @return A new Integer instance.
- */
-Integer new_Integer(int32_t i);
-
-/**
- * @brief Creates a new Long object.
- * @param l The initial 64-bit value.
- * @return A new Long instance.
- */
-Long new_Long(int64_t l);
-
-/**
- * @brief Creates a new Float object.
- * @param f The initial float value.
- * @return A new Float instance.
- */
-Float new_Float(float f);
-
-/**
- * @brief Creates a new Double object.
- * @param d The initial double value.
- * @return A new Double instance.
- */
-Double new_Double(double d);
-
-/**
- * @brief Creates a new Boolean object.
- * @param b The initial boolean value.
- * @return A new Boolean instance.
- */
-Boolean new_Boolean(boolean b);
+} _Double;
 
 #endif

@@ -1,3 +1,9 @@
+#ifndef _WIN32
+    #ifndef _POSIX_C_SOURCE
+        #define _POSIX_C_SOURCE 200809L
+    #endif
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -18,7 +24,6 @@
     typedef HANDLE MutexHandle;   // Mutex handle type for Windows
     #define THREAD_FUNC_RETURN DWORD WINAPI  // Thread function return type for Windows
     #define THREAD_FUNC_PARAM LPVOID         // Thread function parameter type for Windows
-    #define sleep(ms) Sleep(ms)              // Sleep function for Windows
 #else
     #include <pthread.h>
     #include <unistd.h>
@@ -32,8 +37,18 @@
     typedef pthread_mutex_t MutexHandle; // Mutex handle type for POSIX
     #define THREAD_FUNC_RETURN void*     // Thread function return type for POSIX
     #define THREAD_FUNC_PARAM void*      // Thread function parameter type for POSIX
-    #define sleep(ms) usleep((ms)*1000)  // Sleep function for POSIX
 #endif
+
+static inline void sleep_ms(unsigned int milliseconds) {
+    #ifdef _WIN32
+        Sleep(milliseconds);
+    #else
+        struct timespec delay;
+        delay.tv_sec = (time_t)(milliseconds / 1000U);
+        delay.tv_nsec = (long)(milliseconds % 1000U) * 1000000L;
+        nanosleep(&delay, NULL);
+    #endif
+}
 
 #define import extern
 #define final const

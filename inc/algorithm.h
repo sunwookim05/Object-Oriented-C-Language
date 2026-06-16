@@ -3,7 +3,6 @@
 #ifndef __ALGORITHM_H
 #define __ALGORITHM_H
 
-#pragma pack(push, 1)
 /**
  * @struct STACK
  * @brief Stack structure for storing generic data.
@@ -40,7 +39,6 @@ typedef struct STACK {
      */
     void (*delete)(struct STACK*);
 } Stack;
-#pragma pack(pop)
 
 /**
  * @brief Creates a new stack with a given element size.
@@ -54,7 +52,6 @@ Stack new_stack(size_t);
  */
 #define new_Stack(type) new_stack(sizeof(type))
 
-#pragma pack(push, 1)
 /**
  * @struct QUEUE
  * @brief Queue structure for storing generic data.
@@ -90,7 +87,6 @@ typedef struct QUEUE {
      */
     void (*delete)(struct QUEUE*);
 } Queue;
-#pragma pack(pop)
 
 /**
  * @brief Creates a new queue with a given element size.
@@ -104,7 +100,6 @@ Queue new_queue(size_t);
  */
 #define new_Queue(type) new_queue(sizeof(type))
 
-#pragma pack(push, 1)
 /**
  * @struct DEQUE
  * @brief Deque (double-ended queue) structure for storing generic data.
@@ -154,7 +149,6 @@ typedef struct DEQUE {
      */
     void (*delete)(struct DEQUE*);
 } Deque;
-#pragma pack(pop)
 
 /**
  * @brief Creates a new deque with a given element size.
@@ -168,7 +162,6 @@ Deque new_deque(size_t);
  */
 #define new_Deque(type) new_deque(sizeof(type))
 
-#pragma pack(push, 1)
 /**
  * @struct LIST
  * @brief List structure for storing generic data.
@@ -205,7 +198,6 @@ typedef struct LIST {
      */
     void (*delete)(struct LIST*);
 } List;
-#pragma pack(pop)
 
 /**
  * @brief Creates a new list with a given element size.

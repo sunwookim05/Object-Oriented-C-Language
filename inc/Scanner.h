@@ -5,7 +5,6 @@
 
 struct __stdin_t;
 
-#pragma pack(push, 1)
 /** 
  * @brief Scanner class
  */
@@ -115,7 +114,6 @@ typedef struct Scanner{
      */
     string (*nextLine)(void);
 }Scanner;
-#pragma pack(pop)
 
 /**
 * Constructs a new {@code Scanner} that produces values scanned

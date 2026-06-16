@@ -5,7 +5,7 @@ void print(const string format, ...) {
     va_list ap;
     char buf[4096];
     va_start(ap, format);
-    vsprintf(buf, format, ap);
+    vsnprintf(buf, sizeof(buf), format, ap);
     va_end(ap);
     fprintf(stdout, "%s", buf);
 }
@@ -14,19 +14,28 @@ void println(const string format, ...) {
     va_list ap;
     char buf[4096];
     va_start(ap, format);
-    vsprintf(buf, format, ap);
+    vsnprintf(buf, sizeof(buf), format, ap);
     va_end(ap);
     fprintf(stdout, "%s\n", buf);
+}
+
+static int32_t readInput(void) {
+    return getchar();
 }
 
 SYSTEM System = {
     .out = {
         .printf = print,
         .println = println
+    },
+    .in = {
+        .read = readInput
     }
 };
 
 static int fileScanf(File* self, const string format, ...) {
+    if (self == null || self->file == null || format == null) return EOF;
+
     va_list ap;
     va_start(ap, format);
     int result = vfscanf(self->file, format, ap);
@@ -35,6 +44,8 @@ static int fileScanf(File* self, const string format, ...) {
 }
 
 static int filePrintf(File* self, const string format, ...) {
+    if (self == null || self->file == null || format == null) return EOF;
+
     va_list ap;
     va_start(ap, format);
     int result = vfprintf(self->file, format, ap);
@@ -43,6 +54,8 @@ static int filePrintf(File* self, const string format, ...) {
 }
 
 static int filePrintln(File* self, const string format, ...) {
+    if (self == null || self->file == null || format == null) return EOF;
+
     va_list ap;
     va_start(ap, format);
     int result = vfprintf(self->file, format, ap);
@@ -52,12 +65,16 @@ static int filePrintln(File* self, const string format, ...) {
 }
 
 static int fileOpen(File* self, const string name, const string mode) {
+    if (self == null || name == null || mode == null) return 1;
+    if (self->file != null) fclose(self->file);
     self->file = fopen(name, mode);
     return self->file == null ? 1 : 0;
 }
 
 static void fileClose(File* self) {
+    if (self == null || self->file == null) return;
     fclose(self->file);
+    self->file = null;
 }
 
 File new_File(const string name, const string mode) {
@@ -73,16 +90,30 @@ File new_File(const string name, const string mode) {
 
 /*------------------------------Process Class---------------------------*/
 
+#ifdef _WIN32
+DWORD processFindByName(Process* self, const string name);
+#else
+pid_t processFindByName(Process* self, const string name);
+#endif
+
 int processStart(Process* self, const string name) {
+    if (self == null || name == null) return -1;
+
     #ifdef _WIN32
         STARTUPINFO si;
         PROCESS_INFORMATION pi;
+        char* command = (char*)malloc(strlen(name) + 1);
+        if (command == null) return -1;
+
+        strcpy(command, name);
         ZeroMemory(&si, sizeof(si));
         si.cb = sizeof(si);
         ZeroMemory(&pi, sizeof(pi));
-        if (!CreateProcess(null, (LPSTR)name, null, null, FALSE, 0, null, null, &si, &pi)) {
+        if (!CreateProcess(null, command, null, null, FALSE, 0, null, null, &si, &pi)) {
+            free(command);
             return -1;
         }
+        free(command);
         self->pid = pi;
         return 0;
     #else
@@ -100,6 +131,8 @@ int processStart(Process* self, const string name) {
 }
 
 int processKill(Process* self) {
+    if (self == null) return -1;
+
     #ifdef _WIN32
         if (TerminateProcess(self->pid.hProcess, 0)) {
             CloseHandle(self->pid.hProcess);
@@ -118,6 +151,8 @@ int processKill(Process* self) {
 }
 
 int processPause(Process* self) {
+    if (self == null) return -1;
+
     #ifdef _WIN32
         return SuspendThread(self->pid.hThread) == (DWORD)-1 ? -1 : 0;
     #else
@@ -126,6 +161,8 @@ int processPause(Process* self) {
 }
 
 int processResume(Process* self) {
+    if (self == null) return -1;
+
     #ifdef _WIN32
         return ResumeThread(self->pid.hThread) == (DWORD)-1 ? -1 : 0;
     #else
@@ -134,6 +171,8 @@ int processResume(Process* self) {
 }
 
 int processIsRunning(Process* self) {
+    if (self == null) return 0;
+
     #ifdef _WIN32
         DWORD exitCode;
         if (GetExitCodeProcess(self->pid.hProcess, &exitCode)) {
@@ -151,6 +190,8 @@ int processIsRunning(Process* self) {
 }
 
 void processList(Process* self) {
+    (void)self;
+
     #ifdef _WIN32
         HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
         if (hSnapshot == INVALID_HANDLE_VALUE) {
@@ -188,6 +229,9 @@ void processList(Process* self) {
 }
 
 int processAppExists(Process* self, const string name) {
+    (void)self;
+    if (name == null) return 0;
+
     #ifdef _WIN32
         HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
         if (hSnapshot == INVALID_HANDLE_VALUE) {
@@ -231,6 +275,9 @@ int processAppExists(Process* self, const string name) {
 }
 
 int processKillByName(Process* self, const string name) {
+    (void)self;
+    if (name == null) return -1;
+
     #ifdef _WIN32
         HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
         if (hSnapshot == INVALID_HANDLE_VALUE) {
@@ -258,14 +305,16 @@ int processKillByName(Process* self, const string name) {
         CloseHandle(hSnapshot);
         return 0;
     #else
-        char command[256];
-        snprintf(command, sizeof(command), "pkill %s", name);
-        return system(command);
+        pid_t pid = processFindByName(self, name);
+        return pid > 0 ? kill(pid, SIGKILL) : -1;
     #endif
 }
 
 #ifdef _WIN32
     DWORD processFindByName(Process* self, const string name) {
+        (void)self;
+        if (name == null) return 0;
+
         HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
         if (hSnapshot == INVALID_HANDLE_VALUE) {
             return 0;
@@ -291,6 +340,9 @@ int processKillByName(Process* self, const string name) {
     }
 #else
     pid_t processFindByName(Process* self, const string name) {
+        (void)self;
+        if (name == null) return 0;
+
         FILE* fp = popen("ps -e", "r");
         if (fp == null) {
             return 0;
@@ -357,7 +409,24 @@ void getSystemTime(Time* self) {
     #endif
 }
 
+static uint8_t daysInMonthFor(uint16_t year, uint8_t month) {
+    boolean isLeapYear = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+
+    switch (month) {
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            return 31;
+        case 4: case 6: case 9: case 11:
+            return 30;
+        case 2:
+            return isLeapYear ? 29 : 28;
+        default:
+            return 31;
+    }
+}
+
 void getTime(Time* self) {
+    if (self == null) return;
+
     self->year = self->year;
     self->month = self->month;
     self->day = self->day;
@@ -368,6 +437,8 @@ void getTime(Time* self) {
 }
 
 void setTime(Time* self, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second) {
+    if (self == null) return;
+
     self->year = year;
     self->month = month;
     self->day = day;
@@ -383,17 +454,19 @@ DWORD WINAPI _timRun(LPVOID arg) {
 void* _timRun(void* arg) {
 #endif
     Time* self = (Time*)arg;
-    boolean isLeapYear;
-    uint8_t daysInMonth;
     uint16_t prev = 0;
-    
-    isLeapYear = (self->year % 4 == 0 && (self->year % 100 != 0 || self->year % 400 == 0));
-    switch (self->month) {
-        case 1: case 3: case 5: case 7: case 8: case 10: case 12: daysInMonth = 31; break;
-        case 4: case 6: case 9: case 11: daysInMonth = 30; break;
-        case 2: daysInMonth = isLeapYear ? 29 : 28; break;
-        default: daysInMonth = 0; break;
-    }
+
+    if (self == null) return 0;
+
+    #ifdef _WIN32
+        SYSTEMTIME initial;
+        GetLocalTime(&initial);
+        prev = initial.wMilliseconds;
+    #else
+        struct timespec initial;
+        clock_gettime(CLOCK_REALTIME, &initial);
+        prev = (uint16_t)(initial.tv_nsec / 1000000L);
+    #endif
 
     while (self->running) {
         uint16_t current;
@@ -405,13 +478,13 @@ void* _timRun(void* arg) {
         #else
                 struct timespec ts;
                 clock_gettime(CLOCK_REALTIME, &ts);
-                current = ts.tv_nsec / 1.0e6;
+                current = (uint16_t)(ts.tv_nsec / 1000000L);
         #endif
                 uint16_t elapsed = (current >= prev) ? (current - prev) : (1000 - prev + current);
                 prev = current;
 
         #ifdef _WIN32
-                WaitForSingleObject(&self->mutex, INFINITE);
+                WaitForSingleObject(self->mutex, INFINITE);
         #else
                 pthread_mutex_lock(&self->mutex);
         #endif
@@ -430,7 +503,7 @@ void* _timRun(void* arg) {
             if (self->hour >= 24) {
                 self->hour = 0;
                 self->day++;
-                if (self->day > daysInMonth) {
+                if (self->day > daysInMonthFor(self->year, self->month)) {
                     self->day = 1;
                     self->month++;
                     if (self->month > 12) {
@@ -441,11 +514,11 @@ void* _timRun(void* arg) {
             }
         }
         #ifdef _WIN32
-                ReleaseMutex(&self->mutex);
-                sleep(1);
+                ReleaseMutex(self->mutex);
+                sleep_ms(1);
         #else
                 pthread_mutex_unlock(&self->mutex);
-                sleep(1);
+                sleep_ms(1);
         #endif
     }
 
@@ -453,7 +526,7 @@ void* _timRun(void* arg) {
 }
 
 void startTime(Time* self) {
-    if (!self->running) {
+    if (self != null && !self->running) {
         self->running = true;
         #ifdef _WIN32
                 self->thread = CreateThread(null, 0, _timRun, self, 0, null);
@@ -464,7 +537,9 @@ void startTime(Time* self) {
 }
 
 void stopTime(Time* self) {
-        self->running = false;
+    if (self == null || !self->running) return;
+
+    self->running = false;
     #ifdef _WIN32
         WaitForSingleObject(self->thread, INFINITE);
         CloseHandle(self->thread);
@@ -476,7 +551,7 @@ void stopTime(Time* self) {
 Time new_Time(void) {
     Time time;
     #ifdef _WIN32
-        CreateMutex(null, FALSE, null);
+        time.mutex = CreateMutex(null, FALSE, null);
     #else
         pthread_mutex_init(&time.mutex, null);
     #endif
@@ -502,17 +577,12 @@ Time new_Time(void) {
 
 #define PARSE_INT(TYPE, FUNC, NAME) \
 TYPE parse##NAME(const string str, ...) { \
-    int32_t radix = 10; \
-    va_list ap; \
-    va_start(ap, str); \
-    radix = va_arg(ap, int32_t); \
-    va_end(ap); \
-    return (TYPE)FUNC(str, null, radix); \
+    return str == null ? 0 : (TYPE)FUNC(str, null, 0); \
 }
 
 #define PARSE_FLOAT(TYPE, FUNC, NAME) \
 TYPE parse##NAME(const string str) { \
-    return FUNC(str, null); \
+    return str == null ? 0 : FUNC(str, null); \
 }
 
 PARSE_INT(int8_t, strtol, Byte)
@@ -525,9 +595,12 @@ PARSE_FLOAT(double, strtod, Double)
 
 #define TOSTRING(TYPE, FORMAT, NAME) \
 string toString##NAME(TYPE value) { \
+    int required = snprintf(null, 0, FORMAT, value); \
+    if (required < 0) return null; \
+    size_t size = (size_t)required + 1U; \
     string str; \
-    size_t size =  snprintf(null, 0, FORMAT, value) + 1; \
     str = (string)malloc(sizeof(char) * size); \
+    if (str == null) return null; \
     snprintf(str, size, FORMAT, value); \
     return str; \
 }
@@ -542,10 +615,12 @@ TOSTRING(double, "%g", Double)
 #define TOBINARAYSTRING(TYPE, SIZE, NAME) \
 string toBinaryString##NAME(TYPE value) { \
     string binaryString = (string)malloc((SIZE + 1) * sizeof(char)); \
+    if (binaryString == null) return null; \
     *(binaryString + SIZE) = '\0';\
-    TYPE mask = (TYPE)1 << (SIZE - 1); \
+    uint64_t unsignedValue = (uint64_t)value; \
+    uint64_t mask = UINT64_C(1) << (SIZE - 1); \
     for (size_t i = 0; i < SIZE; i++) { \
-        *(binaryString + i) = (value & mask) ? '1' : '0'; \
+        *(binaryString + i) = (unsignedValue & mask) ? '1' : '0'; \
         mask >>= 1; \
     } \
     string ptr = binaryString; \
@@ -557,6 +632,10 @@ string toBinaryString##NAME(TYPE value) { \
     } \
     size_t length = strlen(ptr) + 1; \
     string trimmedBinaryString = (string)malloc(length * sizeof(char)); \
+    if (trimmedBinaryString == null) { \
+        free(binaryString); \
+        return null; \
+    } \
     memcpy(trimmedBinaryString, ptr, length); \
     free(binaryString); \
     return trimmedBinaryString; \
@@ -569,9 +648,12 @@ TOBINARAYSTRING(int64_t, 64, Long)
 
 #define TOOCTALSTRING(TYPE, FORMAT, NAME) \
 string toOctalString##NAME(TYPE value) { \
+    int required = snprintf(null, 0, FORMAT, value); \
+    if (required < 0) return null; \
+    size_t size = (size_t)required + 1U; \
     string str; \
-    size_t size =  snprintf(null, 0, FORMAT, value) + 1; \
     str = (string)malloc(sizeof(char) * size); \
+    if (str == null) return null; \
     snprintf(str, size, FORMAT, value); \
     return str; \
 }
@@ -583,9 +665,12 @@ TOOCTALSTRING(int64_t, "%" SCNo64, Long)
 
 #define TOHEXSTRING(TYPE, FORMAT, NAME) \
 string toHexString##NAME(TYPE value) { \
+    int required = snprintf(null, 0, FORMAT, value); \
+    if (required < 0) return null; \
+    size_t size = (size_t)required + 1U; \
     string str; \
-    size_t size =  snprintf(null, 0, FORMAT, value) + 1; \
     str = (string)malloc(sizeof(char) * size); \
+    if (str == null) return null; \
     snprintf(str, size, FORMAT, value); \
     return str; \
 }
@@ -595,20 +680,23 @@ TOHEXSTRING(int16_t, "%" SCNx16, Short)
 TOHEXSTRING(int32_t, "%" SCNx32, Integer)
 TOHEXSTRING(int64_t, "%" SCNx64, Long)
 
-#define BITCOUNT(TYPE, NAME) \
+#define BITCOUNT(TYPE, SIZE, NAME) \
 size_t bitCount##NAME(TYPE value) { \
     size_t count = 0; \
-    while (value) { \
-        count += value & 1; \
-        value >>= 1; \
+    uint64_t unsignedValue = (uint64_t)value; \
+    uint64_t mask = SIZE == 64 ? UINT64_MAX : ((UINT64_C(1) << SIZE) - 1); \
+    unsignedValue &= mask; \
+    while (unsignedValue) { \
+        count += unsignedValue & 1U; \
+        unsignedValue >>= 1; \
     } \
     return count; \
 }
 
-BITCOUNT(int8_t, Byte)
-BITCOUNT(int16_t, Short)
-BITCOUNT(int32_t, Integer)
-BITCOUNT(int64_t, Long)
+BITCOUNT(int8_t, 8, Byte)
+BITCOUNT(int16_t, 16, Short)
+BITCOUNT(int32_t, 32, Integer)
+BITCOUNT(int64_t, 64, Long)
 
 #define BYTEVALUE(TYPE, NAME) \
 int8_t byteValue##NAME(TYPE value) { \
@@ -741,45 +829,75 @@ EQUALS(boolean, Boolean)
 
 /*-----------------------------------String Class-----------------------------------*/
 char charAt(const string str, size_t index) {
+    if (str == null || index >= strlen(str)) return '\0';
     return *(str + index);
 }
 
 boolean equals(const string str1, const string str2) {
+    if (str1 == null || str2 == null) return str1 == str2;
     return !strcmp(str1, str2);
 }
 
 size_t length(const string str) {
+    if (str == null) return 0;
     return strlen(str);
 }
 
 string replace(const string str, char oldChar, char newChar) {
+    if (str == null) return null;
+
     size_t length = strlen(str);
     string replaced = (string)malloc(sizeof(char) * (length + 1));
+    if (replaced == null) return null;
+
     for (size_t i = 0; i < length; i++) *(replaced + i) = *(str + i) == oldChar ? newChar : *(str + i);
     *(replaced + length) = '\0';
     return replaced;
 }
 
 string substring(const string str, size_t beginIndex, size_t endIndex) {
+    if (str == null) return null;
+
+    size_t strLength = strlen(str);
+    if (beginIndex > strLength) beginIndex = strLength;
+    if (endIndex > strLength) endIndex = strLength;
+    if (endIndex < beginIndex) endIndex = beginIndex;
+
     size_t length = endIndex - beginIndex;
     string substr = (string)malloc(sizeof(char) * (length + 1));
+    if (substr == null) return null;
+
     memcpy(substr, str + beginIndex, length);
     *(substr + length) = '\0';
     return substr;
 }
 
 string stoLowerCase(const string str) {
+    if (str == null) return null;
+
     size_t length = strlen(str);
     string lower = (string)malloc(sizeof(char) * (length + 1));
-    for (size_t i = 0; i < length; i++) *(lower + i) = *(str + i) | 0x20;
+    if (lower == null) return null;
+
+    for (size_t i = 0; i < length; i++) {
+        char c = *(str + i);
+        *(lower + i) = (c >= 'A' && c <= 'Z') ? (char)(c | 0x20) : c;
+    }
     *(lower + length) = '\0';
     return lower;
 }
 
 string stoUpperCase(const string str) {
+    if (str == null) return null;
+
     size_t length = strlen(str);
     string upper = (string)malloc(sizeof(char) * (length + 1));
-    for (size_t i = 0; i < length; i++) *(upper + i) = *(str + i) & 0xDF;
+    if (upper == null) return null;
+
+    for (size_t i = 0; i < length; i++) {
+        char c = *(str + i);
+        *(upper + i) = (c >= 'a' && c <= 'z') ? (char)(c & 0xDF) : c;
+    }
     *(upper + length) = '\0';
     return upper;
 }
@@ -944,25 +1062,25 @@ char ctoLowerCase(const char c) {
 }
 
 char ctoUpperCase(const char c) {
-    return isLowerCase(c) ? c & 0xDF : c;
+    return isLowerCase(c) ? (char)(c & 0xDF) : c;
 }
 
 boolean isAlphabetic(const char c) {
-    return isLetter(c) || isDigit(c);
+    return isLetter(c);
 }
 
 boolean isSpaceChar(const char c) {
-    return !(c ^ ' ');
+    return c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v';
 }
 
 boolean isDefined(const char c) {
-    return (c ^ '\0');
+    return c != '\0';
 }
 /*---------------------------------------------------------------------------------*/
 
 /*---------------------------------Boolean Class---------------------------------*/
 int32_t compare(const boolean x, const boolean y) {
-    return x & y;
+    return (int32_t)x - (int32_t)y;
 }
 
 boolean logicalAnd(const boolean x, const boolean y) {
@@ -982,7 +1100,13 @@ boolean logicalXor(const boolean x, const boolean y) {
 }
 
 boolean parseBoolean(const string str) {
-    return !(((*(str+0)|0x20)^'t') ^ ((*(str+1)|0x20)^'r') ^ ((*(str+2)|0x20)^'u') ^ ((*(str+3)|0x20)^'e')) ? true : false;
+    if (str == null) return false;
+
+    return ((str[0] | 0x20) == 't' &&
+            (str[1] | 0x20) == 'r' &&
+            (str[2] | 0x20) == 'u' &&
+            (str[3] | 0x20) == 'e' &&
+            str[4] == '\0') ? true : false;
 }
 
 boolean valueOfBoolean(const boolean value) {
@@ -1108,7 +1232,9 @@ _Float Float = {
     .longValue = longValueFloat,
     .floatValue = floatValueFloat,
     .doubleValue = doubleValueFloat,
-    .booleanValue = booleanValueFloat
+    .booleanValue = booleanValueFloat,
+    .max = maxFloat,
+    .min = minFloat
 };
 
 _Double Double = {
@@ -1120,6 +1246,8 @@ _Double Double = {
     .longValue = longValueDouble,
     .floatValue = floatValueDouble,
     .doubleValue = doubleValueDouble,
-    .booleanValue = booleanValueDouble
+    .booleanValue = booleanValueDouble,
+    .max = maxDouble,
+    .min = minDouble
 };
-/*-------------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------------*/

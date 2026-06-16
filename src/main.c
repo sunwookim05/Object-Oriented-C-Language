@@ -9,7 +9,7 @@ import SYSTEM System;
 import _String String;
 
 
-int main(void) {    
+int main(void) {
 
 
     return 0;

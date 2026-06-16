@@ -43,7 +43,6 @@ typedef int32_t ColorType;
     #define RESET       0
 #endif
 
-#pragma pack(push, 1)
 /**
  * @struct Console
  * @brief Console structure for handling console input and output.
@@ -117,7 +116,6 @@ typedef struct Console{
      */
     int (*kbhit)(void);
 }Console;
-#pragma pack(pop)
 
 /**
  * @brief Creates a new console instance.

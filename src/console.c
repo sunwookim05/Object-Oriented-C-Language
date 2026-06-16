@@ -13,7 +13,8 @@ void setTextColor(ColorType color) {
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         CONSOLE_SCREEN_BUFFER_INFO csbi;
         GetConsoleScreenBufferInfo(hConsole, &csbi);
-        SetConsoleTextAttribute(hConsole, (csbi.wAttributes & 0xF0) | color);
+        WORD attribute = (WORD)((csbi.wAttributes & 0xF0) | ((WORD)color & 0x0F));
+        SetConsoleTextAttribute(hConsole, attribute);
     #else
         printf("\x1b[%dm", color);
     #endif
@@ -24,7 +25,8 @@ void setBackgroundColor(ColorType color) {
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         CONSOLE_SCREEN_BUFFER_INFO csbi;
         GetConsoleScreenBufferInfo(hConsole, &csbi);
-        SetConsoleTextAttribute(hConsole, (csbi.wAttributes & 0x0F) | (color << 4));
+        WORD attribute = (WORD)((csbi.wAttributes & 0x0F) | (((WORD)color & 0x0F) << 4));
+        SetConsoleTextAttribute(hConsole, attribute);
     #else
         printf("\x1b[%dm", color + 10);
     #endif
@@ -42,8 +44,12 @@ void resetColor() {
 void setCursorPos(int x, int y) {
     #ifdef _WIN32
         COORD coord;
-        coord.X = x;
-        coord.Y = y;
+        if (x < 0) x = 0;
+        if (y < 0) y = 0;
+        if (x > INT16_MAX) x = INT16_MAX;
+        if (y > INT16_MAX) y = INT16_MAX;
+        coord.X = (SHORT)x;
+        coord.Y = (SHORT)y;
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
     #else
         printf("\033[%d;%dH", y, x);
@@ -57,7 +63,7 @@ void setCursorVisibility(boolean visible) {
         cursorInfo.bVisible = visible;
         SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
     #else
-        printf("\e[?25%c", visible ? 'h' : 'l');
+        printf("\033[?25%c", visible ? 'h' : 'l');
     #endif
 }
 
@@ -67,7 +73,7 @@ void setWindowSize(int width, int height) {
         snprintf(command, sizeof(command), "mode con: cols=%d lines=%d", width, height);
         system(command);
     #else
-        printf("\e[8;%d;%dt", height, width);
+        printf("\033[8;%d;%dt", height, width);
     #endif
 }
 
@@ -83,7 +89,7 @@ void printfXY(int x, int y, const string format, ...) {
     va_list ap;
     char buf[4096];
     va_start(ap, format);
-    vsprintf(buf, format, ap);
+    vsnprintf(buf, sizeof(buf), format, ap);
     va_end(ap);
     setCursorPos(x, y);
     fprintf(stdout, "%s", buf);
@@ -93,7 +99,7 @@ void printlnXY(int x, int y, const string format, ...) {
     va_list ap;
     char buf[4096];
     va_start(ap, format);
-    vsprintf(buf, format, ap);
+    vsnprintf(buf, sizeof(buf), format, ap);
     va_end(ap);
     setCursorPos(x, y);
     fprintf(stdout, "%s\n", buf);
@@ -138,4 +144,4 @@ Console new_Console(void) {
         .printlnXY = printlnXY,
         .kbhit = kbhit
     };
-} 
+}
